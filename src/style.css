@@ -74,12 +74,15 @@ body:has(.discussion-screen){overflow:hidden;background:radial-gradient(ellipse 
 body{background:radial-gradient(ellipse at 77% 7%,#35344b 0%,transparent 34%),radial-gradient(ellipse at 15% 75%,#1d2d3c 0%,transparent 46%),linear-gradient(150deg,#101622 0%,#131b2a 46%,#171723 100%)}
 body:before,body:after{content:"";position:fixed;pointer-events:none;z-index:0}
 body:before{inset:0;opacity:.3;background-image:radial-gradient(1px 1px at 12% 18%,#f7e9c7 60%,transparent),radial-gradient(1px 1px at 74% 14%,#f7e9c7 60%,transparent),radial-gradient(1.5px 1.5px at 88% 31%,#f7e9c7 60%,transparent),radial-gradient(1px 1px at 44% 12%,#f7e9c7 60%,transparent),radial-gradient(1px 1px at 63% 51%,#f7e9c7 60%,transparent),radial-gradient(1.5px 1.5px at 23% 62%,#f7e9c7 60%,transparent);background-size:100% 100%;animation:moonlit-twinkle 7s ease-in-out infinite alternate}
-body:after{width:13rem;height:13rem;right:5%;top:4%;border-radius:50%;background:radial-gradient(circle at 38% 36%,#fff1c8 0%,#e9d9ae 35%,#d4c397 48%,#d4c39722 65%,transparent 73%);filter:blur(.2px);opacity:.18;box-shadow:0 0 90px #cbb77c40}
+body:after{width:13rem;height:13rem;right:5%;top:4%;border-radius:50%;background:radial-gradient(circle at 38% 36%,#fff1c8 0%,#e9d9ae 35%,#d4c397 48%,#d4c39722 65%,transparent 73%);filter:blur(.2px);opacity:.18;box-shadow:0 0 90px #cbb77c40;animation:moon-drift 52s ease-in-out infinite alternate}
 .app{position:relative;z-index:1}
 @keyframes moonlit-twinkle{from{opacity:.16}to{opacity:.42}}
+@keyframes moon-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-3vw,2vh,0)}}
+@media(prefers-reduced-motion:reduce){body:before,body:after{animation:none}}
 
 /* Docked drawers stay out of the way until explicitly opened. */
 .gm-drawer.fixed-gm,.log-drawer{position:fixed;z-index:12;width:min(22rem,calc(100vw - 1.5rem));max-width:none;margin:0;padding:.35rem;border:1px solid #d9bd8052;border-radius:1rem;background:rgba(18,23,34,.88);backdrop-filter:blur(18px);box-shadow:0 16px 55px #05070baa}
+.gm-drawer.fixed-gm:not([open]),.log-drawer:not([open]){width:auto}
 .gm-drawer.fixed-gm{top:.8rem;right:.8rem}
 .log-drawer{bottom:.8rem;left:.8rem}
 .gm-drawer.fixed-gm>summary,.log-drawer>summary{display:flex;align-items:center;justify-content:center;gap:.55rem;min-width:3rem;min-height:2.8rem;padding:.45rem .7rem;border-radius:.7rem;color:#f0d7a1;font-weight:700;list-style:none}
@@ -127,3 +130,21 @@ body:has(.night-vote-screen),body:has(.vote-screen){overflow:hidden;background:r
 .timer-unit{font-size:.17em;margin-left:.24em;vertical-align:baseline;letter-spacing:.04em}
 .discussion-screen .phase>small .timer-number{font-size:1em;font-variant-numeric:tabular-nums}
 .discussion-screen .phase>small .timer-unit{font-size:.17em;letter-spacing:.04em}
+
+/* Night information and the suspicion ballot remain visible together. */
+.night-vote-screen>.game-area>.night-result{order:1;width:min(100%,42rem);margin:.2rem auto;text-align:center;border:1px solid #cbb47766;background:linear-gradient(145deg,#2b2b3b,#1c2633);font-size:clamp(1rem,3vw,1.25rem)}
+.night-vote-screen>.game-area>.night-suspicion{order:2}
+.night-vote-screen>.game-area>:not(.phase):not(.handoff):not(.night-result):not(.night-suspicion){order:3}
+
+/* Full viewport announcement screens and vote confirmation. */
+.morning-screen,.execution-screen{position:fixed;inset:0;z-index:5;width:100vw;height:100dvh;max-width:none;min-height:0;margin:0;padding:clamp(1rem,4vw,2.5rem);border:0;border-radius:0;display:flex;flex-direction:column;justify-content:center;align-items:stretch;background:radial-gradient(ellipse at 50% 35%,#3b3039 0%,#1b202d 58%,#101620 100%)}
+.morning-screen>.game-area{width:100%;margin:0 auto}
+.morning-screen>.game-area>.morning-reveal,.execution-screen>.execution-reveal{width:min(100%,64rem);min-height:min(70vh,42rem);margin:auto;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:clamp(1.5rem,7vw,5rem);border:1px solid #c4a56878;border-radius:clamp(1rem,4vw,2rem);background:radial-gradient(ellipse at 50% 0%,#60404a 0%,#282432 70%);box-shadow:0 30px 100px #05060acc}
+.execution-screen>.game-area{width:100%;max-width:none;min-height:100%;margin:0;padding:0;display:grid;place-items:center;background:transparent;border:0}
+.execution-screen>.game-area>.execution-reveal{width:min(100%,64rem);min-height:min(70vh,42rem);margin:auto;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:clamp(1.5rem,7vw,5rem);border:1px solid #c4a56878;border-radius:clamp(1rem,4vw,2rem);background:radial-gradient(ellipse at 50% 0%,#60404a 0%,#282432 70%);box-shadow:0 30px 100px #05060acc}
+.execution-screen>.game-area>.execution-reveal h2{font-size:clamp(2rem,8vw,5rem);line-height:1.5;color:#f4dfb7;text-shadow:0 0 40px #d0a76445}
+.execution-screen>.game-area>.execution-reveal p{color:#b9c2cf}
+.vote-confirm{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1rem;padding:clamp(1.5rem,7vw,5rem);background:radial-gradient(ellipse at 50% 35%,#3c3340f7,#111722f7 75%);backdrop-filter:blur(16px);text-align:center}
+.vote-confirm h3{font-size:clamp(1.8rem,7vw,3.6rem);color:#f1d9a7;margin:0}
+.vote-confirm p{font-size:clamp(1.2rem,4vw,2rem);color:#e3e7ec}
+.vote-confirm button{width:min(100%,28rem);min-height:3.75rem}
