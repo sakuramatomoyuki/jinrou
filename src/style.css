@@ -4,3 +4,5 @@
 /* Shared-device handoff */
 .handoff{border:1px solid rgba(211,178,122,.42);background:linear-gradient(145deg,rgba(39,32,39,.98),rgba(25,24,31,.98));padding:clamp(1.25rem,4vw,2rem);border-radius:1.25rem;margin:1rem 0}.handoff-name{display:block;font-size:clamp(1.7rem,7vw,2.5rem);text-align:center;margin:1rem 0 1.5rem;color:#f0d6a8}.handoff .wide{min-height:3.5rem;margin:.35rem 0}.handoff input{font-size:1.1rem;min-height:3rem}.handoff textarea{width:100%;resize:vertical;font:inherit;padding:.8rem;border:1px solid #55505b;border-radius:.65rem;background:#17161c;color:#fff}
 .pin-backdrop{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:rgba(8,7,12,.88);padding:1rem}.pin-dialog{width:min(100%,30rem);background:#211e27;border:1px solid rgba(211,178,122,.45);border-radius:1rem;padding:1.5rem;box-shadow:0 20px 90px #000}.pin-dialog .wide{min-height:3.25rem;margin:.35rem 0}
+
+.shared-name-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:.15rem 1rem}.shared-name-fields .field{margin-bottom:.35rem}
