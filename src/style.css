@@ -130,6 +130,11 @@ body:has(.night-vote-screen),body:has(.vote-screen){overflow:hidden;background:r
 .timer-unit{font-size:.17em;margin-left:.24em;vertical-align:baseline;letter-spacing:.04em}
 .discussion-screen .phase>small .timer-number{font-size:1em;font-variant-numeric:tabular-nums}
 .discussion-screen .phase>small .timer-unit{font-size:.17em;letter-spacing:.04em}
+.header-actions{display:flex;align-items:center;gap:.6rem}
+.sound-toggle{border:1px solid #ffffff24;border-radius:999px;padding:.45rem .75rem;background:#ffffff0b;color:#d9c18e;font-size:.75rem;font-weight:700;white-space:nowrap}
+.sound-toggle:hover{border-color:#d3af7070;background:#d3af7014}
+.vote-confirm>p{font-size:clamp(1.4rem,5vw,2.4rem);font-weight:700;color:#f0d9aa}
+@media(max-width:650px){.header-actions{gap:.35rem}.sound-toggle{padding:.4rem .55rem;font-size:.68rem}.header-actions .tag{padding:6px 8px;font-size:9px}}
 
 /* Night information and the suspicion ballot remain visible together. */
 .night-vote-screen>.game-area>.night-result{order:1;width:min(100%,42rem);margin:.2rem auto;text-align:center;border:1px solid #cbb47766;background:linear-gradient(145deg,#2b2b3b,#1c2633);font-size:clamp(1rem,3vw,1.25rem)}
