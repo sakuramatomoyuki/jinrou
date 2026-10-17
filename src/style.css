@@ -24,3 +24,36 @@
 .turn-wait{margin:1.2rem 0;padding:1rem;border:1px solid #ffffff18;border-radius:.8rem;color:#c9d1dc;text-align:center;background:#ffffff06}
 .game-screen>.gm-controls{max-width:46rem;margin:1rem auto 0;width:100%}
 @media(max-width:650px){.game-screen{min-height:calc(100svh - 84px);padding:1rem .75rem}.game-screen>.game-area{padding:1rem}.game-screen>.gm-controls{padding:.75rem 0}}
+
+/* Compact GM tools; hidden until the host opens the drawer. */
+.gm-drawer{max-width:46rem;margin:1rem auto 0;border-top:1px solid #ffffff20;padding-top:.75rem}
+.gm-drawer>summary{cursor:pointer;color:#d9c08e;font-size:.9rem;padding:.65rem .2rem;user-select:none}
+.gm-drawer[open]>summary{margin-bottom:.5rem}
+
+/* Dawn acknowledgement gate and dramatic reveal. */
+.morning-screen{display:flex;flex-direction:column;justify-content:center;align-items:stretch}
+.morning-screen>.game-area{display:flex;flex-direction:column;justify-content:center;gap:1rem;background:transparent;border:0;min-height:0}
+.morning-screen>.game-area>.phase{display:none}
+.morning-screen>.game-area>:not(.morning-reveal):not(.handoff){display:none}
+.morning-screen>.game-area>.morning-reveal{width:min(100%,42rem);margin:0 auto;text-align:center;padding:clamp(1.4rem,5vw,3rem);border:1px solid #b69a68;border-radius:1.4rem;background:radial-gradient(ellipse at 50% 0%,#59383a 0%,#242431 65%);box-shadow:0 25px 90px #05060aa8}
+.morning-reveal .eyebrow{letter-spacing:.22em;color:#d8b777}
+.morning-reveal h2{font-size:clamp(1.7rem,6vw,3.1rem);line-height:1.55;color:#f0e1c8;margin:1rem 0}
+.morning-reveal .muted{margin:.5rem 0;color:#c0b8ad}
+.ack-count{font-size:clamp(2.4rem,9vw,4rem);font-weight:700;color:#f0d7a1;margin:1rem 0}
+.ack-count small{font-size:1rem;font-weight:500;color:#c5c0b9}
+.morning-reveal .wide{max-width:24rem;min-height:3.6rem}
+.morning-screen>.game-area>.handoff{width:min(100%,42rem);margin:0 auto}
+.morning-screen>.gm-drawer,.morning-screen>h3,.morning-screen>.log{display:none}
+
+/* Discussion is intentionally a timer-only screen. */
+body:has(.discussion-screen){overflow:hidden;background:radial-gradient(ellipse at 50% 42%,#343142 0%,#181b28 55%,#101620 100%)}
+.discussion-screen{position:fixed;inset:0;z-index:5;width:100%;height:100dvh;max-width:none;min-height:0;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;background:transparent;display:grid;place-items:center}
+.discussion-screen>.game-area{width:100%;min-height:100%;margin:0;padding:2rem;display:grid;place-content:center;text-align:center;background:transparent;border:0;border-radius:0}
+.discussion-screen>.game-area>.phase{border:0;padding:0;display:flex;flex-direction:column;gap:clamp(1rem,4vh,2.5rem)}
+.discussion-screen .phase span{color:#d8bd82;font-size:clamp(1.1rem,3vw,1.5rem);letter-spacing:.18em}
+.discussion-screen .phase b{font-size:clamp(2.8rem,11vw,7rem);letter-spacing:.1em;color:#f2e7d2;text-shadow:0 5px 45px #dabd7945}
+.discussion-screen .phase small{margin:0;color:#e4c98e;font-size:clamp(4.5rem,20vw,12rem);font-variant-numeric:tabular-nums;line-height:1;font-weight:600;text-shadow:0 0 60px #c89e5f44}
+.discussion-screen>.game-area>:not(.phase),.discussion-screen>.gm-drawer,.discussion-screen>.ending,.discussion-screen>h3,.discussion-screen>.log{display:none!important}
+.discussion-screen:before{content:"";position:fixed;inset:1rem;border:1px solid #d9bd8030;border-radius:1.2rem;pointer-events:none}
+.discussion-screen:after{content:"";position:fixed;width:min(74vw,42rem);aspect-ratio:1;border-radius:50%;border:1px solid #d9bd8014;box-shadow:0 0 100px #d9bd800d,inset 0 0 100px #d9bd800d;pointer-events:none}
+@media(max-width:650px){.discussion-screen>.game-area{padding:1.25rem}.discussion-screen .phase{gap:1.5rem}.discussion-screen:before{inset:.55rem;border-radius:.8rem}}
