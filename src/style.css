@@ -43,17 +43,17 @@
 .ack-count small{font-size:1rem;font-weight:500;color:#c5c0b9}
 .morning-reveal .wide{max-width:24rem;min-height:3.6rem}
 .morning-screen>.game-area>.handoff{width:min(100%,42rem);margin:0 auto}
-.morning-screen>.gm-drawer,.morning-screen>h3,.morning-screen>.log{display:none}
+.morning-screen>h3,.morning-screen>.log{display:none}
 
 /* Discussion is intentionally a timer-only screen. */
 body:has(.discussion-screen){overflow:hidden;background:radial-gradient(ellipse at 50% 42%,#343142 0%,#181b28 55%,#101620 100%)}
 .discussion-screen{position:fixed;inset:0;z-index:5;width:100%;height:100dvh;max-width:none;min-height:0;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;background:transparent;display:grid;place-items:center}
 .discussion-screen>.game-area{width:100%;min-height:100%;margin:0;padding:2rem;display:grid;place-content:center;text-align:center;background:transparent;border:0;border-radius:0}
 .discussion-screen>.game-area>.phase{border:0;padding:0;display:flex;flex-direction:column;gap:clamp(1rem,4vh,2.5rem)}
-.discussion-screen .phase span{color:#d8bd82;font-size:clamp(1.1rem,3vw,1.5rem);letter-spacing:.18em}
+.discussion-screen .phase>span:first-child{color:#d8bd82;font-size:clamp(1.1rem,3vw,1.5rem);letter-spacing:.18em}
 .discussion-screen .phase b{font-size:clamp(2.8rem,11vw,7rem);letter-spacing:.1em;color:#f2e7d2;text-shadow:0 5px 45px #dabd7945}
 .discussion-screen .phase>small{margin:0;color:#e4c98e;font-size:clamp(4.5rem,20vw,12rem);font-variant-numeric:tabular-nums;line-height:1;font-weight:600;text-shadow:0 0 60px #c89e5f44}
-.discussion-screen>.game-area>:not(.phase),.discussion-screen>.gm-drawer,.discussion-screen>.ending,.discussion-screen>h3,.discussion-screen>.log{display:none!important}
+.discussion-screen>.game-area>:not(.phase),.discussion-screen>.ending,.discussion-screen>h3,.discussion-screen>.log{display:none!important}
 .discussion-screen:before{content:"";position:fixed;inset:1rem;border:1px solid #d9bd8030;border-radius:1.2rem;pointer-events:none}
 .discussion-screen:after{content:"";position:fixed;width:min(74vw,42rem);aspect-ratio:1;border-radius:50%;border:1px solid #d9bd8014;box-shadow:0 0 100px #d9bd800d,inset 0 0 100px #d9bd800d;pointer-events:none}
 @media(max-width:650px){.discussion-screen>.game-area{padding:1.25rem}.discussion-screen .phase{gap:1.5rem}.discussion-screen:before{inset:.55rem;border-radius:.8rem}}
@@ -69,3 +69,61 @@ body:has(.discussion-screen){overflow:hidden;background:radial-gradient(ellipse 
 .discussion-screen .phase>small{font-size:clamp(3.8rem,15vw,9rem)}
 .discussion-screen .suspect-reveal{margin:.25rem 0}
 @media(max-width:650px){.night-suspicion select{width:100%;margin:0 0 .5rem}.discussion-screen .suspect-reveal{padding:.75rem 1rem}}
+
+/* Night village ambience with quiet star shimmer and a soft moon glow. */
+body{background:radial-gradient(ellipse at 77% 7%,#35344b 0%,transparent 34%),radial-gradient(ellipse at 15% 75%,#1d2d3c 0%,transparent 46%),linear-gradient(150deg,#101622 0%,#131b2a 46%,#171723 100%)}
+body:before,body:after{content:"";position:fixed;pointer-events:none;z-index:0}
+body:before{inset:0;opacity:.3;background-image:radial-gradient(1px 1px at 12% 18%,#f7e9c7 60%,transparent),radial-gradient(1px 1px at 74% 14%,#f7e9c7 60%,transparent),radial-gradient(1.5px 1.5px at 88% 31%,#f7e9c7 60%,transparent),radial-gradient(1px 1px at 44% 12%,#f7e9c7 60%,transparent),radial-gradient(1px 1px at 63% 51%,#f7e9c7 60%,transparent),radial-gradient(1.5px 1.5px at 23% 62%,#f7e9c7 60%,transparent);background-size:100% 100%;animation:moonlit-twinkle 7s ease-in-out infinite alternate}
+body:after{width:13rem;height:13rem;right:5%;top:4%;border-radius:50%;background:radial-gradient(circle at 38% 36%,#fff1c8 0%,#e9d9ae 35%,#d4c397 48%,#d4c39722 65%,transparent 73%);filter:blur(.2px);opacity:.18;box-shadow:0 0 90px #cbb77c40}
+.app{position:relative;z-index:1}
+@keyframes moonlit-twinkle{from{opacity:.16}to{opacity:.42}}
+
+/* Docked drawers stay out of the way until explicitly opened. */
+.gm-drawer.fixed-gm,.log-drawer{position:fixed;z-index:12;width:min(22rem,calc(100vw - 1.5rem));max-width:none;margin:0;padding:.35rem;border:1px solid #d9bd8052;border-radius:1rem;background:rgba(18,23,34,.88);backdrop-filter:blur(18px);box-shadow:0 16px 55px #05070baa}
+.gm-drawer.fixed-gm{top:.8rem;right:.8rem}
+.log-drawer{bottom:.8rem;left:.8rem}
+.gm-drawer.fixed-gm>summary,.log-drawer>summary{display:flex;align-items:center;justify-content:center;gap:.55rem;min-width:3rem;min-height:2.8rem;padding:.45rem .7rem;border-radius:.7rem;color:#f0d7a1;font-weight:700;list-style:none}
+.gm-drawer.fixed-gm>summary::-webkit-details-marker,.log-drawer>summary::-webkit-details-marker{display:none}
+.gm-drawer.fixed-gm>summary span,.log-drawer>summary span{font-size:1.25rem}
+.gm-drawer.fixed-gm>summary b,.log-drawer>summary b{display:none;font-size:.85rem}
+.gm-drawer.fixed-gm[open]>summary,.log-drawer[open]>summary{justify-content:flex-start;border-bottom:1px solid #ffffff18}
+.gm-drawer.fixed-gm[open]>summary b,.log-drawer[open]>summary b{display:block}
+.gm-drawer.fixed-gm .gm-controls{margin:0;padding:.5rem;max-height:min(72vh,40rem);overflow:auto;border:0}
+.gm-drawer.fixed-gm .control-row button{min-height:2.6rem}
+.log-drawer-content{max-height:min(55vh,28rem);overflow:auto;padding:.35rem .55rem}
+.log-drawer-content .log{margin:.35rem 0;line-height:1.55}
+
+/* Shared private actions need an intentional hand-off sequence. */
+.handoff>h3{text-align:center;font-size:clamp(1.4rem,5vw,2rem);margin:1.25rem 0}
+.handoff .primary.wide,.handoff .secondary.wide{min-height:3.5rem}
+.handoff .handoff-instruction{font-size:clamp(1.1rem,4vw,1.4rem);line-height:1.6}
+.seat-active .handoff{padding:1rem 1.25rem}
+.seat-active .handoff .secondary.wide{min-height:2.75rem}
+.vote-question{font-size:clamp(1.3rem,5vw,2rem);color:#f1ddb1;font-weight:700}
+
+/* Night suspicion voting is a focused, full-screen decision view. */
+body:has(.night-vote-screen),body:has(.vote-screen){overflow:hidden;background:radial-gradient(ellipse at 50% 32%,#3a3040 0%,#1c2130 55%,#101622 100%)}
+.night-vote-screen,.vote-screen{position:fixed;inset:0;z-index:5;width:100%;height:100dvh;max-width:none;min-height:0;margin:0;padding:clamp(1rem,4vw,2.5rem);border:0;border-radius:0;box-shadow:none;background:transparent;display:grid;place-items:center}
+.night-vote-screen>.game-area,.vote-screen>.game-area{width:min(100%,58rem);min-height:0;max-height:100%;overflow:auto;margin:0;padding:clamp(1.2rem,4vw,2.5rem);display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:1rem;background:rgba(17,24,37,.75);border:1px solid #d8bb8040;border-radius:1.5rem;box-shadow:0 25px 90px #05070b99}
+.night-vote-screen>.game-area>.phase,.vote-screen>.game-area>.phase{display:none}
+.night-vote-screen>.game-area>.night-suspicion{order:1;width:100%;margin:0;padding:clamp(1.3rem,5vw,3rem);text-align:center;border-color:#d9bd8066;background:radial-gradient(ellipse at 50% 0%,#443342,#242635 70%);box-shadow:inset 0 1px #ffffff12}
+.night-vote-screen .night-suspicion h3{font-size:clamp(1.8rem,6vw,3.4rem);color:#f0d9aa;margin:.25rem 0 1rem}
+.night-vote-screen .night-suspicion p{font-size:clamp(1rem,2.5vw,1.15rem)}
+.night-vote-screen .night-suspicion select{display:block;width:min(100%,34rem);min-height:3.6rem;margin:1.2rem auto;font-size:1.1rem}
+.night-vote-screen .night-suspicion button{min-width:min(100%,22rem);min-height:3.4rem;font-size:1.05rem}
+.night-vote-screen .handoff{order:0;margin:0 auto;width:min(100%,34rem);text-align:center}
+.night-vote-screen .game-area>select{min-height:3.4rem;width:min(100%,34rem);margin:.35rem auto;font-size:1.05rem}
+.night-vote-screen .game-area>button,.vote-screen .game-area>button{min-height:3.35rem;min-width:min(100%,24rem);margin:.2rem auto}
+.night-vote-screen .game-area>p{text-align:center;font-size:1.05rem;color:#d6d9df}
+.vote-screen>.game-area{text-align:center;align-items:center}
+.vote-screen .game-area>.handoff{width:min(100%,32rem);margin:0 auto}
+.vote-screen .vote-question{font-size:clamp(2rem,7vw,4rem);color:#f0d9aa;margin:.4rem 0}
+.vote-screen .game-area>p:not(.vote-question){color:#b8c2ce}
+.vote-screen .game-area>select{width:min(100%,34rem);min-height:3.7rem;margin:.5rem auto;font-size:1.1rem}
+.night-vote-screen:before,.vote-screen:before{content:"";position:fixed;inset:1rem;border:1px solid #d9bd8030;border-radius:1.2rem;pointer-events:none}
+.night-vote-screen>.gm-drawer,.vote-screen>.gm-drawer{z-index:15}
+@media(max-width:650px){.night-vote-screen,.vote-screen{padding:.7rem}.night-vote-screen>.game-area,.vote-screen>.game-area{padding:1rem;border-radius:1rem}.gm-drawer.fixed-gm{top:.45rem;right:.45rem}.log-drawer{bottom:.45rem;left:.45rem}.night-vote-screen:before,.vote-screen:before{inset:.4rem}}
+.timer-number{display:inline-block;font-variant-numeric:tabular-nums;letter-spacing:0;will-change:contents}
+.timer-unit{font-size:.17em;margin-left:.24em;vertical-align:baseline;letter-spacing:.04em}
+.discussion-screen .phase>small .timer-number{font-size:1em;font-variant-numeric:tabular-nums}
+.discussion-screen .phase>small .timer-unit{font-size:.17em;letter-spacing:.04em}
