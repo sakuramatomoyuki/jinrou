@@ -6,3 +6,5 @@
 .pin-backdrop{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:rgba(8,7,12,.88);padding:1rem}.pin-dialog{width:min(100%,30rem);background:#211e27;border:1px solid rgba(211,178,122,.45);border-radius:1rem;padding:1.5rem;box-shadow:0 20px 90px #000}.pin-dialog .wide{min-height:3.25rem;margin:.35rem 0}
 
 .shared-name-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:.15rem 1rem}.shared-name-fields .field{margin-bottom:.35rem}
+
+.handoff-instruction{text-align:center;font-size:1.15rem;margin:1rem 0}.handoff-instruction b{color:#f0d6a8;font-size:1.3em}
