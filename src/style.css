@@ -215,3 +215,13 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
  .tile,.role-cards article,button:not(:disabled),.gm-drawer.fixed-gm,.log-drawer{transition:none}
  .night-suspicion,.night-result,.handoff{transition:none}
 }
+
+/* A dramatic dissolve for the outgoing day/phase plaque. */
+.game-area{position:relative}
+.phase-vanish{position:absolute;z-index:8;top:clamp(1rem,5vh,3rem);left:50%;display:flex;align-items:center;gap:.7rem;width:max-content;max-width:calc(100% - 1.5rem);padding:.8rem 1.35rem;border:1px solid #d7b7739c;border-radius:1rem;background:linear-gradient(120deg,#242538f5,#413344f5,#242538f5);box-shadow:0 0 0 1px #ffffff08 inset,0 12px 50px #05070bbd,0 0 36px #d6b46f30;pointer-events:none;transform-origin:50% 80%;animation:phase-plaque-shatter .82s cubic-bezier(.2,.7,.2,1) both}
+.phase-vanish:before,.phase-vanish:after{content:"✦";position:absolute;color:#f4d99d;text-shadow:0 0 14px #f1ce82;font-size:.85rem;animation:phase-sparks .82s ease-out both}
+.phase-vanish:before{left:12%;top:-.45rem}.phase-vanish:after{right:10%;bottom:-.35rem;animation-delay:.08s}
+.phase-vanish span{font-size:.85rem;color:#e0c17d}.phase-vanish b{font-size:1.35rem;color:#fff1d2;letter-spacing:.08em}
+@keyframes phase-plaque-shatter{0%{opacity:1;transform:translate(-50%,0) scale(1) rotateX(0);clip-path:inset(0 round 1rem);filter:blur(0)}28%{opacity:1;transform:translate(-50%,-3px) scale(1.035) rotateX(-4deg);box-shadow:0 0 0 1px #fff3 inset,0 0 62px #e0bb6b66}62%{opacity:.78;transform:translate(calc(-50% + 5px),-18px) scale(.96) rotateX(12deg) rotateZ(-1deg);clip-path:polygon(0 0,18% 3%,35% 0,55% 5%,74% 0,100% 3%,98% 100%,74% 95%,53% 100%,30% 96%,12% 100%,2% 96%);filter:blur(1px)}100%{opacity:0;transform:translate(calc(-50% - 9px),-55px) scale(.78) rotateX(28deg) rotateZ(2deg);clip-path:polygon(0 0,21% 0,31% 18%,48% 0,67% 8%,82% 0,100% 0,91% 100%,70% 82%,53% 100%,35% 84%,15% 100%,4% 79%);filter:blur(8px)}}
+@keyframes phase-sparks{0%{opacity:0;transform:translate(0,8px) scale(.2) rotate(0)}28%{opacity:1;transform:translate(0,-5px) scale(1.4) rotate(60deg)}100%{opacity:0;transform:translate(18px,-35px) scale(.1) rotate(170deg)}}
+@media(prefers-reduced-motion:reduce){.phase-vanish,.phase-vanish:before,.phase-vanish:after{animation:none;display:none}}
