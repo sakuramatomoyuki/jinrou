@@ -52,8 +52,20 @@ body:has(.discussion-screen){overflow:hidden;background:radial-gradient(ellipse 
 .discussion-screen>.game-area>.phase{border:0;padding:0;display:flex;flex-direction:column;gap:clamp(1rem,4vh,2.5rem)}
 .discussion-screen .phase span{color:#d8bd82;font-size:clamp(1.1rem,3vw,1.5rem);letter-spacing:.18em}
 .discussion-screen .phase b{font-size:clamp(2.8rem,11vw,7rem);letter-spacing:.1em;color:#f2e7d2;text-shadow:0 5px 45px #dabd7945}
-.discussion-screen .phase small{margin:0;color:#e4c98e;font-size:clamp(4.5rem,20vw,12rem);font-variant-numeric:tabular-nums;line-height:1;font-weight:600;text-shadow:0 0 60px #c89e5f44}
+.discussion-screen .phase>small{margin:0;color:#e4c98e;font-size:clamp(4.5rem,20vw,12rem);font-variant-numeric:tabular-nums;line-height:1;font-weight:600;text-shadow:0 0 60px #c89e5f44}
 .discussion-screen>.game-area>:not(.phase),.discussion-screen>.gm-drawer,.discussion-screen>.ending,.discussion-screen>h3,.discussion-screen>.log{display:none!important}
 .discussion-screen:before{content:"";position:fixed;inset:1rem;border:1px solid #d9bd8030;border-radius:1.2rem;pointer-events:none}
 .discussion-screen:after{content:"";position:fixed;width:min(74vw,42rem);aspect-ratio:1;border-radius:50%;border:1px solid #d9bd8014;box-shadow:0 0 100px #d9bd800d,inset 0 0 100px #d9bd800d;pointer-events:none}
 @media(max-width:650px){.discussion-screen>.game-area{padding:1.25rem}.discussion-screen .phase{gap:1.5rem}.discussion-screen:before{inset:.55rem;border-radius:.8rem}}
+
+.night-suspicion{margin:1.25rem 0;padding:1.15rem;border:1px solid #ffffff1c;border-radius:1rem;background:#202634}
+.night-suspicion h3{margin:0 0 .4rem;color:#e9d5aa}
+.night-suspicion p{color:#acb7c5;font-size:.9rem;line-height:1.65}
+.night-suspicion select{width:min(100%,25rem);margin-right:.5rem}
+.suspect-reveal{display:grid;justify-items:center;gap:.25rem;padding:1rem 1.5rem;border:1px solid #c3a36566;border-radius:1rem;background:linear-gradient(145deg,#292537dd,#1b202bde);color:#d6c29a;font-size:clamp(.85rem,2vw,1.05rem);letter-spacing:.04em}
+.suspect-reveal strong{font-size:clamp(1.5rem,5vw,2.5rem);color:#f1d99f;letter-spacing:.08em}
+.suspect-reveal small{font-size:.9rem;color:#c9bd9f}
+.discussion-screen .phase{position:relative;z-index:1}
+.discussion-screen .phase>small{font-size:clamp(3.8rem,15vw,9rem)}
+.discussion-screen .suspect-reveal{margin:.25rem 0}
+@media(max-width:650px){.night-suspicion select{width:100%;margin:0 0 .5rem}.discussion-screen .suspect-reveal{padding:.75rem 1rem}}
