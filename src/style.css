@@ -251,3 +251,7 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
 @keyframes host-toast-glow{from{box-shadow:0 18px 60px #0009,0 0 16px #d9bd8022}to{box-shadow:0 18px 60px #0009,0 0 34px #d9bd8055}}
 @keyframes host-crown{0%{transform:rotate(-25deg) scale(.3);opacity:0}70%{transform:rotate(8deg) scale(1.2);opacity:1}100%{transform:rotate(0) scale(1)}}
 @media(prefers-reduced-motion:reduce){.host-transfer-toast,.host-transfer-toast>span{animation:none!important}}
+.host-transfer-toast.revoked{border-color:#e59a9a;background:linear-gradient(120deg,#4a2930,#172334 72%);color:#ffe3e3}
+.host-transfer-toast.revoked>span{color:#f0a5a5}
+.host-transfer-toast.returned{border-color:#9bcda8;background:linear-gradient(120deg,#263f36,#172334 72%);color:#e4ffeb}
+.host-transfer-toast.returned>span{color:#a8e3b6}
