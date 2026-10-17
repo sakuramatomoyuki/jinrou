@@ -15,3 +15,12 @@
 .role-confirmation{width:min(100%,34rem);margin:0 auto;text-align:center;padding:clamp(1.1rem,4vw,2rem);border:1px solid rgba(211,178,122,.38);border-radius:1.35rem;background:linear-gradient(155deg,rgba(42,34,46,.95),rgba(19,25,35,.97));box-shadow:0 24px 70px #05070ba8}
 .role-confirmation h2{font-size:clamp(1.3rem,4.5vw,1.8rem);margin:.55rem 0}.role-confirmation .eyebrow{margin-bottom:.4rem}.role-confirmation .wide{width:100%;min-height:3.35rem;margin:.35rem 0}.role-art{width:min(48vw,12rem);height:11rem;margin:.8rem auto .35rem;display:grid;place-items:center;filter:drop-shadow(0 12px 20px #09070baa)}.role-art svg{width:100%;height:100%;overflow:visible}.role-art.hidden{opacity:.7}.role-mask{color:#d6c39d;margin:0 0 1rem;font-size:.95rem}.role-you{color:#c8bfac;margin:.3rem 0}.role-title{font-size:clamp(2.4rem,9vw,3.7rem);letter-spacing:.08em;color:#f0d7a1;text-shadow:0 3px 20px #d6a96244;margin:.15rem 0}.role-faction{display:inline-block;border:1px solid #b9975e;border-radius:99px;padding:.3rem .9rem;color:#e5c986;margin:.4rem 0}.role-description{color:#d0d3d9;line-height:1.8;max-width:29rem;margin:.8rem auto 1rem}.role-confirmation .clue{margin:.7rem 0;text-align:left}
 @media(max-width:650px){.rolecheck-mode{min-height:calc(100svh - 84px);padding:16px 12px;margin:0 auto}.role-confirmation{padding:1rem .9rem}.role-art{height:9.5rem}.role-title{margin:.05rem 0}}
+
+/* In-game screens replace the lobby details once play begins. */
+.game-screen{min-height:calc(100svh - 112px);background:linear-gradient(155deg,#1a2432,#171b27 62%,#211d29);border-color:#ffffff18}
+.game-screen>.eyebrow,.game-screen>.room-head,.game-screen>.room-columns{display:none}
+.game-screen>.game-area{margin:0 auto;width:min(100%,46rem);min-height:22rem;padding:clamp(1.2rem,4vw,2rem);background:#111b29;border:1px solid #ffffff12;border-radius:1.2rem}
+.game-screen>.ending{max-width:46rem;margin:0 auto}
+.turn-wait{margin:1.2rem 0;padding:1rem;border:1px solid #ffffff18;border-radius:.8rem;color:#c9d1dc;text-align:center;background:#ffffff06}
+.game-screen>.gm-controls{max-width:46rem;margin:1rem auto 0;width:100%}
+@media(max-width:650px){.game-screen{min-height:calc(100svh - 84px);padding:1rem .75rem}.game-screen>.game-area{padding:1rem}.game-screen>.gm-controls{padding:.75rem 0}}
