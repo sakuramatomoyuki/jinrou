@@ -387,3 +387,21 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
 @keyframes crystal-green-glow{0%,22%{filter:drop-shadow(0 0 5px #fff)}58%{filter:drop-shadow(0 0 18px #78ffc0)}100%{filter:drop-shadow(0 0 25px #38da8b)}}
 @keyframes crystal-red-glow{0%,22%{filter:drop-shadow(0 0 5px #fff)}58%{filter:drop-shadow(0 0 18px #ff898e)}100%{filter:drop-shadow(0 0 26px #f24855)}}
 @media(prefers-reduced-motion:reduce){.action-cinematic-backdrop,.action-cinematic-scene,.action-cinematic .action-sigil,.action-cinematic .action-result,.action-cinematic .cinematic-dismiss,.action-sigil:before,.action-sigil:after,.action-shield,.crystal-icon,.crystal-body,.crystal-facet,.crystal-glint{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+
+/* Communication wait state: keep the user aware while a seat/action is changing. */
+.request-loading{position:fixed;z-index:220;inset:0;display:grid;place-content:center;justify-items:center;gap:.8rem;background:#080d18a6;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);color:#f0dfbd;font-weight:700;letter-spacing:.08em;animation:loading-veil-in .18s ease-out both;pointer-events:all}
+.loading-spinner{width:2.7rem;height:2.7rem;border:3px solid #d8c28b55;border-top-color:#f1d18b;border-radius:50%;box-shadow:0 0 24px #d8b87844;animation:loading-spin .75s linear infinite}
+@keyframes loading-spin{to{transform:rotate(360deg)}}
+@keyframes loading-veil-in{from{opacity:0}to{opacity:1}}
+
+/* Action vignettes float over the game instead of replacing it with an opaque scene. */
+.action-cinematic-backdrop{background:rgba(7,11,20,.3)!important;backdrop-filter:blur(8px) saturate(.72);-webkit-backdrop-filter:blur(8px) saturate(.72);animation:action-blur-in .28s ease-out both!important}
+.action-attack .action-cinematic-backdrop{background:rgba(46,17,25,.25)!important}
+.action-divination .action-cinematic-backdrop{background:rgba(13,34,53,.24)!important}
+.action-guard .action-cinematic-backdrop{background:rgba(18,40,45,.24)!important}
+.action-medium .action-cinematic-backdrop{background:rgba(34,19,44,.25)!important}
+.action-blocked .action-cinematic-backdrop{background:rgba(53,40,20,.24)!important}
+.action-cinematic-backdrop:before,.action-cinematic-backdrop:after{border-color:#dfc78a16;box-shadow:0 0 70px #d5b8790d,inset 0 0 70px #d5b87908}
+.action-cinematic-scene{width:min(100%,31rem);padding:clamp(1.1rem,4vw,2.3rem) clamp(1rem,4vw,2rem);background:linear-gradient(150deg,#202b3aeb,#171c2aee 65%,#241d2aeb);box-shadow:0 24px 70px #02050b88,inset 0 1px #ffffff18}
+@keyframes action-blur-in{from{opacity:0;backdrop-filter:blur(0) saturate(1)}to{opacity:1;backdrop-filter:blur(8px) saturate(.72)}}
+@media(prefers-reduced-motion:reduce){.request-loading,.loading-spinner{animation-duration:.01ms!important;animation-iteration-count:1!important}}
