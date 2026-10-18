@@ -334,3 +334,56 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
 .action-divination.divination-wolf .action-result{border-color:#ff746e88;background:#a522301f;color:#ffc8bf;text-shadow:0 0 20px #ff544e}
 @keyframes crystal-blue-pulse{from{filter:drop-shadow(0 0 10px #42baff);transform:scale(.97)}to{filter:drop-shadow(0 0 32px #48c7ff);transform:scale(1.06)}}
 @keyframes crystal-red-pulse{from{filter:drop-shadow(0 0 12px #ff3d51);transform:scale(.96)}to{filter:drop-shadow(0 0 36px #ff4653);transform:scale(1.07)}}
+
+/* Short, readable one-second action beats. */
+.action-cinematic-backdrop{animation:action-backdrop-beat 1.05s ease-out both}
+.action-cinematic-scene{animation:action-scene-beat 1.05s cubic-bezier(.18,.76,.22,1) both}
+.action-cinematic .action-sigil{animation:action-symbol-beat 1s cubic-bezier(.16,.8,.25,1) both}
+.action-cinematic .action-sigil:before,.action-cinematic .action-sigil:after{animation-duration:1s}
+.action-cinematic .action-result{animation:action-result-beat 1s ease-out both}
+.action-cinematic .cinematic-dismiss{animation:action-button-beat 1s ease-out both}
+@keyframes action-backdrop-beat{0%{opacity:0}12%{opacity:1}78%{opacity:1}100%{opacity:0}}
+@keyframes action-scene-beat{0%{opacity:0;transform:translateY(1rem) scale(.9)}16%{opacity:1;transform:translateY(0) scale(1.025)}72%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.035)}}
+@keyframes action-symbol-beat{0%{opacity:0;transform:scale(.55) rotate(-12deg)}20%{opacity:1;transform:scale(1.12) rotate(3deg)}72%{opacity:1;transform:scale(1)}100%{opacity:.25;transform:scale(1.08)}}
+@keyframes action-result-beat{0%,20%{opacity:0;transform:translateY(.5rem)}38%,78%{opacity:1;transform:translateY(0)}100%{opacity:0}}
+@keyframes action-button-beat{0%,70%{opacity:0}100%{opacity:.75}}
+
+/* Knight: raise an unmistakable shield wall. */
+.action-guard .action-sigil{border-color:#b9d4c7;background:radial-gradient(circle,#b8ecd65c 0%,#83c7a324 54%,transparent 74%);color:#e4ffe9;text-shadow:0 0 22px #8fffc5;filter:drop-shadow(0 0 18px #7cf0b2)}
+.action-guard .action-sigil:before{border:3px solid #a9efd0;border-radius:22% 22% 42% 42%;inset:.45rem;box-shadow:0 0 30px #69f0b366,inset 0 0 22px #73eab044;animation:shield-wall-in .9s cubic-bezier(.12,.85,.2,1) both}
+.action-guard .action-sigil:after{content:"";inset:-.8rem;border-color:#a9efd078;animation:shield-flash .95s ease-out both}
+@keyframes shield-wall-in{0%{opacity:0;transform:translateY(1rem) scale(.55)}48%{opacity:1;transform:translateY(-.2rem) scale(1.12)}72%{transform:translateY(0) scale(1)}100%{opacity:.6}}
+@keyframes shield-flash{0%,32%{opacity:0;transform:scale(.65)}50%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(1.5)}}
+
+/* Werewolf attack: a steel slash, intercepted by a shield when the knight protected the target. */
+.action-attack .action-sigil{color:#e9f0fa;text-shadow:0 0 20px #a7c8ed;filter:drop-shadow(0 0 12px #7594bc)}
+.action-attack .action-sigil:before{border-color:#a9bddc77;animation:slash-ripple .95s ease-out both}
+.action-attack .action-sigil:after{content:"";inset:-.5rem auto auto 50%;width:5px;height:0;border:0;border-radius:99px;background:linear-gradient(180deg,#fff,#9bc7ff 45%,#fff);box-shadow:0 0 15px #d7ebff,0 0 35px #77aaff;transform:translateX(-50%) rotate(42deg);animation:sword-slash .75s .08s cubic-bezier(.2,.8,.25,1) both}
+@keyframes sword-slash{0%{height:0;opacity:0;transform:translate(-50%,-20%) rotate(42deg)}24%{height:145%;opacity:1}52%{height:145%;opacity:1;transform:translate(-50%,8%) rotate(42deg)}100%{height:145%;opacity:0;transform:translate(-50%,18%) rotate(42deg)}}
+@keyframes slash-ripple{0%{opacity:0;transform:scale(.7)}45%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(1.35)}}
+.action-blocked .action-sigil:after{animation:sword-blocked .85s .08s cubic-bezier(.2,.8,.25,1) both}
+.action-blocked .action-sigil:before{border-color:#f2d382;box-shadow:0 0 36px #f6d36b99,inset 0 0 22px #efd77855;animation:shield-impact .9s ease-out both}
+.action-shield{position:absolute;z-index:2;inset:50% auto auto 50%;font-size:.67em;line-height:1;transform:translate(-50%,-50%);filter:drop-shadow(0 0 16px #ffe785);animation:shield-impact .85s cubic-bezier(.16,.9,.22,1) both}
+.action-blocked .action-cinematic-scene{border-color:#e9ca7777}
+.action-blocked .action-cinematic-backdrop{background:radial-gradient(ellipse at 50% 42%,#574a36f2 0%,#28232cf5 56%,#090d16fa 100%)}
+@keyframes sword-blocked{0%{height:0;opacity:0;transform:translate(-50%,-20%) rotate(42deg)}26%{height:140%;opacity:1}44%{height:140%;opacity:1;transform:translate(-50%,4%) rotate(42deg)}62%{height:120%;opacity:.8;transform:translate(-50%,-4%) rotate(38deg)}100%{height:120%;opacity:0;transform:translate(-50%,12%) rotate(38deg)}}
+@keyframes shield-impact{0%{opacity:0;transform:translate(-50%,-50%) scale(.35)}36%{opacity:1;transform:translate(-50%,-50%) scale(1.18)}52%{transform:translate(-50%,-50%) scale(.96)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.12)}}
+
+/* The crystal begins white, then resolves to green or red. */
+.crystal-icon{width:clamp(3.3rem,12vw,5rem);height:clamp(4rem,15vw,6rem);overflow:visible;filter:drop-shadow(0 0 9px #fff);animation:crystal-arrive 1s ease-out both}
+.crystal-body{fill:#fff;stroke:#fff;stroke-width:3;stroke-linejoin:round;animation:crystal-white-green 1s ease-out both}
+.crystal-facet{fill:none;stroke:#ffffffd9;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round;animation:crystal-facet-green 1s ease-out both}
+.crystal-glint{fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;filter:drop-shadow(0 0 4px #fff);animation:crystal-glint 1s ease-out both}
+.divination-wolf .crystal-body{animation-name:crystal-white-red}
+.divination-wolf .crystal-facet{animation-name:crystal-facet-red}
+.divination-wolf .crystal-icon{animation-name:crystal-arrive,crystal-red-glow;animation-duration:.55s,1s;animation-delay:0s,0s;animation-fill-mode:both}
+.divination-human .crystal-icon{animation-name:crystal-arrive,crystal-green-glow;animation-duration:.55s,1s;animation-delay:0s,0s;animation-fill-mode:both}
+@keyframes crystal-arrive{0%{opacity:0;transform:scale(.55) rotate(-12deg)}35%{opacity:1;transform:scale(1.1) rotate(4deg)}100%{opacity:1;transform:scale(1)}}
+@keyframes crystal-white-green{0%,22%{fill:#fff;stroke:#fff}48%{fill:#baffdf;stroke:#c4ffe2}100%{fill:#42d88c;stroke:#84ffc0}}
+@keyframes crystal-facet-green{0%,22%{stroke:#fff}52%{stroke:#effff5}100%{stroke:#c9ffe0}}
+@keyframes crystal-white-red{0%,22%{fill:#fff;stroke:#fff}48%{fill:#ffc2c2;stroke:#ffd0d0}100%{fill:#f24855;stroke:#ff8490}}
+@keyframes crystal-facet-red{0%,22%{stroke:#fff}52%{stroke:#fff2f2}100%{stroke:#ffd9da}}
+@keyframes crystal-glint{0%,42%{opacity:0}60%{opacity:1}100%{opacity:.35}}
+@keyframes crystal-green-glow{0%,22%{filter:drop-shadow(0 0 5px #fff)}58%{filter:drop-shadow(0 0 18px #78ffc0)}100%{filter:drop-shadow(0 0 25px #38da8b)}}
+@keyframes crystal-red-glow{0%,22%{filter:drop-shadow(0 0 5px #fff)}58%{filter:drop-shadow(0 0 18px #ff898e)}100%{filter:drop-shadow(0 0 26px #f24855)}}
+@media(prefers-reduced-motion:reduce){.action-cinematic-backdrop,.action-cinematic-scene,.action-cinematic .action-sigil,.action-cinematic .action-result,.action-cinematic .cinematic-dismiss,.action-sigil:before,.action-sigil:after,.action-shield,.crystal-icon,.crystal-body,.crystal-facet,.crystal-glint{animation-duration:.01ms!important;animation-iteration-count:1!important}}
