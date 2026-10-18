@@ -410,3 +410,12 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
 @media (max-width: 650px) {
   input, select, textarea, .field input, .field select { font-size: 16px; }
 }
+
+.suspect-reveal-heading>div{display:flex;align-items:center;gap:.55rem}
+.suspect-toggle{display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .65rem;border:1px solid #d6b97655;border-radius:999px;background:#111a29;color:#f1dfb8;font:inherit;font-size:.8rem;white-space:nowrap}
+.suspect-toggle span{font-size:1rem;transition:transform .3s ease}
+.suspect-reveal-details{display:grid;grid-template-rows:1fr;opacity:1;transform:translateY(0);transition:grid-template-rows .55s cubic-bezier(.2,.8,.2,1),opacity .35s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
+.suspect-reveal-details>.suspect-leaders,.suspect-reveal-details>.suspect-empty{min-height:0;overflow:hidden}
+.suspect-reveal.collapsed .suspect-reveal-details{grid-template-rows:0fr;opacity:0;transform:translateY(-.6rem);pointer-events:none}
+.suspect-reveal.collapsed .suspect-toggle span{transform:rotate(180deg)}
+@media(prefers-reduced-motion:reduce){.suspect-reveal-details,.suspect-toggle span{transition:none}}
