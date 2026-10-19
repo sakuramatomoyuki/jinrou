@@ -419,3 +419,11 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
 .suspect-reveal.collapsed .suspect-reveal-details{grid-template-rows:0fr;opacity:0;transform:translateY(-.6rem);pointer-events:none}
 .suspect-reveal.collapsed .suspect-toggle span{transform:rotate(180deg)}
 @media(prefers-reduced-motion:reduce){.suspect-reveal-details,.suspect-toggle span{transition:none}}
+
+/* Make revote instructions visible on both personal and shared-device ballots. */
+.revote-notice{margin:1rem 0;padding:1rem 1.15rem;border:1px solid #d9bd8070;border-radius:1rem;background:linear-gradient(135deg,#4b38231e,#d9bd800d);box-shadow:inset 0 0 28px #d9bd8008;animation:card-arrive .4s ease both}
+.revote-notice b{display:block;color:#f0d7a1;font-size:clamp(1.05rem,3vw,1.35rem)}
+.revote-notice p{margin:.4rem 0 0;color:#d5dce5;line-height:1.7}
+.wolf-chat-panel{border-color:#d56a7155;background:linear-gradient(145deg,#2b1b25,#171a27)}
+.wolf-chat-panel h3{color:#ffc5bd}
+.wolf-chat-panel .shared-chat-messages article.own-message{border-color:#d56a7144;background:#3a222b}
