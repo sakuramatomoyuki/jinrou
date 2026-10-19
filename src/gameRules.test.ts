@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { chooseRandomDistinct, revoteVoters, tallyVotes } from '../functions/src/gameRules';
+import { canRevealSeatSecret, chooseRandomDistinct, nightCompleteIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, winningTeam } from '../functions/src/gameRules';
 
 describe('再投票のルール', () => {
   it('同率候補は投票者から外し、生存者だけを投票者にする', () => {
@@ -18,6 +18,18 @@ describe('再投票のルール', () => {
   });
 });
 
+describe('再投票の例外', () => {
+  it('再投票後の同票と通常の再投票後の同票は処刑しない', () => {
+    expect(tiedVoteAction('random', true, false)).toBe('none');
+    expect(tiedVoteAction('revote', false, true)).toBe('none');
+    expect(tiedVoteAction('random', false, false)).toBe('random');
+  });
+  it('再投票者がいないときは全生存者の再投票へ戻す', () => {
+    expect(revoteFallbackPlan(['A','B'], ['A','B'], ['A','B'])).toEqual({phase:'vote',voters:['A','B'],candidates:['A','B'],fallback:true});
+    expect(revoteFallbackPlan(['A','B'], ['A','B'], [])).toEqual({phase:'execution',voters:[],candidates:[],fallback:false});
+  });
+});
+
 describe('人狼の襲撃先決定', () => {
   it('全員一致ならその対象を選ぶ', () => {
     expect(chooseRandomDistinct(['C', 'C'], () => 0)).toBe('C');
@@ -27,5 +39,46 @@ describe('人狼の襲撃先決定', () => {
     const randomIndex = vi.fn(() => 1);
     expect(chooseRandomDistinct(['C', 'D', 'C'], randomIndex)).toBe('D');
     expect(randomIndex).toHaveBeenCalledWith(2);
+  });
+});
+
+describe('共有端末の秘密情報', () => {
+  it('共有プレイヤーには現在の手渡し対象の個人画面だけを返す', () => {
+    expect(canRevealSeatSecret('A','shared','vote','A')).toBe(true);
+    expect(canRevealSeatSecret('B','shared','vote','A')).toBe(false);
+    expect(canRevealSeatSecret('A','shared','discussion',null)).toBe(false);
+    expect(canRevealSeatSecret('A','personal','discussion',null)).toBe(true);
+  });
+});
+
+describe('合意済みの役職・進行ルール', () => {
+  it('3〜20人のおすすめ編成は人数と一致し、人狼を含む', () => {
+    for (let count = 3; count <= 20; count++) {
+      const roles = recommendedRoles(count);
+      expect(Object.values(roles).reduce((sum, n) => sum + n, 0)).toBe(count);
+      expect(roles['人狼']).toBeGreaterThan(0);
+    }
+    expect(recommendedRoles(8)).toEqual({市民:3,占い師:1,霊媒師:1,騎士:1,共有者:0,人狼:2,狂人:0,狂言者:0});
+  });
+
+  it('勝敗判定は人狼陣営の非人狼役職を市民人数に含めない', () => {
+    expect(winningTeam([{alive:true,role:'人狼'},{alive:true,role:'狂人'},{alive:true,role:'市民'}])).toBe('人狼陣営');
+    expect(winningTeam([{alive:true,role:'人狼'},{alive:true,role:'占い師'},{alive:true,role:'市民'}])).toBeNull();
+    expect(winningTeam([])).toBe('引き分け');
+  });
+  it('初日白の抽選対象は村人陣営だけ', () => {
+    expect(teamOf('市民')).toBe('村人陣営');
+    expect(teamOf('人狼')).toBe('人狼陣営');
+    expect(teamOf('狂人')).toBe('人狼陣営');
+    expect(teamOf('狂言者')).toBe('人狼陣営');
+  });
+
+  it('夜の完了人数には接続中・生存・保留でない人だけを含む', () => {
+    expect(nightCompleteIds([
+      {uid:'a',alive:true,connected:true,hold:false},
+      {uid:'b',alive:true,connected:false,hold:false},
+      {uid:'c',alive:false,connected:true,hold:false},
+      {uid:'d',alive:true,connected:true,hold:true},
+    ])).toEqual(['a']);
   });
 });
