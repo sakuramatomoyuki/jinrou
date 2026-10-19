@@ -7,6 +7,20 @@
         "signalRevision": {
           ".read": "auth != null",
           ".write": false
+        },
+        "chatMembers": {
+          ".read": false,
+          ".write": false
+        },
+        "chatSignals": {
+          "shared": {
+            ".read": "auth != null && root.child('rooms').child($roomCode).child('chatMembers').child('shared').child(auth.uid).val() === true",
+            ".write": false
+          },
+          "wolf": {
+            ".read": "auth != null && root.child('rooms').child($roomCode).child('chatMembers').child('wolf').child(auth.uid).val() === true",
+            ".write": false
+          }
         }
       }
     }
