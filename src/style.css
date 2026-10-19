@@ -491,7 +491,7 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
  .night-vote-screen{padding:calc(env(safe-area-inset-top) + .35rem) .45rem calc(env(safe-area-inset-bottom) + .4rem)}
  .night-vote-screen>.eyebrow,.night-vote-screen>.room-head,.night-vote-screen>.room-columns{display:none}
  .night-vote-screen>.game-area{width:100%;height:100%;max-height:none;min-height:0;justify-content:flex-start;gap:.65rem;padding:.65rem;overflow:auto;border-radius:.8rem}
- .night-vote-screen>.game-area>.night-chat-tabs{order:1;position:sticky;top:0;z-index:8;width:100%;margin:0;padding:.25rem;background:#161923f5;backdrop-filter:blur(12px)}
+ .night-vote-screen>.game-area>.night-chat-tabs{order:-1;position:sticky;top:0;z-index:8;width:100%;margin:0;padding:.25rem;background:#161923f5;backdrop-filter:blur(12px)}
  .night-vote-screen>.game-area>.night-suspicion{order:2;flex:1 0 auto;justify-content:center;padding:1rem .75rem;border-radius:.9rem}
  .night-vote-screen>.game-area>.night-suspicion h3{font-size:clamp(1.55rem,7vw,2.2rem);margin:.15rem 0 .55rem}
  .night-vote-screen>.game-area>.night-suspicion p{font-size:.95rem;line-height:1.6;margin:.3rem 0}

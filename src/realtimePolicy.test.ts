@@ -20,3 +20,22 @@ describe('夜のリアルタイム更新', () => {
     expect(shouldDeferRoomUpdates(night('占い師'), true)).toBe(false);
   });
 });
+
+describe('役職確認中のリアルタイム更新', () => {
+  const rolecheck = (ready: boolean) => ({
+    phase: 'rolecheck',
+    secret: { role: '市民', ready },
+  });
+
+  it('本人が役職を確認するまでは、ほかの人の更新を受け取らない', () => {
+    expect(shouldDeferRoomUpdates(rolecheck(false), false)).toBe(true);
+  });
+
+  it('本人が確認した後は更新を受け取る', () => {
+    expect(shouldDeferRoomUpdates(rolecheck(true), false)).toBe(false);
+  });
+
+  it('共有端末の役職確認は既存の更新経路を保つ', () => {
+    expect(shouldDeferRoomUpdates(rolecheck(false), true)).toBe(false);
+  });
+});
