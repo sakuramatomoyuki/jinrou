@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { canRevealSeatSecret, chooseRandomDistinct, cleanRealtimeData, nightCompleteIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, winningTeam } from '../functions/src/gameRules';
+import { canRevealSeatSecret, chooseRandomDistinct, cleanRealtimeData, nightCompleteIds, nightParticipantIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, winningTeam } from '../functions/src/gameRules';
 
 describe('Realtime Database保存データ', () => {
   it('オブジェクト内のundefinedを除去し、配列内はnullに置き換える', () => {
@@ -89,5 +89,14 @@ describe('合意済みの役職・進行ルール', () => {
       {uid:'c',alive:false,connected:true,hold:false},
       {uid:'d',alive:true,connected:true,hold:true},
     ])).toEqual(['a']);
+  });
+
+  it('共有端末は接続状態の一時的な揺れがあっても夜の完了待ちに含める', () => {
+    expect(nightParticipantIds([
+      {uid:'a',alive:true,connected:true,hold:false,device:'personal'},
+      {uid:'b',alive:true,connected:false,hold:false,device:'shared'},
+      {uid:'c',alive:false,connected:true,hold:false,device:'shared'},
+      {uid:'d',alive:true,connected:false,hold:true,device:'shared'},
+    ])).toEqual(['a', 'b']);
   });
 });

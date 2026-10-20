@@ -104,3 +104,8 @@ export function canRevealSeatSecret(uid: string, device: string | undefined, pha
 export function nightCompleteIds(players: Array<{uid:string;alive:boolean;connected:boolean;hold:boolean}>) {
   return players.filter(p => p.alive && p.connected && !p.hold).map(p => p.uid);
 }
+
+/** Shared-device seats remain night participants during transient connection-state changes. */
+export function nightParticipantIds(players: Array<{uid:string;alive:boolean;connected:boolean;hold:boolean;device?:string}>) {
+  return players.filter(p => p.alive && !p.hold && (p.connected || p.device === 'shared')).map(p => p.uid);
+}
