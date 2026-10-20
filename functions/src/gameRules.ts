@@ -2,6 +2,20 @@ export type Ballot = Record<string, string>;
 
 export const ABSTAIN = '__abstain__';
 
+/** Realtime Database rejects undefined anywhere inside a transaction payload. */
+export function cleanRealtimeData<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return value.map((item) => item === undefined ? null : cleanRealtimeData(item)) as T;
+  }
+  if (value && typeof value === 'object') {
+    const entries = Object.entries(value as Record<string, unknown>)
+      .filter(([, item]) => item !== undefined)
+      .map(([key, item]) => [key, cleanRealtimeData(item)] as const);
+    return Object.fromEntries(entries) as T;
+  }
+  return value;
+}
+
 export function recommendedRoles(playerCount: number): Record<string, number> {
   const count = Math.max(3, Math.min(20, Math.floor(playerCount)));
   const wolves = Math.ceil(count / 4);

@@ -1,5 +1,14 @@
 import { describe, expect, it, vi } from 'vitest';
-import { canRevealSeatSecret, chooseRandomDistinct, nightCompleteIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, winningTeam } from '../functions/src/gameRules';
+import { canRevealSeatSecret, chooseRandomDistinct, cleanRealtimeData, nightCompleteIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, winningTeam } from '../functions/src/gameRules';
+
+describe('Realtime Database保存データ', () => {
+  it('オブジェクト内のundefinedを除去し、配列内はnullに置き換える', () => {
+    expect(cleanRealtimeData({ endedAt: undefined, clientMeta: { gm: undefined, phase: 'night' }, items: [1, undefined, { value: undefined }] })).toEqual({
+      clientMeta: { phase: 'night' },
+      items: [1, null, {}],
+    });
+  });
+});
 
 describe('再投票のルール', () => {
   it('同率候補は投票者から外し、生存者だけを投票者にする', () => {
