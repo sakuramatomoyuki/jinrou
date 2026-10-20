@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { canRevealSeatSecret, chooseRandomDistinct, cleanRealtimeData, nightCompleteIds, nightParticipantIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, winningTeam } from '../functions/src/gameRules';
+import { canRevealSeatSecret, chooseRandomDistinct, cleanRealtimeData, nightCompleteIds, nightParticipantIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, voteParticipantIds, winningTeam } from '../functions/src/gameRules';
 
 describe('Realtime Database保存データ', () => {
   it('オブジェクト内のundefinedを除去し、配列内はnullに置き換える', () => {
@@ -36,6 +36,26 @@ describe('再投票の例外', () => {
   it('再投票者がいないときは全生存者の再投票へ戻す', () => {
     expect(revoteFallbackPlan(['A','B'], ['A','B'], ['A','B'])).toEqual({phase:'vote',voters:['A','B'],candidates:['A','B'],fallback:true});
     expect(revoteFallbackPlan(['A','B'], ['A','B'], [])).toEqual({phase:'execution',voters:[],candidates:[],fallback:false});
+  });
+});
+
+describe('共有端末の投票完了判定', () => {
+  it('接続表示が揺れても全員共有の生存席を投票者に含める', () => {
+    const voters = voteParticipantIds([
+      {uid:'A',alive:true,connected:true,hold:false,device:'shared'},
+      {uid:'B',alive:true,connected:false,hold:false,device:'shared'},
+      {uid:'C',alive:true,connected:false,hold:false,device:'shared'},
+    ], 'vote', []);
+    expect(voters).toEqual(['A','B','C']);
+    expect(voters.every(uid => Object.prototype.hasOwnProperty.call({A:'B'}, uid))).toBe(false);
+  });
+
+  it('再投票では同率者を除いた共有席だけが投票者になる', () => {
+    expect(voteParticipantIds([
+      {uid:'A',alive:true,connected:false,hold:false,device:'shared'},
+      {uid:'B',alive:true,connected:true,hold:false,device:'shared'},
+      {uid:'C',alive:true,connected:true,hold:false,device:'personal'},
+    ], 'revote', ['A'])).toEqual(['B','C']);
   });
 });
 

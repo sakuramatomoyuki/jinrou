@@ -38,6 +38,11 @@ export function revoteVoters(livingIds: string[], tiedIds: string[]): string[] {
   return livingIds.filter((uid) => !tied.has(uid));
 }
 
+/** Eligible voters include shared-device seats despite transient per-seat connection flags. */
+export function voteParticipantIds(players: Array<{uid:string;alive:boolean;connected:boolean;hold:boolean;device?:string}>, phase:string, tiedIds:string[]) {
+  return players.filter(p => p.alive && !p.hold && (p.connected || p.device === 'shared') && (phase !== 'revote' || !tiedIds.includes(p.uid))).map(p => p.uid);
+}
+
 export function tallyVotes(votes: Ballot, voterIds: string[], candidateIds: string[]) {
   const voters = new Set(voterIds);
   const candidates = new Set(candidateIds);
