@@ -43,6 +43,11 @@ export function voteParticipantIds(players: Array<{uid:string;alive:boolean;conn
   return players.filter(p => p.alive && !p.hold && (p.connected || p.device === 'shared') && (phase !== 'revote' || !tiedIds.includes(p.uid))).map(p => p.uid);
 }
 
+/** A ballot may be tallied only after every eligible participant has submitted. */
+export function allVoteParticipantsSubmitted(votes: Ballot, participantIds: string[]): boolean {
+  return participantIds.length > 0 && participantIds.every((uid) => Object.prototype.hasOwnProperty.call(votes, uid));
+}
+
 export function tallyVotes(votes: Ballot, voterIds: string[], candidateIds: string[]) {
   const voters = new Set(voterIds);
   const candidates = new Set(candidateIds);
@@ -106,6 +111,11 @@ export function canRevealSeatSecret(uid: string, device: string | undefined, pha
   return ['rolecheck', 'night', 'vote', 'revote'].includes(phase) && activeSeatUid === uid;
 }
 
+/** Public-only room snapshots are needed by the owner of a shared-device room. */
+export function canReadSharedPublicView(uid: string, hostUid: string, method: string): boolean {
+  return uid === hostUid && (method === 'shared' || method === 'hybrid');
+}
+
 export function nightCompleteIds(players: Array<{uid:string;alive:boolean;connected:boolean;hold:boolean}>) {
   return players.filter(p => p.alive && p.connected && !p.hold).map(p => p.uid);
 }
@@ -113,6 +123,37 @@ export function nightCompleteIds(players: Array<{uid:string;alive:boolean;connec
 /** Shared-device seats remain night participants during transient connection-state changes. */
 export function nightParticipantIds(players: Array<{uid:string;alive:boolean;connected:boolean;hold:boolean;device?:string}>) {
   return players.filter(p => p.alive && !p.hold && (p.connected || p.device === 'shared')).map(p => p.uid);
+}
+
+/** Invalidate a night action when its actor or its selected target dies before resolution. */
+export function invalidateNightActionsForDeath(
+  actions: Record<string, any>,
+  nightDone: Record<string, boolean>,
+  deadUid: string,
+  at: number,
+): string[] {
+  const reopened: string[] = [];
+  for (const [actorUid, action] of Object.entries(actions)) {
+    if (!action || action.invalidatedReason || (!action.target && !action.result)) continue;
+    if (actorUid === deadUid) {
+      action.invalidatedReason = 'actor-dead';
+      action.invalidatedAt = at;
+      if (action.result) action.result.invalidated = true;
+      continue;
+    }
+    if (action.target !== deadUid) continue;
+    action.invalidatedReason = 'target-dead';
+    action.invalidatedTarget = deadUid;
+    action.invalidatedAt = at;
+    if (action.result) action.result.invalidated = true;
+    // Seers have already seen their result, so they cannot reroll it.
+    if (action.result?.type === '占い') continue;
+    if (nightDone[actorUid]) {
+      delete nightDone[actorUid];
+      reopened.push(actorUid);
+    }
+  }
+  return reopened;
 }
 
 /** Find the next eligible shared-device night turn and return its stable cursor. */

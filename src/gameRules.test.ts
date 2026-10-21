@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { canRevealSeatSecret, chooseRandomDistinct, cleanRealtimeData, nextSharedNightTurn, nightCompleteIds, nightParticipantIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, voteParticipantIds, winningTeam } from '../functions/src/gameRules';
+import { allVoteParticipantsSubmitted, canReadSharedPublicView, canRevealSeatSecret, chooseRandomDistinct, cleanRealtimeData, invalidateNightActionsForDeath, nextSharedNightTurn, nightCompleteIds, nightParticipantIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, voteParticipantIds, winningTeam } from '../functions/src/gameRules';
 
 describe('Realtime Database保存データ', () => {
   it('オブジェクト内のundefinedを除去し、配列内はnullに置き換える', () => {
@@ -13,6 +13,15 @@ describe('Realtime Database保存データ', () => {
 describe('再投票のルール', () => {
   it('同率候補は投票者から外し、生存者だけを投票者にする', () => {
     expect(revoteVoters(['A', 'B', 'C', 'D'], ['A', 'B'])).toEqual(['C', 'D']);
+  });
+  it('再投票の参加者判定では、共有席の一時的な切断表示を無視する', () => {
+    const players = [
+      {uid:'A',alive:true,connected:false,hold:false,device:'shared'},
+      {uid:'B',alive:true,connected:false,hold:false,device:'shared'},
+      {uid:'C',alive:true,connected:false,hold:false,device:'personal'},
+    ];
+    const eligible = voteParticipantIds(players, 'revote', ['A']);
+    expect(revoteFallbackPlan(['A','B','C'], ['A'], eligible)).toEqual({phase:'revote',voters:['B'],candidates:['A'],fallback:false});
   });
 
   it('再投票では同率候補への票と無投票だけを集計する', () => {
@@ -36,6 +45,17 @@ describe('再投票の例外', () => {
   it('再投票者がいないときは全生存者の再投票へ戻す', () => {
     expect(revoteFallbackPlan(['A','B'], ['A','B'], ['A','B'])).toEqual({phase:'vote',voters:['A','B'],candidates:['A','B'],fallback:true});
     expect(revoteFallbackPlan(['A','B'], ['A','B'], [])).toEqual({phase:'execution',voters:[],candidates:[],fallback:false});
+  });
+});
+
+describe('投票確定のゲート', () => {
+  it('有効な参加者の一部だけが投票した状態では集計を始めない', () => {
+    expect(allVoteParticipantsSubmitted({ A: 'B' }, ['A', 'B', 'C'])).toBe(false);
+    expect(allVoteParticipantsSubmitted({ A: 'B', B: '__abstain__', C: 'A' }, ['A', 'B', 'C'])).toBe(true);
+  });
+
+  it('投票参加者がいない場合に空の投票を自動確定しない', () => {
+    expect(allVoteParticipantsSubmitted({}, [])).toBe(false);
   });
 });
 
@@ -71,6 +91,14 @@ describe('人狼の襲撃先決定', () => {
   });
 });
 
+describe('共有ルームの公開スナップショット権限', () => {
+  it('共有・併用ルームではホストだけが公開ビューを要求できる', () => {
+    expect(canReadSharedPublicView('host','host','shared')).toBe(true);
+    expect(canReadSharedPublicView('guest','host','hybrid')).toBe(false);
+    expect(canReadSharedPublicView('host','host','individual')).toBe(false);
+  });
+});
+
 describe('共有端末の秘密情報', () => {
   it('共有プレイヤーには現在の手渡し対象の個人画面だけを返す', () => {
     expect(canRevealSeatSecret('A','shared','vote','A')).toBe(true);
@@ -95,6 +123,32 @@ describe('共有端末の夜行動順', () => {
 
   it('順番が終わった場合は次の席なしとして末尾カーソルを返す', () => {
     expect(nextSharedNightTurn(order, 3, players, {A:true,D:true})).toEqual({uid:null,index:4});
+  });
+});
+
+describe('夜中に行動者または対象が死亡した場合', () => {
+  it('行動者が死んだら確定済み行動を無効にし、結果も有効扱いしない', () => {
+    const actions: Record<string, any> = { wolf: { target: 'town' }, seer: { target: 'town', result: { type: '占い', result: '人狼' } } };
+    const done = { wolf: true, seer: true };
+    expect(invalidateNightActionsForDeath(actions, done, 'seer', 123)).toEqual([]);
+    expect(actions.seer.invalidatedReason).toBe('actor-dead');
+    expect(actions.seer.result.invalidated).toBe(true);
+    expect(done.seer).toBe(true);
+  });
+
+  it('死亡した対象への襲撃・護衛をやり直し、既に見た占い結果は無効表示のまま固定する', () => {
+    const actions: Record<string, any> = {
+      wolf: { target: 'town' },
+      guard: { target: 'town' },
+      seer: { target: 'town', result: { type: '占い', target: 'town', result: '村人（人間）' } },
+    };
+    const done = { wolf: true, guard: true, seer: true };
+    expect(invalidateNightActionsForDeath(actions, done, 'town', 456)).toEqual(['wolf', 'guard']);
+    expect(actions.wolf.invalidatedReason).toBe('target-dead');
+    expect(actions.guard.invalidatedReason).toBe('target-dead');
+    expect(done).toEqual({ seer: true });
+    expect(actions.seer.invalidatedReason).toBe('target-dead');
+    expect(actions.seer.result).toMatchObject({ invalidated: true, result: '村人（人間）' });
   });
 });
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { sharedRosterError, validSharedPin } from './sharedMode';
+import { clearSharedSeatSecret, sharedRosterError } from './sharedMode';
 
 describe('共有端末の入力検証', () => {
   it('全員共有では全員分の名前が必要', () => {
@@ -18,9 +18,12 @@ describe('共有端末の入力検証', () => {
     expect(sharedRosterError('shared', 2, ['月見', '月見'])).not.toBeNull();
     expect(sharedRosterError('shared', 2, [' Moon ', 'moon'])).not.toBeNull();
   });
-  it('PINは8〜64文字で確認値と一致する必要がある', () => {
-    expect(validSharedPin('long-pin-123')).toBe(true);
-    expect(validSharedPin('short')).toBe(false);
-    expect(validSharedPin('long-pin-123', 'different')).toBe(false);
+});
+
+describe('共有端末の引き継ぎ表示', () => {
+  it('操作完了後に役職・個人情報を画面状態から外し、元の応答は変更しない', () => {
+    const privateView = { phase: 'night', secret: { role: '占い師', clue: { target: 'B' } } };
+    expect(clearSharedSeatSecret(privateView)).toEqual({ phase: 'night', secret: null });
+    expect(privateView.secret.role).toBe('占い師');
   });
 });

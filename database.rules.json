@@ -5,7 +5,11 @@
     "rooms": {
       "$roomCode": {
         "signalRevision": {
-          ".read": "auth != null",
+          ".read": "auth != null && (root.child('rooms').child($roomCode).child('clientMeta').child('host').val() === auth.uid || root.child('rooms').child($roomCode).child('clientMeta').child('manager').val() === auth.uid || root.child('rooms').child($roomCode).child('clientMeta').child('players').child(auth.uid).val() !== null || root.child('rooms').child($roomCode).child('clientMeta').child('spectators').child(auth.uid).val() !== null)",
+          ".write": false
+        },
+        "progressRevision": {
+          ".read": "auth != null && (root.child('rooms').child($roomCode).child('clientMeta').child('host').val() === auth.uid || root.child('rooms').child($roomCode).child('clientMeta').child('manager').val() === auth.uid || root.child('rooms').child($roomCode).child('clientMeta').child('players').child(auth.uid).val() !== null || root.child('rooms').child($roomCode).child('clientMeta').child('spectators').child(auth.uid).val() !== null)",
           ".write": false
         },
         "chatMembers": {

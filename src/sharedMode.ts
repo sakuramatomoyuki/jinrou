@@ -12,6 +12,8 @@ export function sharedRosterError(mode: JoinMode, playerCount: number, inputName
   return null;
 }
 
-export function validSharedPin(pin: string, confirmation?: string): boolean {
-  return pin.length >= 8 && pin.length <= 64 && (confirmation === undefined || pin === confirmation);
+
+/** Hide a completed shared-seat secret before handing the device to another person. */
+export function clearSharedSeatSecret<T extends {secret?: unknown}>(view: T): T {
+  return { ...view, secret: null };
 }
