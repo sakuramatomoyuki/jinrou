@@ -114,3 +114,20 @@ export function nightCompleteIds(players: Array<{uid:string;alive:boolean;connec
 export function nightParticipantIds(players: Array<{uid:string;alive:boolean;connected:boolean;hold:boolean;device?:string}>) {
   return players.filter(p => p.alive && !p.hold && (p.connected || p.device === 'shared')).map(p => p.uid);
 }
+
+/** Find the next eligible shared-device night turn and return its stable cursor. */
+export function nextSharedNightTurn(
+  order: string[],
+  start: number,
+  players: Record<string, {alive:boolean;hold:boolean} | undefined>,
+  done: Record<string, boolean> = {},
+): {uid:string|null;index:number} {
+  let index = Math.max(0, Math.floor(start));
+  while (index < order.length) {
+    const uid = order[index];
+    const player = players[uid];
+    if (player?.alive && !player.hold && !done[uid]) return {uid,index};
+    index++;
+  }
+  return {uid:null,index:order.length};
+}

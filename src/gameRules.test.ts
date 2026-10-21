@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { canRevealSeatSecret, chooseRandomDistinct, cleanRealtimeData, nightCompleteIds, nightParticipantIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, voteParticipantIds, winningTeam } from '../functions/src/gameRules';
+import { canRevealSeatSecret, chooseRandomDistinct, cleanRealtimeData, nextSharedNightTurn, nightCompleteIds, nightParticipantIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, voteParticipantIds, winningTeam } from '../functions/src/gameRules';
 
 describe('Realtime Database保存データ', () => {
   it('オブジェクト内のundefinedを除去し、配列内はnullに置き換える', () => {
@@ -77,6 +77,24 @@ describe('共有端末の秘密情報', () => {
     expect(canRevealSeatSecret('B','shared','vote','A')).toBe(false);
     expect(canRevealSeatSecret('A','shared','discussion',null)).toBe(false);
     expect(canRevealSeatSecret('A','personal','discussion',null)).toBe(true);
+  });
+});
+
+describe('共有端末の夜行動順', () => {
+  const order = ['A', 'B', 'C', 'D'];
+  const players = {
+    A: {alive:true,hold:false},
+    B: {alive:false,hold:false},
+    C: {alive:true,hold:true},
+    D: {alive:true,hold:false},
+  };
+
+  it('死亡・保留済みの席を飛ばし、次の有効な人を返す', () => {
+    expect(nextSharedNightTurn(order, 0, players, {A:true})).toEqual({uid:'D',index:3});
+  });
+
+  it('順番が終わった場合は次の席なしとして末尾カーソルを返す', () => {
+    expect(nextSharedNightTurn(order, 3, players, {A:true,D:true})).toEqual({uid:null,index:4});
   });
 });
 
