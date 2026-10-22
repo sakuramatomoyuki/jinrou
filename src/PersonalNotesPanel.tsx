@@ -59,7 +59,7 @@ export function PersonalNotesPanel({ room, activeSeat }: { room: any; activeSeat
           return <article className="personal-note-card" key={player.uid}>
             <header><b>{player.name}</b><span className={player.alive ? 'note-alive' : 'note-dead'}>{player.alive ? '生存' : '死亡'}</span></header>
             <small className="personal-note-timestamp">{item.phase ? `${item.phase} ・ ${item.time}` : 'まだ記録はありません'}</small>
-            <label>役職予想<select value={item.prediction} onChange={event => update(player.uid, { prediction: event.target.value })}><option value="">まだ決めない</option>{noteRoles.map(role => <option key={role} value={role}>{role}</option>)}</select></label>
+            <label>役職予想<select className={item.prediction ? (['人狼', '狂人', '狂言者'].includes(item.prediction) ? 'prediction-wolf' : 'prediction-village') : ''} value={item.prediction} onChange={event => update(player.uid, { prediction: event.target.value })}><option value="">まだ決めない</option>{noteRoles.map(role => <option key={role} value={role}>{role}</option>)}</select></label>
             <label>信頼度<select value={item.confidence} onChange={event => update(player.uid, { confidence: event.target.value })}><option value="unknown">不明</option><option value="trust">信頼</option><option value="suspicious">怪しい</option></select></label>
             <label>メモ<textarea rows={2} maxLength={500} value={item.note} placeholder="発言や行動の気づきを記録" onChange={event => update(player.uid, { note: event.target.value })}/></label>
           </article>;
