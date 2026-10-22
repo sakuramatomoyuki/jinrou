@@ -609,6 +609,26 @@ body:has(.app[data-scene^="victory"])::after{right:42%;top:4%;opacity:.2}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+/* iPhone viewport-safe phase curtain; render through a body portal in React. */
+.scene-transition{width:100vw;height:100vh;height:100dvh;min-height:100svh}
+.scene-transition-ballot{background:#120f18;animation:ballot-curtain 1.85s cubic-bezier(.16,.76,.2,1) both}
+.scene-transition-ballot .scene-transition-sky{background:radial-gradient(ellipse at 50% 28%,#df9d6799,transparent 26%),radial-gradient(ellipse at 50% 78%,#a12e4166,transparent 38%),linear-gradient(180deg,#583344,#302337 52%,#11141d)}
+.scene-transition-ballot .scene-transition-copy>span{border-color:#eac18d;background:#28192399;box-shadow:0 0 0 12px #e8bf7d12,0 0 70px #e0a96888;animation:ballot-seal 1.85s cubic-bezier(.16,.76,.2,1) both}
+.scene-transition-ballot .scene-transition-copy h2{text-shadow:0 0 34px #f7c78677}
+.scene-transition-invalid-match{background:#090b12;animation:invalid-curtain 1.85s ease both}
+.scene-transition-invalid-match .scene-transition-sky{background:radial-gradient(ellipse at 50% 35%,#9ba5b633,transparent 34%),linear-gradient(160deg,#333846,#1b202b 58%,#0b0e15)}
+.scene-transition-invalid-match .scene-transition-village{filter:grayscale(1);opacity:.28}
+.scene-transition-invalid-match .scene-transition-copy>span{color:#d8dde4;border-color:#aab3c077;box-shadow:0 0 0 10px #aab3c011,0 0 45px #aab3c033}
+.scene-transition-invalid-match .scene-transition-copy h2{color:#e3e6eb;text-shadow:0 0 26px #c5cedd33}
+.scene-transition-invalid-match .scene-transition-copy p{color:#c2c8d2}
+.personal-note-card select.prediction-wolf{color:#fff4f1;background:linear-gradient(135deg,#742f39,#451d2a);border-color:#e27677;box-shadow:0 0 18px #c83f4c25}
+.personal-note-card select.prediction-village{color:#292d32;background:#f3f1e9;border-color:#fff;box-shadow:0 0 16px #f4efdc22}
+.personal-note-card select.prediction-wolf option,.personal-note-card select.prediction-village option{color:#f5f2ec;background:#121923}
+@keyframes ballot-curtain{0%{opacity:0;filter:brightness(1.8)}16%{opacity:1;filter:brightness(1.2)}65%{opacity:1;filter:brightness(1)}100%{opacity:0}}
+@keyframes ballot-seal{0%{opacity:0;transform:scale(.35) rotate(-45deg)}38%{opacity:1;transform:scale(1.16) rotate(8deg)}62%{transform:scale(.96) rotate(0)}100%{opacity:.85;transform:scale(1)}}
+@keyframes invalid-curtain{0%{opacity:0;filter:grayscale(0) brightness(1.5)}35%{opacity:1;filter:grayscale(.8) brightness(.9)}100%{opacity:0;filter:grayscale(1) brightness(.65)}}
+@media(prefers-reduced-motion:reduce){.scene-transition-invalid-match,.scene-transition-ballot,.scene-transition-ballot .scene-transition-copy>span{animation:none!important}}
 .personal-notes-trigger{position:fixed;z-index:45;right:1rem;bottom:1rem;border:1px solid rgba(214,177,109,.65);border-radius:999px;background:linear-gradient(135deg,#2b251f,#141a24);color:#f4ddb0;padding:.75rem 1.1rem;box-shadow:0 12px 32px #0008;cursor:pointer}
 .personal-notes-scrim{position:fixed;inset:0;z-index:80;background:#070a10c9;backdrop-filter:blur(8px);display:flex;justify-content:flex-end;animation:notesScrimIn .22s ease-out}
 .personal-notes-drawer{width:min(100%,36rem);height:100%;overflow:auto;padding:clamp(1rem,4vw,2rem);background:linear-gradient(155deg,#202633,#111720 55%,#1b1919);border-left:1px solid #cda86566;box-shadow:-24px 0 80px #0008;animation:notesDrawerIn .28s cubic-bezier(.2,.8,.2,1)}
