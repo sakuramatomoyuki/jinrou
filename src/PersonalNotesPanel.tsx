@@ -17,6 +17,10 @@ export function PersonalNotesPanel({ room, activeSeat }: { room: any; activeSeat
   const [notice, setNotice] = React.useState('');
   const timer = React.useRef<number | undefined>(undefined);
 
+  // The notes drawer is modal and blocks game controls. Close it automatically
+  // when the game advances so a player (including a host playing) can act.
+  React.useEffect(() => { setOpen(false); }, [room?.phase, room?.round, enabled]);
+
   React.useEffect(() => {
     if (!enabled || !cacheKey) { setLoadedKey(''); return; }
     let active = true;
