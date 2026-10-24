@@ -77,7 +77,7 @@ npm run test:integration
 
 - 専用の `firebase.emulator.json` と固定プロジェクト `demo-jinrou-integration` を使用し、`.firebaserc` の本番選択や `.env.local` を読みません。本番用 `firebase.json` は変更しません。
 - テストのURLはすべて127.0.0.1に固定し、Emulator環境変数・プロジェクトIDが一致しなければ通信前に失敗します。起動スクリプトは認証資格情報の環境変数も子プロセスから除去します。
-- 本番と同じFunctionsコードと `database.rules.json` を使います。ルームや秘密情報の管理用直接書き込み・Rules無効化はせず、匿名AuthのトークンとCallable HTTPプロトコル、Database REST APIを使います。拒否テストは実際のHTTP権限エラーを検証します。
+- Emulator専用設定でDatabaseのinstanceを明示し、Functions・REST・Rulesを同じ名前空間に接続します。本番と同じFunctionsコードと `database.rules.json` を使います。ルームや秘密情報の管理用直接書き込み・Rules無効化はせず、匿名AuthのトークンとCallable HTTPプロトコル、Database REST APIを使います。拒否テストは実際のHTTP権限エラーを検証します。
 - 実行ごとに新しい匿名UIDとルームを作成し、ディスクへのデータexport/importを行いません。既存の本番データに接続・変更しません。
 - CLI本体のバージョンを固定していますが、CLIの推移的依存はnpm解決に従います。既存のアプリ・Functions依存は変更せず既存lockfileと `npm ci` を使用します。
 

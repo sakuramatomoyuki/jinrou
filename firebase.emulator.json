@@ -3,9 +3,12 @@
     "source": "functions",
     "runtime": "nodejs20"
   },
-  "database": {
-    "rules": "database.rules.json"
-  },
+  "database": [
+    {
+      "instance": "demo-jinrou-integration",
+      "rules": "database.rules.json"
+    }
+  ],
   "emulators": {
     "auth": {
       "host": "127.0.0.1",
