@@ -244,4 +244,4 @@ export const tickRooms=onSchedule('every 1 minutes',async()=>{
  }
 });
 
-export const disbandRoom=onCall(async q=>{const uid=actor(q),code=codeOf(q.data),ref=db.ref(`rooms/${code}`);const result=await ref.transaction((raw:any)=>{if(!raw)return undefined;const room=normalize(raw as Room);return isManager(room,uid)&&room.phase==='waiting'?null:undefined});if(!result.committed){const current=await ref.get();if(!current.exists())err('ルームが見つかりません。','not-found');err('待機中のルームだけ解散できます。','permission-denied')}return {disbanded:true}});
+export const disbandRoom=onCall(async q=>{const uid=actor(q),code=codeOf(q.data),ref=db.ref(`rooms/${code}`),seedRoom=await load(code);const result=await ref.transaction((raw:any)=>{const room=normalize((raw??seedRoom) as Room);return isManager(room,uid)&&room.phase==='waiting'?null:undefined});if(!result.committed){const current=await ref.get();if(!current.exists())err('ルームが見つかりません。','not-found');err('待機中のルームだけ解散できます。','permission-denied')}return {disbanded:true}});
