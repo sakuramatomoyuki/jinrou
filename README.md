@@ -60,7 +60,7 @@ Functionsの依存関係を別途導入して型検査する場合は `npm ci --
 
 ### 単体テスト
 
-`npm test` は従来の `src` 配下のVitest単体テスト51件を実行します。統合テストは独立したNode.js test runnerで実行し、単体テストにはEmulatorやJavaを要求しません。
+`npm test` は従来の `src` 配下のVitest単体テスト66件を実行します。統合テストは独立したNode.js test runnerで実行し、単体テストにはEmulatorやJavaを要求しません。
 
 ### Firebase Emulator統合テスト
 

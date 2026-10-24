@@ -75,7 +75,7 @@ async function firstVote(r) {
 }
 async function db(who, path, method = 'GET', value) {
   const url = new URL(dbBase + '/' + path + '.json');
-  url.searchParams.set('ns', project + '-default-rtdb');
+  url.searchParams.set('ns', project);
   if (who) url.searchParams.set('auth', who.token);
   return request(url, { method, ...(value === undefined ? {} : {
     headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(value),
