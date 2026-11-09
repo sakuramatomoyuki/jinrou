@@ -4,7 +4,7 @@ import { clearPersonalNotes, emptyPersonalNote, loadPersonalNotes, savePersonalN
 const noteRoles = ['市民', '占い師', '霊媒師', '騎士', '共有者', '人狼', '狂人', '狂言者'];
 const notePhases: Record<string, string> = { rolecheck: '役職確認', night: '夜', morning: '朝', discussion: '議論', vote: '投票', revote: '再投票', execution: '処刑結果', ended: '試合終了' };
 
-export function PersonalNotesPanel({ room, activeSeat }: { room: any; activeSeat: any }) {
+export function PersonalNotesPanel({ room, activeSeat, chatOpen = false }: { room: any; activeSeat: any; chatOpen?: boolean }) {
   const uid = room?.secret?.me?.uid;
   const gameStartedAt = Number(room?.startedAt || 0);
   const cacheKey = uid && room?.code ? `${room.code}:${uid}:${gameStartedAt}` : '';
@@ -52,7 +52,7 @@ export function PersonalNotesPanel({ room, activeSeat }: { room: any; activeSeat
     time: new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }),
   }));
   return <>
-    <button className="personal-notes-trigger" type="button" onClick={() => setOpen(true)}>✎ 推理メモ</button>
+    <button className={`personal-notes-trigger${chatOpen ? ' chat-open' : ''}`} type="button" onClick={() => setOpen(true)}>✎ 推理メモ</button>
     {open && <div className="personal-notes-scrim" role="presentation" onClick={() => setOpen(false)}>
       <section className="personal-notes-drawer" role="dialog" aria-modal="true" aria-labelledby="personal-notes-title" onClick={event => event.stopPropagation()}>
         <div className="personal-notes-heading"><div><div className="eyebrow">PRIVATE NOTES · THIS DEVICE ONLY</div><h2 id="personal-notes-title">推理メモ</h2></div><button type="button" className="secondary" onClick={() => setOpen(false)}>閉じる</button></div>
