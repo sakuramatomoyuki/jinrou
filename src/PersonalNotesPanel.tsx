@@ -52,8 +52,8 @@ export function PersonalNotesPanel({ room, activeSeat, chatOpen = false }: { roo
     time: new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }),
   }));
   return <>
-    <button className={`personal-notes-trigger${chatOpen ? ' chat-open' : ''}`} type="button" onClick={() => setOpen(true)}>✎ 推理メモ</button>
-    {open && <div className="personal-notes-scrim" role="presentation" onClick={() => setOpen(false)}>
+    {!open && <button className={`personal-notes-trigger${chatOpen ? ' chat-open' : ''}`} type="button" onClick={() => setOpen(true)}>✎ 推理メモ</button>}
+    {open && <div className={`personal-notes-scrim${chatOpen ? ' chat-open' : ''}`} role="presentation" onClick={() => setOpen(false)}>
       <section className="personal-notes-drawer" role="dialog" aria-modal="true" aria-labelledby="personal-notes-title" onClick={event => event.stopPropagation()}>
         <div className="personal-notes-heading"><div><div className="eyebrow">PRIVATE NOTES · THIS DEVICE ONLY</div><h2 id="personal-notes-title">推理メモ</h2></div><button type="button" className="secondary" onClick={() => setOpen(false)}>閉じる</button></div>
         <p className="personal-notes-privacy">このメモはこの端末だけに保存され、Firebaseには送信されません。他の参加者や管理者にも見えません。</p>

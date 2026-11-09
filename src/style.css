@@ -559,7 +559,7 @@ body:has(.app[data-scene="ballot"])::after{right:13%;top:8%;opacity:.12;filter:h
 body:has(.app[data-scene="night"])::after{right:7%;top:5%;opacity:.28}
 body:has(.app[data-scene="dawn"])::after{right:40%;top:7%;opacity:.1;filter:hue-rotate(320deg)}
 body:has(.app[data-scene^="victory"])::after{right:42%;top:4%;opacity:.2}
-.app>header{position:relative;z-index:5;background:linear-gradient(180deg,#11192255,#1119221a);backdrop-filter:blur(14px);border-bottom-color:#e9d6ad2e}
+.app>header{position:relative;z-index:20;background:linear-gradient(180deg,#11192255,#1119221a);backdrop-filter:blur(14px);border-bottom-color:#e9d6ad2e}
 .brand{font-family:'Noto Sans JP',serif;text-shadow:0 2px 18px #090d12a8}.moon{filter:drop-shadow(0 0 12px #f0d59b88)}
 .hero,.panel:not(.game-screen){background:linear-gradient(145deg,#15222ac9,#17232ad9 48%,#1a2029db);border:1px solid #d7bd8050;box-shadow:0 28px 90px #080d13a0,inset 0 1px #fff2c51a;backdrop-filter:blur(16px)}
 .hero{position:relative;overflow:hidden;border-radius:28px;padding-inline:clamp(24px,5vw,60px)}
@@ -637,6 +637,7 @@ body:has(.app[data-scene^="victory"])::after{right:42%;top:4%;opacity:.2}
 .personal-notes-trigger{position:fixed;z-index:45;right:1rem;bottom:1rem;border:1px solid rgba(214,177,109,.65);border-radius:999px;background:linear-gradient(135deg,#2b251f,#141a24);color:#f4ddb0;padding:.75rem 1.1rem;box-shadow:0 12px 32px #0008;cursor:pointer;transition:bottom .28s cubic-bezier(.2,.75,.25,1),transform .2s ease}
 .personal-notes-trigger.chat-open{z-index:121}
 .personal-notes-scrim{position:fixed;inset:0;z-index:80;background:#070a10c9;backdrop-filter:blur(8px);display:flex;justify-content:flex-end;animation:notesScrimIn .22s ease-out}
+.personal-notes-scrim.chat-open{z-index:130}
 .personal-notes-drawer{width:min(100%,36rem);height:100%;overflow:auto;padding:clamp(1rem,4vw,2rem);background:linear-gradient(155deg,#202633,#111720 55%,#1b1919);border-left:1px solid #cda86566;box-shadow:-24px 0 80px #0008;animation:notesDrawerIn .28s cubic-bezier(.2,.8,.2,1)}
 .personal-notes-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem}.personal-notes-heading h2{margin:.35rem 0}.personal-notes-privacy{color:#c5cbd5;font-size:.92rem;line-height:1.6}.personal-notes-save{display:block;color:#d8ba83;margin:.8rem 0}.personal-notes-list{display:grid;gap:.8rem}.personal-note-card{padding:1rem;border:1px solid #8791a033;border-radius:1rem;background:#ffffff08}.personal-note-card>header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem}.personal-note-card label{display:grid;gap:.35rem;margin:.65rem 0;color:#d9dce3;font-size:.9rem}.personal-note-card select,.personal-note-card textarea{width:100%;font:inherit;color:#f5f2ec;background:#121923;border:1px solid #8791a055;border-radius:.65rem;padding:.7rem}.personal-note-card textarea{resize:vertical}.note-alive{color:#a8d49a}.note-dead{color:#e69a91}
 @keyframes notesScrimIn{from{opacity:0}to{opacity:1}}@keyframes notesDrawerIn{from{opacity:.65;transform:translateX(2rem)}to{opacity:1;transform:translateX(0)}}
