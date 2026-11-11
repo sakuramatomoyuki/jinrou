@@ -666,3 +666,25 @@ html.performance-light .hero::after,html.performance-light .primary:not(:disable
 html.performance-light .hero,html.performance-light .panel:not(.game-screen),html.performance-light .tile,html.performance-light .role-cards article,html.performance-light .game-screen>.game-area,html.performance-light .game-screen>.game-area>.phase,html.performance-light .ranking-screen,html.performance-light .ranking-row,html.performance-light .action-cinematic-scene,html.performance-light .death-cinematic-scene{animation-duration:.22s!important}
 html.performance-light .tile,html.performance-light .role-cards article,html.performance-light button,html.performance-light .gm-drawer,html.performance-light .log-drawer{transition-duration:.12s!important}
 html.performance-light .death-cloud,html.performance-light .death-moon,html.performance-light .death-village-silhouette{animation:none!important}
+
+/* Active game uses a fixed viewport; only content panels may scroll. */
+html:has(.app.in-game),body:has(.app.in-game),body:has(.app.in-game) #root{height:100%;min-height:0;overflow:hidden}
+.app.in-game{height:100dvh;height:100svh;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+.app.in-game>header{display:none!important}
+.app.in-game>main{flex:1;min-height:0;height:100%;width:100%;max-width:none;margin:0;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);overflow:hidden;display:flex;flex-direction:column}
+.app.in-game>main>.game-screen{flex:1;min-height:0;height:100%;width:100%;max-width:none;margin:0;border-radius:0;padding:clamp(.55rem,2vw,1.25rem);overflow:hidden;display:flex;flex-direction:column}
+.app.in-game .game-screen>.game-area{flex:1;min-height:0;max-height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;padding-bottom:max(1rem,env(safe-area-inset-bottom))}
+.app.in-game .game-screen>.ending,.app.in-game .game-screen>.ranking-screen{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-bottom:max(1.25rem,env(safe-area-inset-bottom))}
+.app.in-game .gm-drawer.fixed-gm{top:max(.55rem,env(safe-area-inset-top));right:.65rem;z-index:40}
+.app.in-game .gm-drawer.fixed-gm:not([open]){width:auto}
+.app.in-game .gm-drawer.fixed-gm>summary{width:3.15rem;height:3.15rem;min-width:3.15rem;min-height:3.15rem;border-radius:50%;background:#182333ef;border:1px solid #d9bd8070;box-shadow:0 5px 20px #0006}
+.app.in-game .gm-drawer.fixed-gm[open]{width:min(23rem,calc(100vw - 1rem));max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 1rem);overflow:hidden;display:flex;flex-direction:column}
+.app.in-game .game-menu-content{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:.55rem}
+.game-settings-accordion{border:1px solid #ffffff20;border-radius:.8rem;padding:.15rem .65rem;margin:.25rem 0 .6rem}
+.game-settings-accordion>summary{padding:.65rem 0;color:#ead197;font-weight:700;cursor:pointer}
+.game-settings-accordion>div{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;padding:0 0 .6rem}
+.game-settings-accordion button,.game-help-button{min-height:2.75rem;padding:.55rem .7rem;border-radius:.7rem;border:1px solid #ffffff20;background:#202d3d;color:#edf1f6;font-size:.88rem}
+.game-help-button{width:100%;text-align:left;margin:.1rem 0 .55rem;color:#e8d09d}
+.app.in-game .gm-controls{max-height:none;overflow:visible;margin:.35rem 0 0;padding:.65rem;border-top:1px solid #ffffff20}
+.app.in-game .role-intel-drawer.fixed-role-intel{top:4.25rem;right:.65rem;z-index:30}
+@media(max-width:650px){.app.in-game>main>.game-screen{padding:.45rem}.app.in-game .game-screen>.game-area{padding:.75rem;min-height:0}.app.in-game .gm-drawer.fixed-gm{top:max(.45rem,env(safe-area-inset-top));right:.45rem}.app.in-game .gm-drawer.fixed-gm[open]{width:min(21rem,calc(100vw - .9rem));max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - .9rem)}.app.in-game .role-intel-drawer.fixed-role-intel{top:4rem;right:.45rem}.app.in-game .game-screen>.ending,.app.in-game .game-screen>.ranking-screen{padding:.6rem .45rem max(1rem,env(safe-area-inset-bottom))}}
