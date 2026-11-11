@@ -709,3 +709,16 @@ html:has(.app.in-game),body:has(.app.in-game),body:has(.app.in-game) #root{heigh
 .app.in-game .gm-drawer.fixed-gm[open] .game-menu-content{display:block;width:100%;height:calc(100% - 3.5rem);max-height:none;min-height:0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable}
 .app.in-game .gm-drawer.fixed-gm[open] .gm-controls{max-height:none;overflow:visible}
 @media(max-width:650px){.app.in-game .gm-drawer.fixed-gm{top:max(1rem,env(safe-area-inset-top));right:.5rem}.app.in-game .gm-drawer.fixed-gm[open]{width:min(21rem,calc(100vw - 1rem));height:calc(100dvh - 2rem);max-height:calc(100dvh - 2rem)}.app.in-game>main>.game-screen{padding-top:.75rem}}
+
+/* Explicit game menu state avoids native details sizing differences in mobile browsers. */
+.app.in-game .gm-drawer.fixed-gm:not(.menu-open){width:auto;height:auto;max-height:none;padding:0;border:0;background:transparent;box-shadow:none;backdrop-filter:none}
+.app.in-game .game-menu-trigger{display:flex;align-items:center;justify-content:center;gap:.55rem;width:3.2rem;height:3.2rem;min-width:3.2rem;min-height:3.2rem;padding:.45rem;border:1px solid #d9bd8070;border-radius:50%;background:#182333ef;color:#f0d7a1;box-shadow:0 5px 20px #0006}
+.app.in-game .game-menu-trigger span{font-size:1.25rem}.app.in-game .game-menu-trigger b{display:none;font-size:.88rem;white-space:nowrap}
+.app.in-game .gm-drawer.fixed-gm.menu-open{display:block;width:min(23rem,calc(100vw - 1rem));height:calc(100dvh - 2rem);max-height:calc(100dvh - 2rem);overflow:hidden}
+.app.in-game .gm-drawer.fixed-gm.menu-open .game-menu-trigger{width:100%;height:auto;min-height:2.8rem;justify-content:flex-start;border:0;border-radius:.7rem;background:transparent;box-shadow:none;padding:.45rem .7rem}
+.app.in-game .gm-drawer.fixed-gm.menu-open .game-menu-trigger b{display:block}
+.app.in-game .gm-drawer.fixed-gm.menu-open .game-menu-content{display:block;width:100%;height:calc(100% - 3.5rem);max-height:none;min-height:0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable}
+.app.in-game .gm-drawer.fixed-gm.menu-open .gm-controls{max-height:none;overflow:visible}
+html:has(.app.in-game),body:has(.app.in-game),body:has(.app.in-game) #root{overscroll-behavior:none}
+.app.in-game{position:fixed;inset:0;width:100%;height:100vh;height:100dvh;overscroll-behavior:none}
+@media(max-width:650px){.app.in-game .gm-drawer.fixed-gm.menu-open{width:min(21rem,calc(100vw - 1rem));height:calc(100dvh - 2rem);max-height:calc(100dvh - 2rem)}}
