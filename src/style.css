@@ -761,3 +761,14 @@ html.performance-light .action-cinematic-backdrop{animation-name:action-backdrop
 html.performance-light .action-cinematic .action-sigil{animation-name:action-sigil-long!important}
 html.performance-light .action-cinematic .action-result{animation-name:action-result-long!important}
 @media(prefers-reduced-motion:reduce){html.performance-light .action-cinematic-scene,html.performance-light .action-cinematic-backdrop,html.performance-light .action-cinematic .action-sigil,html.performance-light .action-cinematic .action-result{animation:none!important}}
+
+/* Keep the village-green palette on the landing page only. */
+.app.home-page[data-scene="village"]:before{background:radial-gradient(ellipse at 50% -8%,#fff0c7b8,transparent 42%),radial-gradient(ellipse at 12% 36%,#8eaa7666,transparent 42%),radial-gradient(ellipse at 92% 45%,#6f987166,transparent 40%),linear-gradient(180deg,#6f8490 0%,#85917e 36%,#445c4b 100%)}
+.app:not(.home-page)[data-scene="village"]:before,.app[data-scene="day"]:before{background:radial-gradient(ellipse at 75% 8%,#8199bd22,transparent 30%),radial-gradient(ellipse at 15% 75%,#29456355,transparent 42%),linear-gradient(180deg,#172338 0%,#111c2b 55%,#0e1725 100%)}
+body.game-active,.app.in-game,.app.in-game[data-scene="day"],.app.in-game[data-scene="village"],.app.in-game[data-scene="dusk"],.app.in-game[data-scene="ballot"],.app.in-game[data-scene="night"],.app.in-game[data-scene="dawn"],.app.in-game[data-scene="victory-village"],.app.in-game[data-scene="victory-wolf"],.app.in-game[data-scene="invalid-match"]{background:#111c29}
+/* The game stays viewport-locked during play; only the ending container scrolls. */
+.app.in-game.is-ending{height:100vh;height:100dvh;height:100lvh;min-height:100lvh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+.app.in-game.is-ending>main{display:block;height:auto;min-height:100%;overflow:visible;padding:max(.65rem,env(safe-area-inset-top)) .5rem max(1.5rem,env(safe-area-inset-bottom))}
+.app.in-game.is-ending>main>.game-screen{display:block;height:auto;min-height:100%;overflow:visible;padding:.5rem;background:transparent}
+.app.in-game.is-ending .ending,.app.in-game.is-ending .ranking-screen{display:block;flex:none;width:min(100%,46rem);height:auto;min-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none;overflow:visible;margin:0 auto;padding:clamp(1rem,4vw,1.6rem) .9rem max(2rem,env(safe-area-inset-bottom));box-sizing:border-box}
+@media(max-width:650px){.app.in-game.is-ending>main{padding-left:.25rem;padding-right:.25rem}.app.in-game.is-ending>main>.game-screen{padding:.25rem}.app.in-game.is-ending .ending,.app.in-game.is-ending .ranking-screen{padding-left:.7rem;padding-right:.7rem}}
