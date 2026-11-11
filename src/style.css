@@ -667,87 +667,25 @@ html.performance-light .hero,html.performance-light .panel:not(.game-screen),htm
 html.performance-light .tile,html.performance-light .role-cards article,html.performance-light button,html.performance-light .gm-drawer,html.performance-light .log-drawer{transition-duration:.12s!important}
 html.performance-light .death-cloud,html.performance-light .death-moon,html.performance-light .death-village-silhouette{animation:none!important}
 
-/* Active game uses a fixed viewport; only content panels may scroll. */
-html:has(.app.in-game),body:has(.app.in-game),body:has(.app.in-game) #root{height:100%;min-height:0;overflow:hidden}
-.app.in-game{height:100dvh;height:100svh;min-height:0;overflow:hidden;display:flex;flex-direction:column}
-.app.in-game>header{display:none!important}
-.app.in-game>main{flex:1;min-height:0;height:100%;width:100%;max-width:none;margin:0;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);overflow:hidden;display:flex;flex-direction:column}
-.app.in-game>main>.game-screen{flex:1;min-height:0;height:100%;width:100%;max-width:none;margin:0;border-radius:0;padding:clamp(.55rem,2vw,1.25rem);overflow:hidden;display:flex;flex-direction:column}
-.app.in-game .game-screen>.game-area{flex:1;min-height:0;max-height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;padding-bottom:max(1rem,env(safe-area-inset-bottom))}
-.app.in-game .game-screen>.ending,.app.in-game .game-screen>.ranking-screen{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-bottom:max(1.25rem,env(safe-area-inset-bottom))}
-.app.in-game .gm-drawer.fixed-gm{top:max(.55rem,env(safe-area-inset-top));right:.65rem;z-index:40}
-.app.in-game .gm-drawer.fixed-gm:not([open]){width:auto}
-.app.in-game .gm-drawer.fixed-gm>summary{width:3.15rem;height:3.15rem;min-width:3.15rem;min-height:3.15rem;border-radius:50%;background:#182333ef;border:1px solid #d9bd8070;box-shadow:0 5px 20px #0006}
-.app.in-game .gm-drawer.fixed-gm[open]{width:min(23rem,calc(100vw - 1rem));max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 1rem);overflow:hidden;display:flex;flex-direction:column}
-.app.in-game .game-menu-content{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:.55rem}
-.game-settings-accordion{border:1px solid #ffffff20;border-radius:.8rem;padding:.15rem .65rem;margin:.25rem 0 .6rem}
-.game-settings-accordion>summary{padding:.65rem 0;color:#ead197;font-weight:700;cursor:pointer}
-.game-settings-accordion>div{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;padding:0 0 .6rem}
-.game-settings-accordion button,.game-help-button{min-height:2.75rem;padding:.55rem .7rem;border-radius:.7rem;border:1px solid #ffffff20;background:#202d3d;color:#edf1f6;font-size:.88rem}
-.game-help-button{width:100%;text-align:left;margin:.1rem 0 .55rem;color:#e8d09d}
-.app.in-game .gm-controls{max-height:none;overflow:visible;margin:.35rem 0 0;padding:.65rem;border-top:1px solid #ffffff20}
-.app.in-game .role-intel-drawer.fixed-role-intel{top:4.25rem;right:.65rem;z-index:30}
-@media(max-width:650px){.app.in-game>main>.game-screen{padding:.45rem}.app.in-game .game-screen>.game-area{padding:.75rem;min-height:0}.app.in-game .gm-drawer.fixed-gm{top:max(.45rem,env(safe-area-inset-top));right:.45rem}.app.in-game .gm-drawer.fixed-gm[open]{width:min(21rem,calc(100vw - .9rem));max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - .9rem)}.app.in-game .role-intel-drawer.fixed-role-intel{top:4rem;right:.45rem}.app.in-game .game-screen>.ending,.app.in-game .game-screen>.ranking-screen{padding:.6rem .45rem max(1rem,env(safe-area-inset-bottom))}}
-
-/* Cross-browser mobile viewport and settings-drawer fixes. */
-html:has(.app.in-game),body:has(.app.in-game),body:has(.app.in-game) #root{height:100%;min-height:0;overflow:hidden}
-.app.in-game{height:100vh;height:100dvh;min-height:0}
-.app.in-game>main{padding-top:max(.65rem,env(safe-area-inset-top));padding-bottom:max(.45rem,env(safe-area-inset-bottom))}
-.app.in-game .gm-drawer.fixed-gm[open]>summary{flex:0 0 auto;width:auto;height:auto;min-width:0;min-height:2.8rem;white-space:nowrap;justify-content:flex-start;padding:.45rem .7rem}
-.app.in-game .gm-drawer.fixed-gm[open] .game-menu-content{flex:1 1 0;height:0;min-height:0;max-height:none;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-gutter:stable}
-.app.in-game .gm-drawer.fixed-gm[open] .gm-controls{max-height:none;overflow:visible}
-.app.in-game .gm-drawer.fixed-gm{top:max(.8rem,env(safe-area-inset-top))}
-@media(max-width:650px){.app.in-game .gm-drawer.fixed-gm{top:max(.75rem,env(safe-area-inset-top));right:.5rem}.app.in-game .gm-drawer.fixed-gm[open]{max-height:calc(100dvh - max(.75rem,env(safe-area-inset-top)) - .65rem)}.app.in-game>main>.game-screen{padding-top:.65rem}}
-
-/* Stable mobile game viewport and a reliably scrollable full settings panel. */
-html:has(.app.in-game),body:has(.app.in-game),body:has(.app.in-game) #root{height:100%;min-height:0;overflow:hidden;overscroll-behavior:none}
-.app.in-game{position:fixed;inset:0;width:100%;height:100vh;height:100dvh;min-height:0;overflow:hidden;overscroll-behavior:none}
-.app.in-game>main{padding-top:max(1.2rem,env(safe-area-inset-top));padding-bottom:max(.6rem,env(safe-area-inset-bottom))}
-.app.in-game .gm-drawer.fixed-gm{top:max(1rem,env(safe-area-inset-top));right:.65rem}
-.app.in-game .gm-drawer.fixed-gm[open]{display:block;width:min(23rem,calc(100vw - 1rem));height:calc(100dvh - 2rem);max-height:calc(100dvh - 2rem);overflow:hidden}
-.app.in-game .gm-drawer.fixed-gm[open]>summary{display:flex;width:100%;height:auto;min-width:0;min-height:2.8rem;white-space:nowrap;flex:none;justify-content:flex-start}
-.app.in-game .gm-drawer.fixed-gm[open] .game-menu-content{display:block;width:100%;height:calc(100% - 3.5rem);max-height:none;min-height:0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable}
-.app.in-game .gm-drawer.fixed-gm[open] .gm-controls{max-height:none;overflow:visible}
-@media(max-width:650px){.app.in-game .gm-drawer.fixed-gm{top:max(1rem,env(safe-area-inset-top));right:.5rem}.app.in-game .gm-drawer.fixed-gm[open]{width:min(21rem,calc(100vw - 1rem));height:calc(100dvh - 2rem);max-height:calc(100dvh - 2rem)}.app.in-game>main>.game-screen{padding-top:.75rem}}
-
-/* Explicit game menu state avoids native details sizing differences in mobile browsers. */
-.app.in-game .gm-drawer.fixed-gm:not(.menu-open){width:auto;height:auto;max-height:none;padding:0;border:0;background:transparent;box-shadow:none;backdrop-filter:none}
-.app.in-game .game-menu-trigger{display:flex;align-items:center;justify-content:center;gap:.55rem;width:3.2rem;height:3.2rem;min-width:3.2rem;min-height:3.2rem;padding:.45rem;border:1px solid #d9bd8070;border-radius:50%;background:#182333ef;color:#f0d7a1;box-shadow:0 5px 20px #0006}
-.app.in-game .game-menu-trigger span{font-size:1.25rem}.app.in-game .game-menu-trigger b{display:none;font-size:.88rem;white-space:nowrap}
-.app.in-game .gm-drawer.fixed-gm.menu-open{display:block;width:min(23rem,calc(100vw - 1rem));height:calc(100dvh - 2rem);max-height:calc(100dvh - 2rem);overflow:hidden}
-.app.in-game .gm-drawer.fixed-gm.menu-open .game-menu-trigger{width:100%;height:auto;min-height:2.8rem;justify-content:flex-start;border:0;border-radius:.7rem;background:transparent;box-shadow:none;padding:.45rem .7rem}
-.app.in-game .gm-drawer.fixed-gm.menu-open .game-menu-trigger b{display:block}
-.app.in-game .gm-drawer.fixed-gm.menu-open .game-menu-content{display:block;width:100%;height:calc(100% - 3.5rem);max-height:none;min-height:0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable}
-.app.in-game .gm-drawer.fixed-gm.menu-open .gm-controls{max-height:none;overflow:visible}
-html:has(.app.in-game),body:has(.app.in-game),body:has(.app.in-game) #root{overscroll-behavior:none}
-.app.in-game{position:fixed;inset:0;width:100%;height:100vh;height:100dvh;overscroll-behavior:none}
-@media(max-width:650px){.app.in-game .gm-drawer.fixed-gm.menu-open{width:min(21rem,calc(100vw - 1rem));height:calc(100dvh - 2rem);max-height:calc(100dvh - 2rem)}}
-
-/* Keep the in-game canvas stable while mobile browser chrome expands or collapses. */
-html:has(.app.in-game),body:has(.app.in-game),body:has(.app.in-game) #root{height:100%;min-height:0;overflow:hidden;overscroll-behavior:none;touch-action:pan-x pan-y}
-body:has(.app.in-game){position:fixed;inset:0;width:100%;background:#445c4b}
-.app.in-game{position:fixed;inset:0;width:100%;height:100vh;height:100lvh;min-height:100lvh;overflow:hidden;overscroll-behavior:none;background:#445c4b}
-.app.in-game[data-scene="day"],.app.in-game[data-scene="village"]{background:linear-gradient(180deg,#6f8490 0%,#85917e 36%,#445c4b 100%)}
-.app.in-game[data-scene="dusk"]{background:linear-gradient(180deg,#483d51 0%,#302b3c 48%,#151d2a 100%)}
-.app.in-game[data-scene="ballot"]{background:linear-gradient(180deg,#382e3a 0%,#2a2532 45%,#151823 100%)}
-.app.in-game[data-scene="night"]{background:linear-gradient(180deg,#101724 0%,#172333 50%,#111c29 100%)}
-.app.in-game[data-scene="dawn"]{background:linear-gradient(180deg,#695b6d 0%,#a27b76 45%,#34414b 100%)}
-.app.in-game[data-scene^="victory"]{background:linear-gradient(180deg,#5c6870 0%,#645c50 52%,#1c342e 100%)}
-.app.in-game[data-scene="invalid-match"]{background:linear-gradient(180deg,#35313b 0%,#24232c 55%,#14141a 100%)}
-.app.in-game:before{inset:0 auto auto 0;height:100lvh;width:100vw}.app.in-game:after{position:fixed;bottom:0}
-body:has(.app.in-game) .gm-drawer.fixed-gm{top:max(1rem,env(safe-area-inset-top));right:.65rem;z-index:100}
-body:has(.app.in-game) .gm-drawer.fixed-gm:not(.menu-open){width:auto;height:auto;max-height:none;padding:0;border:0;background:transparent;box-shadow:none;backdrop-filter:none}
-body:has(.app.in-game) .game-menu-trigger{display:flex;align-items:center;justify-content:center;gap:.55rem;width:3.2rem;height:3.2rem;min-width:3.2rem;min-height:3.2rem;padding:.45rem;border:1px solid #d9bd8070;border-radius:50%;background:#182333ef;color:#f0d7a1;box-shadow:0 5px 20px #0006}
-body:has(.app.in-game) .game-menu-trigger span{font-size:1.25rem}body:has(.app.in-game) .game-menu-trigger b{display:none;font-size:.88rem;white-space:nowrap}
-body:has(.app.in-game) .gm-drawer.fixed-gm.menu-open{display:block;width:min(23rem,calc(100vw - 1rem));height:min(38rem,calc(100lvh - 2rem));max-height:calc(100lvh - 2rem);overflow:hidden;background:rgba(18,23,34,.96)}
-body:has(.app.in-game) .gm-drawer.fixed-gm.menu-open .game-menu-trigger{width:100%;height:auto;min-height:2.8rem;justify-content:flex-start;border:0;border-radius:.7rem;background:transparent;box-shadow:none;padding:.45rem .7rem}
-body:has(.app.in-game) .gm-drawer.fixed-gm.menu-open .game-menu-trigger b{display:block}
-body:has(.app.in-game) .gm-drawer.fixed-gm.menu-open .game-menu-content{position:absolute;inset:3.45rem .35rem .35rem;display:block;height:auto;max-height:none;min-height:0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable}
-body:has(.app.in-game) .gm-drawer.fixed-gm.menu-open .gm-controls{max-height:none;overflow:visible}
-@media(max-width:650px){body:has(.app.in-game) .gm-drawer.fixed-gm{top:max(1rem,env(safe-area-inset-top));right:.5rem}body:has(.app.in-game) .gm-drawer.fixed-gm.menu-open{width:min(21rem,calc(100vw - 1rem));height:min(38rem,calc(100lvh - 2rem));max-height:calc(100lvh - 2rem)}}
-
-/* Match iOS safe areas to the scene and keep the animated background inside them. */
+/* Lightweight mobile game viewport and menu. */
+html,body.game-active{height:100%;min-height:0;overflow:hidden;overscroll-behavior-y:none;background:#445c4b}
+body.game-active{position:fixed;inset:0;width:100%}
+body.game-active:before,body.game-active:after{display:none!important;animation:none!important;filter:none!important}
+.app.in-game{position:fixed;inset:0;width:100%;height:100vh;height:100lvh;min-height:100lvh;overflow:hidden;overscroll-behavior:none;isolation:isolate;background:#445c4b}
+.app.in-game:before,.app.in-game:after,.app.in-game main:before{display:none!important;animation:none!important;filter:none!important;backdrop-filter:none!important}
 .app.in-game[data-scene="day"],.app.in-game[data-scene="village"]{background:#445c4b}
 .app.in-game[data-scene="dusk"]{background:#151d2a}.app.in-game[data-scene="ballot"]{background:#151823}.app.in-game[data-scene="night"]{background:#111c29}.app.in-game[data-scene="dawn"]{background:#34414b}.app.in-game[data-scene="victory-village"]{background:#1c342e}.app.in-game[data-scene="victory-wolf"]{background:#120f19}.app.in-game[data-scene="invalid-match"]{background:#14141a}
-.app.in-game:before{top:env(safe-area-inset-top);left:0;right:auto;bottom:auto;height:calc(100lvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));width:100vw}
-.app.in-game:after{bottom:env(safe-area-inset-bottom)}
+.app.in-game>header{display:none!important}
+.app.in-game>main{display:flex;flex:1;flex-direction:column;width:100%;height:100%;min-height:0;max-width:none;margin:0;overflow:hidden;padding:max(.65rem,env(safe-area-inset-top)) .5rem max(.5rem,env(safe-area-inset-bottom))}
+.app.in-game>main>.game-screen{display:flex;flex:1;flex-direction:column;width:100%;height:100%;min-height:0;max-width:none;margin:0;overflow:hidden;border-radius:0;padding:.5rem;background:transparent}
+.app.in-game .game-screen>.game-area{flex:1;min-height:0;max-height:100%;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-bottom:max(1rem,env(safe-area-inset-bottom))}
+.app.in-game .game-screen>.ending,.app.in-game .game-screen>.ranking-screen{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.gm-drawer.fixed-gm:not(.menu-open){position:fixed;top:max(.65rem,env(safe-area-inset-top));right:.65rem;z-index:100;width:auto;margin:0;padding:0;border:0;background:transparent;box-shadow:none;backdrop-filter:none}
+.game-menu-trigger{display:flex;align-items:center;justify-content:center;width:3.15rem;height:3.15rem;padding:.45rem;border:1px solid #d9bd8070;border-radius:50%;background:#182333;color:#f0d7a1}
+.game-menu-trigger span{font-size:1.25rem}.game-menu-trigger b{display:none;white-space:nowrap}
+.gm-drawer.fixed-gm.menu-open{position:fixed;top:max(.65rem,env(safe-area-inset-top));right:.5rem;z-index:100;width:min(24rem,calc(100vw - 1rem));height:min(38rem,calc(100lvh - 1.3rem));max-height:calc(100lvh - 1.3rem);margin:0;padding:.35rem;border:1px solid #d9bd8052;border-radius:1rem;background:#121722;box-shadow:0 8px 18px #05070b66;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.gm-drawer.fixed-gm.menu-open .game-menu-trigger{position:sticky;top:0;z-index:1;justify-content:flex-start;width:100%;height:auto;min-height:2.8rem;border:0;border-radius:.7rem;background:#121722;box-shadow:none;padding:.45rem .7rem}
+.gm-drawer.fixed-gm.menu-open .game-menu-trigger span{font-size:1rem}.gm-drawer.fixed-gm.menu-open .game-menu-trigger b{display:block;font-size:.9rem}
+.gm-drawer.fixed-gm.menu-open .game-menu-content{position:static;display:block;width:100%;height:auto;max-height:none;min-height:0;overflow:visible;padding:.35rem}
+.gm-drawer.fixed-gm.menu-open .gm-controls{max-height:none;overflow:visible}
+@media(max-width:650px){.gm-drawer.fixed-gm.menu-open{width:calc(100vw - 1rem);height:min(38rem,calc(100lvh - 1.3rem));max-height:calc(100lvh - 1.3rem)}.app.in-game>main>.game-screen{padding:.25rem}}
