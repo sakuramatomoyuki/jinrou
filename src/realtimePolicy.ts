@@ -35,14 +35,15 @@ export function buildNightDoneAction(suspicionTarget?: string | null) {
 /** Merge a server-validated private night receipt without downloading the full room again. */
 export function mergePrivateActionReceipt(room: any, receipt: any) {
   if (!room || !receipt?.secret) return null;
-  const gm = room.gm
+  const hasSharedTurn = receipt.sharedTurnUid !== undefined;
+  const gm = room.gm || hasSharedTurn
     ? {
-        ...room.gm,
-        ...(receipt.sharedTurnUid !== undefined
+        ...(room.gm || {}),
+        ...(hasSharedTurn
           ? {
               sharedTurnUid: receipt.sharedTurnUid,
-              // The shared night handoff UI reads nightTurnUid. Keep it in
-              // sync with the server's canonical sharedTurnUid receipt.
+              // Keep the canonical turn cursor available even when the active
+              // seat view intentionally omits manager-only data.
               ...(room.phase === 'night' ? { nightTurnUid: receipt.sharedTurnUid } : {}),
             }
           : {}),
@@ -51,6 +52,7 @@ export function mergePrivateActionReceipt(room: any, receipt: any) {
     : room.gm;
   return {
     ...room,
+    ...(hasSharedTurn ? { sharedTurnUid: receipt.sharedTurnUid } : {}),
     phase: receipt.phase ?? room.phase,
     round: receipt.round ?? room.round,
     revision: receipt.revision ?? room.revision,
