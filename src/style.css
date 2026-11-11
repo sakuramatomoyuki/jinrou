@@ -834,3 +834,29 @@ body.game-active,.app.in-game,.app.in-game[data-scene="day"],.app.in-game[data-s
 @keyframes wolf-lunge{0%,18%{opacity:0;transform:translate(-20px,18px) scale(.78)}34%{opacity:1;transform:translate(5px,-4px) scale(1.07)}46%{transform:translate(-2px,2px) scale(.98)}58%,100%{opacity:1;transform:translate(0) scale(1)}}
 @keyframes wolf-eyes-open{0%,27%{opacity:0}38%,56%{opacity:1}74%,100%{opacity:.42}}
 @keyframes ambush-impact{0%,43%{opacity:0;transform:scale(.25)}54%{opacity:.95;transform:scale(1.32)}68%,100%{opacity:.24;transform:scale(1)}}
+
+/* Keep Safari's SFX, BGM and lite toggles on one consistent control grid. */
+.sound-toggle,.bgm-toggle,.effects-toggle{-webkit-appearance:none;appearance:none;box-sizing:border-box;display:inline-flex;flex:0 0 7rem;align-items:center;justify-content:center;width:7rem;min-width:7rem;height:2.45rem;min-height:2.45rem;padding:.35rem .3rem;margin:0;font-family:inherit;font-size:.72rem;font-weight:750;line-height:1;letter-spacing:.015em;text-align:center;white-space:nowrap;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media(max-width:650px){.sound-toggle,.bgm-toggle,.effects-toggle{flex-basis:clamp(3.8rem,17vw,4.7rem);width:clamp(3.8rem,17vw,4.7rem);min-width:clamp(3.8rem,17vw,4.7rem);height:2.35rem;min-height:2.35rem;padding:.3rem .15rem;font-size:.59rem}.game-settings-accordion>div .sound-toggle,.game-settings-accordion>div .bgm-toggle,.game-settings-accordion>div .effects-toggle{width:100%;min-width:0;flex:1 1 auto;height:2.5rem;min-height:2.5rem;font-size:.75rem}}
+.wolf-attack-intel{display:grid;gap:.35rem;margin:.25rem 0 .8rem;padding:.65rem .8rem;border:1px solid #893d4a99;border-left:3px solid #a34a54;border-radius:.65rem;background:linear-gradient(115deg,#2a1720e8,#111722e8);box-shadow:inset 0 1px #fff1,0 8px 22px #0003;text-align:left;animation:wolf-intel-reveal .35s ease-out both}
+.wolf-attack-intel small{color:#c39599;font-size:.72rem;letter-spacing:.08em}.wolf-attack-intel strong{color:#f0d9d8;font-size:.98rem;font-weight:700}
+@keyframes wolf-intel-reveal{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+/* The wolf is deliberately absent from both attack vignettes: only the talon scars remain. */
+.art-claw-shadow,.art-claw-cut,.art-claw-glint,.death-claw-shadow,.death-claw,.death-claw-highlight{fill:none;stroke-linecap:square;stroke-linejoin:bevel}
+.art-claw-shadow{stroke:#08070b;stroke-width:13;filter:drop-shadow(0 0 10px #9b1d2b);stroke-dasharray:230;stroke-dashoffset:230;animation:talon-rake .9s .35s cubic-bezier(.18,.7,.2,1) both}
+.art-claw-cut{stroke:#8b2634;stroke-width:7;filter:drop-shadow(0 0 8px #ae2e3d);stroke-dasharray:230;stroke-dashoffset:230;animation:talon-rake .9s .35s cubic-bezier(.18,.7,.2,1) both}
+.art-claw-glint{stroke:#d2b6ad;stroke-width:1.2;opacity:.85;stroke-dasharray:160;stroke-dashoffset:160;animation:talon-rake .9s .35s cubic-bezier(.18,.7,.2,1) both}
+.art-rent{fill:none;stroke:#bd3545;stroke-width:2;stroke-linecap:square;opacity:0;filter:drop-shadow(0 0 6px #9b2435);animation:rent-flash 1.7s .5s ease both}
+.death-cinematic-attack .death-stage{filter:drop-shadow(0 16px 28px #000b)}
+.death-cinematic-attack .wolf-halo{fill:#090a0f55;stroke:#7c25314a;stroke-dasharray:1 12;filter:drop-shadow(0 0 20px #7f18294d)}
+.death-claw-shadow{stroke:#05050a;stroke-width:22;filter:drop-shadow(0 0 14px #6e1423);stroke-dasharray:490;stroke-dashoffset:490;animation:morning-talon-rake 1.4s .55s cubic-bezier(.17,.76,.17,1) both}
+.death-claw{stroke:#7b202e;stroke-width:13;filter:drop-shadow(0 0 10px #971e30);stroke-dasharray:490;stroke-dashoffset:490;animation:morning-talon-rake 1.4s .55s cubic-bezier(.17,.76,.17,1) both}
+.death-claw-highlight{stroke:#a78d8b;stroke-width:1.5;opacity:.5;stroke-dasharray:490;stroke-dashoffset:490;animation:morning-talon-rake 1.4s .55s cubic-bezier(.17,.76,.17,1) both}
+.death-rent{fill:none;stroke:#a22d3b;stroke-width:3;stroke-linecap:square;filter:drop-shadow(0 0 8px #85202f);opacity:0;animation:rent-flash 2.1s 1.35s ease both}
+.death-cinematic-attack .death-impact-mark{fill:#320d16;stroke:#a82b39;filter:drop-shadow(0 0 16px #9e1d30);animation:ambush-impact 2.8s ease both}
+.death-cinematic-attack .death-embers i{background:#a52a3c;opacity:.6}
+@keyframes talon-rake{0%,16%{stroke-dashoffset:230;opacity:0}27%{opacity:1}77%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:.85}}
+@keyframes morning-talon-rake{0%,17%{stroke-dashoffset:490;opacity:0}28%{opacity:1}75%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:.75}}
+@keyframes rent-flash{0%,35%{opacity:0;transform:scale(.96)}52%{opacity:.9;transform:scale(1.02)}100%{opacity:.26;transform:scale(1)}}
+.art-blocking-shield{fill:#162c37e8;stroke:#d3b76f;stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 0 9px #e0bc65);animation:shield-impact .85s cubic-bezier(.16,.9,.22,1) both}
+.action-attack .action-sigil:after{display:none!important;content:none!important}
