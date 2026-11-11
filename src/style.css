@@ -688,3 +688,76 @@ body.game-active:before,body.game-active:after{display:none!important;animation:
 .gm-drawer.fixed-gm.menu-open .game-menu-content{position:static;display:block;width:100%;height:auto;max-height:none;min-height:0;overflow:visible;padding:.35rem}
 .gm-drawer.fixed-gm.menu-open .gm-controls{max-height:none;overflow:visible}
 @media(max-width:650px){.gm-drawer.fixed-gm.menu-open{width:calc(100vw - 1rem);height:min(38rem,calc(100lvh - 1.3rem));max-height:calc(100lvh - 1.3rem)}.app.in-game>main>.game-screen{padding:.25rem}}
+
+/* Full-length illustrated action scenes: keep visible for the whole mobile beat. */
+.action-cinematic-backdrop{animation:action-backdrop-long 3s ease both!important;background:rgba(7,11,20,.38)!important}
+.action-cinematic-scene{animation:action-scene-long 3s cubic-bezier(.18,.76,.22,1) both!important}
+.action-cinematic .action-sigil{width:clamp(8rem,34vw,12rem);margin-bottom:1.05rem;animation:action-sigil-long 3s cubic-bezier(.16,.8,.25,1) both!important}
+.action-cinematic .action-sigil:before{animation:art-outer-orbit 9s linear infinite!important}
+.action-cinematic .action-sigil:after{animation:art-inner-orbit 13s linear infinite!important}
+.action-cinematic .action-result{animation:action-result-long 3s ease both!important}
+.action-cinematic .cinematic-dismiss{animation:none!important}
+.action-art{width:84%;height:84%;overflow:visible;filter:drop-shadow(0 10px 22px #02040ab0)}
+.art-orbit,.art-moon-ring{fill:none;stroke:#d9c28b88;stroke-width:1.3;stroke-dasharray:3 7;transform-origin:center;animation:art-orbit 18s linear infinite}
+.art-rays,.art-rune{fill:none;stroke:#f4d895;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px #edcd82);animation:rune-ignite 2.7s ease-in-out infinite alternate}
+.art-stand{fill:#63513b;stroke:#f2d397;stroke-width:2.3;stroke-linejoin:round;filter:drop-shadow(0 7px 8px #000)}
+.art-gem{fill:#fff;stroke:#fff;stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 0 10px #fff);animation:gem-resolve-green 3s ease both}
+.result-wolf .art-gem{animation-name:gem-resolve-red}
+.art-facets{fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;animation:facet-resolve 3s ease both}
+.result-wolf .art-facets{animation-name:facet-red}
+.art-glint{fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;filter:drop-shadow(0 0 8px #fff);animation:crystal-glint 2.7s ease-in-out infinite alternate}
+.result-wolf .art-rays,.result-wolf .art-rune{stroke:#ff8589;filter:drop-shadow(0 0 8px #f2354b)}
+.result-human .art-rays,.result-human .art-rune{stroke:#94ffbe;filter:drop-shadow(0 0 8px #36d47f)}
+.art-wolf{fill:#171b23;stroke:#ded0af;stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 0 12px #bba47766);animation:wolf-emerge 3s cubic-bezier(.16,.8,.25,1) both}
+.art-wolf-detail{fill:none;stroke:#c8b894;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.art-eye{fill:none;stroke:#e6bd74;stroke-width:5;stroke-linecap:round;filter:drop-shadow(0 0 7px #d63c45);animation:wolf-eyes 3s ease both}
+.art-slash{fill:none;stroke:#f6e9cf;stroke-width:2.2;stroke-linecap:round;stroke-dasharray:190;stroke-dashoffset:190;filter:drop-shadow(0 0 8px #f7d7a2);animation:art-slash 3s ease both}
+.art-shield{fill:#273844;stroke:#c8b078;stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 0 12px #7de1b666);animation:shield-raise 3s cubic-bezier(.18,.76,.22,1) both}
+.art-shield-inner{fill:none;stroke:#86d9bd;stroke-width:1.5;opacity:.82}
+.art-shield-mark{fill:#d9c28b;stroke:#fff0c8;stroke-width:1.2;filter:drop-shadow(0 0 6px #e2c980)}
+.art-impact{fill:none;stroke:#fff0b3;stroke-width:3;stroke-linecap:round;opacity:0;animation:shield-spark 3s ease both}
+.art-lantern{fill:#282131;stroke:#cdb17a;stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 0 15px #ce92ff77)}
+.art-spirit{fill:#d9c6f4;stroke:#fff;stroke-width:1.2;filter:drop-shadow(0 0 11px #d4b5ff);animation:spirit-rise 3s ease both}
+.action-blocked .art-slash{stroke:#fff2b1;filter:drop-shadow(0 0 10px #ffdc6d)}
+.action-blocked .art-impact{opacity:1;stroke:#fff1aa;filter:drop-shadow(0 0 8px #ffd75b)}
+@keyframes action-backdrop-long{0%{opacity:0}8%{opacity:1}90%{opacity:1}100%{opacity:0}}
+@keyframes action-scene-long{0%{opacity:0;transform:translateY(1.2rem) scale(.92)}12%{opacity:1;transform:translateY(0) scale(1.015)}24%,87%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.02)}}
+@keyframes action-sigil-long{0%{opacity:0;transform:scale(.58) rotate(-13deg)}16%{opacity:1;transform:scale(1.08) rotate(3deg)}27%,100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes action-result-long{0%,22%{opacity:0;transform:translateY(.45rem)}34%,100%{opacity:1;transform:translateY(0)}}
+@keyframes art-orbit{to{transform:rotate(360deg)}}@keyframes art-outer-orbit{to{transform:rotate(360deg)}}@keyframes art-inner-orbit{to{transform:rotate(-360deg)}}
+@keyframes rune-ignite{0%{opacity:.28}100%{opacity:1}}
+@keyframes gem-resolve-green{0%,25%{fill:#fff;stroke:#fff}50%{fill:#c8ffe0;stroke:#effff5}100%{fill:#37d987;stroke:#baffd5}}
+@keyframes gem-resolve-red{0%,25%{fill:#fff;stroke:#fff}50%{fill:#ffd6d6;stroke:#fff0f0}100%{fill:#e83e50;stroke:#ffc3c9}}
+@keyframes facet-resolve{0%,30%{stroke:#fff}60%{stroke:#eafff1}100%{stroke:#caffdc}}
+@keyframes facet-red{0%,30%{stroke:#fff}60%{stroke:#fff0f0}100%{stroke:#ffd5d8}}
+@keyframes wolf-emerge{0%{opacity:0;transform:translateY(20px) scale(.83)}20%{opacity:1;transform:translateY(-3px) scale(1.04)}32%,100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes wolf-eyes{0%,24%{opacity:0}38%,100%{opacity:1}}
+@keyframes art-slash{0%,24%{stroke-dashoffset:190;opacity:0}34%{opacity:1}48%{stroke-dashoffset:0;opacity:1}70%,100%{stroke-dashoffset:0;opacity:.35}}
+@keyframes shield-raise{0%{transform:translateY(28px) scale(.78);opacity:0}19%{transform:translateY(-4px) scale(1.06);opacity:1}30%,100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes shield-spark{0%,30%{opacity:0;transform:translateX(8px)}40%{opacity:1}55%,100%{opacity:0;transform:translateX(-5px)}}
+@keyframes spirit-rise{0%{opacity:0;transform:translateY(20px) scale(.7)}30%{opacity:1;transform:translateY(-4px) scale(1.06)}48%,100%{opacity:.9;transform:translateY(0) scale(1)}}
+/* A separate illustrated death scene for the wolf raid and public judgment. */
+.death-stage{width:min(88vw,29rem);height:min(64vh,30rem)}
+.death-art{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 12px 24px #0009)}
+.judgment-halo,.wolf-halo{fill:#caa65a0c;stroke:#e6cb9166;stroke-width:1.2;stroke-dasharray:2 7;transform-origin:center;animation:art-orbit 24s linear infinite}
+.judgment-scale{fill:none;stroke:#e6cf9c;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px #ebcf8c77);animation:scale-arrive 2.8s cubic-bezier(.18,.8,.25,1) both}
+.judgment-gavel{fill:#805b3c;stroke:#ecd29b;stroke-width:3;stroke-linejoin:round;transform-origin:200px 120px;animation:gavel-strike 2.8s cubic-bezier(.25,.7,.2,1) both;filter:drop-shadow(0 5px 7px #000)}
+.judgment-spark{fill:#f8e3a7;stroke:#fff1c6;stroke-width:2;opacity:0;transform-origin:center;filter:drop-shadow(0 0 10px #ffd878);animation:judgment-flash 2.8s ease both}
+.death-wolf{fill:#171922;stroke:#d1b77f;stroke-width:4;stroke-linejoin:round;filter:drop-shadow(0 0 16px #ab384366);animation:wolf-emerge 2.8s ease both}
+.death-wolf-detail{fill:none;stroke:#d2c19b;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.death-claw{fill:none;stroke:#f1d7c5;stroke-width:5;stroke-linecap:round;stroke-dasharray:230;stroke-dashoffset:230;filter:drop-shadow(0 0 11px #ec515d);animation:death-claw-strike 2.8s cubic-bezier(.2,.7,.2,1) both}
+.death-impact-mark{fill:#f2d59a;stroke:#ffecc1;stroke-width:2;opacity:0;transform-origin:center;filter:drop-shadow(0 0 12px #f6d16b);animation:judgment-flash 2.8s ease both}
+.death-embers i{width:5px;height:5px;background:#f5d28b;clip-path:polygon(50% 0,63% 37%,100% 50%,63% 63%,50% 100%,37% 63%,0 50%,37% 37%)}
+@keyframes scale-arrive{0%{opacity:0;transform:translateY(-18px) scale(.8)}25%{opacity:1;transform:translateY(2px) scale(1.04)}45%,100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes gavel-strike{0%,38%{transform:rotate(-22deg) translate(-12px,-22px)}52%{transform:rotate(13deg) translate(6px,18px)}60%{transform:rotate(-4deg) translate(-2px,-4px)}100%{transform:rotate(0) translate(0)}}
+@keyframes judgment-flash{0%,47%{opacity:0;transform:scale(.45)}56%{opacity:1;transform:scale(1.25)}68%,100%{opacity:.18;transform:scale(1.7)}}
+@keyframes death-claw-strike{0%,28%{opacity:0;stroke-dashoffset:230}37%{opacity:1}52%{stroke-dashoffset:0;opacity:1}68%,100%{stroke-dashoffset:0;opacity:.2}}
+@media(max-width:600px){.action-cinematic{padding:.55rem}.action-cinematic-scene{padding:1.1rem .8rem;border-radius:1.1rem}.action-cinematic .action-sigil{width:min(35vw,9rem);margin-bottom:.65rem}.action-cinematic h2{margin:.45rem 0;font-size:clamp(1.35rem,7vw,2rem)}.action-cinematic p{margin:.25rem 0 .5rem;font-size:.82rem}.action-cinematic .cinematic-dismiss{margin-top:.7rem}.death-stage{width:92vw;height:min(58vh,24rem)}}
+@media(prefers-reduced-motion:reduce){.action-cinematic-backdrop,.action-cinematic-scene,.action-cinematic .action-sigil,.action-cinematic .action-result,.action-cinematic .cinematic-dismiss,.action-sigil:before,.action-sigil:after,.action-art *,.death-art *,.death-embers i{animation:none!important;transition:none!important}.action-cinematic-backdrop{opacity:.92!important}.action-cinematic-scene{opacity:1!important;transform:none!important}.action-cinematic .action-sigil{opacity:1!important;transform:none!important}.action-cinematic .action-result{opacity:1!important;transform:none!important}}
+
+html.performance-light .action-cinematic-backdrop,html.performance-light .action-cinematic-scene,html.performance-light .action-cinematic .action-sigil,html.performance-light .action-cinematic .action-result{animation-duration:3s!important}
+html.performance-light .action-cinematic-scene{animation-name:action-scene-long!important;opacity:1}
+html.performance-light .action-cinematic-backdrop{animation-name:action-backdrop-long!important}
+html.performance-light .action-cinematic .action-sigil{animation-name:action-sigil-long!important}
+html.performance-light .action-cinematic .action-result{animation-name:action-result-long!important}
+@media(prefers-reduced-motion:reduce){html.performance-light .action-cinematic-scene,html.performance-light .action-cinematic-backdrop,html.performance-light .action-cinematic .action-sigil,html.performance-light .action-cinematic .action-result{animation:none!important}}
