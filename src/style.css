@@ -745,3 +745,9 @@ body:has(.app.in-game) .gm-drawer.fixed-gm.menu-open .game-menu-trigger b{displa
 body:has(.app.in-game) .gm-drawer.fixed-gm.menu-open .game-menu-content{position:absolute;inset:3.45rem .35rem .35rem;display:block;height:auto;max-height:none;min-height:0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable}
 body:has(.app.in-game) .gm-drawer.fixed-gm.menu-open .gm-controls{max-height:none;overflow:visible}
 @media(max-width:650px){body:has(.app.in-game) .gm-drawer.fixed-gm{top:max(1rem,env(safe-area-inset-top));right:.5rem}body:has(.app.in-game) .gm-drawer.fixed-gm.menu-open{width:min(21rem,calc(100vw - 1rem));height:min(38rem,calc(100lvh - 2rem));max-height:calc(100lvh - 2rem)}}
+
+/* Match iOS safe areas to the scene and keep the animated background inside them. */
+.app.in-game[data-scene="day"],.app.in-game[data-scene="village"]{background:#445c4b}
+.app.in-game[data-scene="dusk"]{background:#151d2a}.app.in-game[data-scene="ballot"]{background:#151823}.app.in-game[data-scene="night"]{background:#111c29}.app.in-game[data-scene="dawn"]{background:#34414b}.app.in-game[data-scene="victory-village"]{background:#1c342e}.app.in-game[data-scene="victory-wolf"]{background:#120f19}.app.in-game[data-scene="invalid-match"]{background:#14141a}
+.app.in-game:before{top:env(safe-area-inset-top);left:0;right:auto;bottom:auto;height:calc(100lvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));width:100vw}
+.app.in-game:after{bottom:env(safe-area-inset-bottom)}
