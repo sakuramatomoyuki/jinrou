@@ -805,3 +805,32 @@ body.game-active,.app.in-game,.app.in-game[data-scene="day"],.app.in-game[data-s
 @keyframes execution-sword-drop{0%,38%{transform:translateY(-90px) rotate(-4deg)}49%{transform:translateY(-76px) rotate(-3deg)}58%{transform:translateY(5px) rotate(1deg)}64%{transform:translateY(-3px) rotate(0)}100%{transform:translateY(0) rotate(0)}}
 @keyframes block-emerge{0%,28%{opacity:0;transform:translateY(8px)}48%{opacity:1;transform:translateY(0)}100%{opacity:.92}}
 @keyframes rune-dim{0%,53%{opacity:0;transform:scale(.3)}62%{opacity:.88;transform:scale(1.3)}76%,100%{opacity:.4;transform:scale(1)}}
+
+/* Turn the dawn attack reveal into a frightening medieval werewolf ambush. */
+.death-cinematic-attack .death-cinematic-scene{background:radial-gradient(ellipse at 50% 65%,#46151e55,transparent 42%),radial-gradient(ellipse at 75% 10%,#28374b3d,transparent 29%),linear-gradient(180deg,#070b13 0%,#111724 48%,#08090f 100%)}
+.death-cinematic-attack .death-vignette{background:radial-gradient(ellipse at 50% 47%,transparent 0%,#08070ba8 37%,#020207fa 79%);animation:wolf-vignette 3s ease both}
+.death-cinematic-attack .death-moon{background:radial-gradient(circle at 36% 30%,#8a6971,#573743 45%,#241d2a 76%,#10121b);box-shadow:0 0 28px #68263355,0 0 92px #72182933;filter:saturate(.58);animation:wolf-moon 3s ease both}
+.death-cinematic-attack .death-cloud{background:linear-gradient(105deg,transparent 4%,#6e82912a 28%,transparent 48%,#752b3833 69%,transparent 94%);filter:blur(21px);animation:wolf-fog 3s ease both}
+.death-cinematic-attack .death-village-silhouette{opacity:.88;filter:brightness(.43) saturate(.5)}
+.death-cinematic-attack .death-cinematic-caption{color:#9b969a;animation:wolf-caption 3s ease both}
+.death-cinematic-attack .death-cinematic-caption small{color:#7d828e;letter-spacing:.44em}
+.death-cinematic-attack .death-cinematic-caption strong{color:#c1aeb1;text-shadow:0 2px 24px #000,0 0 18px #76232f66;letter-spacing:.28em}
+.death-cinematic-attack .death-embers i{background:#b62f43;box-shadow:0 0 10px #a62239;animation:death-ember-fly 2.7s ease-out both}
+.wolf-halo{fill:#090b1188;stroke:#a5314055;stroke-dasharray:1 8;filter:drop-shadow(0 0 18px #831b2b77);animation:wolf-halo-pulse 3s ease both}
+.death-wolf-body{fill:#10131b;stroke:#282832;stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 12px 12px #000);animation:wolf-lunge 2.8s cubic-bezier(.16,.8,.25,1) both}
+.death-wolf{fill:#171820;stroke:#777078;stroke-width:3;stroke-linejoin:bevel;filter:drop-shadow(0 0 13px #0a080c);animation:wolf-lunge 2.8s cubic-bezier(.16,.8,.25,1) both}
+.death-wolf-muzzle{fill:#27222a;stroke:#98828a;stroke-width:2.5;stroke-linejoin:bevel;filter:drop-shadow(0 0 5px #000)}
+.death-wolf-nose{fill:#08090e;stroke:#b49899;stroke-width:1.5;stroke-linejoin:bevel}
+.death-wolf-detail{fill:none;stroke:#95888a;stroke-width:3;stroke-linecap:square;stroke-linejoin:bevel}
+.death-wolf-eyes{fill:none;stroke:#d8474e;stroke-width:5;stroke-linecap:square;filter:drop-shadow(0 0 7px #e02635);animation:wolf-eyes-open 3s ease both}
+.death-wolf-fangs{fill:#c9bdb2;stroke:#f0dcd0;stroke-width:1.4;stroke-linejoin:bevel;filter:drop-shadow(0 0 4px #dfc1b0)}
+.death-cinematic-attack .death-claw{stroke:#c3b6b4;stroke-width:5;filter:drop-shadow(0 0 10px #bd2b3a);animation:death-claw-strike 2.8s cubic-bezier(.2,.7,.2,1) both}
+.death-cinematic-attack .death-impact-mark{fill:#47131e;stroke:#c43d49;filter:drop-shadow(0 0 14px #bc2537);animation:ambush-impact 2.8s ease both}
+@keyframes wolf-vignette{0%,32%{opacity:.78}47%{opacity:1}63%,100%{opacity:.9}}
+@keyframes wolf-moon{0%{opacity:0;transform:scale(.75)}24%{opacity:.48;transform:scale(1.02)}42%,100%{opacity:.28;transform:scale(1)}}
+@keyframes wolf-fog{0%{opacity:0;transform:translateX(-16%)}28%{opacity:.75}100%{opacity:.25;transform:translateX(15%)}}
+@keyframes wolf-caption{0%,40%{opacity:0;filter:blur(7px);transform:translateY(9px)}61%{opacity:1;filter:blur(0);transform:translateY(0)}100%{opacity:.85}}
+@keyframes wolf-halo-pulse{0%,32%{opacity:0;transform:scale(.8)}48%{opacity:.95;transform:scale(1.08)}70%,100%{opacity:.56;transform:scale(1)}}
+@keyframes wolf-lunge{0%,18%{opacity:0;transform:translate(-20px,18px) scale(.78)}34%{opacity:1;transform:translate(5px,-4px) scale(1.07)}46%{transform:translate(-2px,2px) scale(.98)}58%,100%{opacity:1;transform:translate(0) scale(1)}}
+@keyframes wolf-eyes-open{0%,27%{opacity:0}38%,56%{opacity:1}74%,100%{opacity:.42}}
+@keyframes ambush-impact{0%,43%{opacity:0;transform:scale(.25)}54%{opacity:.95;transform:scale(1.32)}68%,100%{opacity:.24;transform:scale(1)}}
