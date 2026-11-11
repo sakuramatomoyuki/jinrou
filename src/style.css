@@ -688,3 +688,13 @@ html:has(.app.in-game),body:has(.app.in-game),body:has(.app.in-game) #root{heigh
 .app.in-game .gm-controls{max-height:none;overflow:visible;margin:.35rem 0 0;padding:.65rem;border-top:1px solid #ffffff20}
 .app.in-game .role-intel-drawer.fixed-role-intel{top:4.25rem;right:.65rem;z-index:30}
 @media(max-width:650px){.app.in-game>main>.game-screen{padding:.45rem}.app.in-game .game-screen>.game-area{padding:.75rem;min-height:0}.app.in-game .gm-drawer.fixed-gm{top:max(.45rem,env(safe-area-inset-top));right:.45rem}.app.in-game .gm-drawer.fixed-gm[open]{width:min(21rem,calc(100vw - .9rem));max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - .9rem)}.app.in-game .role-intel-drawer.fixed-role-intel{top:4rem;right:.45rem}.app.in-game .game-screen>.ending,.app.in-game .game-screen>.ranking-screen{padding:.6rem .45rem max(1rem,env(safe-area-inset-bottom))}}
+
+/* Cross-browser mobile viewport and settings-drawer fixes. */
+html:has(.app.in-game),body:has(.app.in-game),body:has(.app.in-game) #root{height:100%;min-height:0;overflow:hidden}
+.app.in-game{height:100vh;height:100dvh;min-height:0}
+.app.in-game>main{padding-top:max(.65rem,env(safe-area-inset-top));padding-bottom:max(.45rem,env(safe-area-inset-bottom))}
+.app.in-game .gm-drawer.fixed-gm[open]>summary{flex:0 0 auto;width:auto;height:auto;min-width:0;min-height:2.8rem;white-space:nowrap;justify-content:flex-start;padding:.45rem .7rem}
+.app.in-game .gm-drawer.fixed-gm[open] .game-menu-content{flex:1 1 0;height:0;min-height:0;max-height:none;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-gutter:stable}
+.app.in-game .gm-drawer.fixed-gm[open] .gm-controls{max-height:none;overflow:visible}
+.app.in-game .gm-drawer.fixed-gm{top:max(.8rem,env(safe-area-inset-top))}
+@media(max-width:650px){.app.in-game .gm-drawer.fixed-gm{top:max(.75rem,env(safe-area-inset-top));right:.5rem}.app.in-game .gm-drawer.fixed-gm[open]{max-height:calc(100dvh - max(.75rem,env(safe-area-inset-top)) - .65rem)}.app.in-game>main>.game-screen{padding-top:.65rem}}
