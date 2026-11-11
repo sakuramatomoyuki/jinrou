@@ -772,3 +772,36 @@ body.game-active,.app.in-game,.app.in-game[data-scene="day"],.app.in-game[data-s
 .app.in-game.is-ending>main>.game-screen{display:block;height:auto;min-height:100%;overflow:visible;padding:.5rem;background:transparent}
 .app.in-game.is-ending .ending,.app.in-game.is-ending .ranking-screen{display:block;flex:none;width:min(100%,46rem);height:auto;min-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none;overflow:visible;margin:0 auto;padding:clamp(1rem,4vw,1.6rem) .9rem max(2rem,env(safe-area-inset-bottom));box-sizing:border-box}
 @media(max-width:650px){.app.in-game.is-ending>main{padding-left:.25rem;padding-right:.25rem}.app.in-game.is-ending>main>.game-screen{padding:.25rem}.app.in-game.is-ending .ending,.app.in-game.is-ending .ranking-screen{padding-left:.7rem;padding-right:.7rem}}
+
+/* A somber, high-stakes execution tableau: ash, iron and a muted blood moon. */
+.death-cinematic-execution .death-cinematic-scene{background:radial-gradient(ellipse at 68% 28%,#572b3626,transparent 30%),radial-gradient(ellipse at 50% 100%,#2c101b88,transparent 62%),linear-gradient(180deg,#080b13 0%,#10121a 48%,#09090f 100%)}
+.death-cinematic-execution .death-vignette{background:radial-gradient(ellipse at 52% 48%,transparent 0%,#07070b88 38%,#020207f5 82%);animation:execution-vignette 3s ease-in-out both}
+.death-cinematic-execution .death-moon{background:radial-gradient(circle at 38% 32%,#9d7677,#633e4a 48%,#281c2a 76%,#100f18);box-shadow:0 0 28px #81384040,0 0 86px #4a1c2b55;filter:saturate(.62);animation:execution-moon 3s ease both}
+.death-cinematic-execution .death-cloud{background:linear-gradient(104deg,transparent 5%,#a4a6b014 28%,transparent 49%,#a34a5a21 70%,transparent 92%);filter:blur(22px);animation:execution-fog 3s ease both}
+.death-cinematic-execution .death-village-silhouette{opacity:.82;filter:brightness(.58)}
+.death-cinematic-execution .death-cinematic-caption{color:#b7a9a8;animation:execution-caption 3s ease both}
+.death-cinematic-execution .death-cinematic-caption small{color:#948589;letter-spacing:.42em}
+.death-cinematic-execution .death-cinematic-caption strong{color:#d3c2bf;text-shadow:0 2px 24px #000,0 0 18px #772f3d55;letter-spacing:.3em}
+.death-cinematic-execution .death-embers i{background:#a64a53;box-shadow:0 0 9px #8f303d;animation:death-ember-fly 2.7s ease-out both}
+.judgment-halo{fill:#170e1588;stroke:#a35b6250;stroke-dasharray:1 9;filter:drop-shadow(0 0 16px #762d3855)}
+.judgment-eclipse{fill:#20151c;stroke:#8e545c55;stroke-width:2;filter:drop-shadow(0 0 24px #641f2a55);animation:eclipse-breathe 3s ease-in-out both}
+.executioner-cloak{fill:#101117;stroke:#4a3e45;stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 8px 13px #000);animation:executioner-rise 3s cubic-bezier(.2,.8,.2,1) both}
+.executioner-hood{fill:#17161d;stroke:#66545b;stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 0 9px #08070b);animation:executioner-rise 3s cubic-bezier(.2,.8,.2,1) both}
+.executioner-mask{fill:#08090e;stroke:#78666a;stroke-width:2}
+.executioner-eyes{fill:none;stroke:#a94450;stroke-width:3;stroke-linecap:round;filter:drop-shadow(0 0 5px #a93440);animation:executioner-eyes 3s ease both}
+.executioner-seam{stroke:#514349;stroke-width:2}
+.execution-sword{fill:#8a8d93;stroke:#c2c0bb;stroke-width:2;stroke-linejoin:round;filter:drop-shadow(0 0 9px #bac4d055);transform-origin:242px 50px;animation:execution-sword-drop 3s cubic-bezier(.25,.7,.2,1) both}
+.execution-sword-hilt{fill:#4b3333;stroke:#9a7772;stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 3px 4px #000);transform-origin:242px 50px;animation:execution-sword-drop 3s cubic-bezier(.25,.7,.2,1) both}
+.execution-block{fill:#24232a;stroke:#5d5054;stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 8px 9px #000);animation:block-emerge 3s ease both}
+.execution-rune{fill:#6c2834;stroke:#c06b70;stroke-width:2;filter:drop-shadow(0 0 8px #a83343);opacity:.55;animation:rune-dim 3s ease both}
+.death-cinematic-execution .judgment-spark{fill:#8e3945;stroke:#d08383;filter:drop-shadow(0 0 10px #a83748);animation:judgment-flash 3s ease both}
+@keyframes execution-vignette{0%,38%{opacity:.74}55%{opacity:1}100%{opacity:.88}}
+@keyframes execution-moon{0%{opacity:0;transform:scale(.78)}35%{opacity:.62;transform:scale(1.04)}58%,100%{opacity:.42;transform:scale(1)}}
+@keyframes execution-fog{0%{opacity:0;transform:translateX(-12%)}32%{opacity:.85}100%{opacity:.38;transform:translateX(10%)}}
+@keyframes execution-caption{0%,38%{opacity:0;filter:blur(6px);transform:translateY(10px)}58%{opacity:1;filter:blur(0);transform:translateY(0)}100%{opacity:.92}}
+@keyframes eclipse-breathe{0%,25%{opacity:0;transform:scale(.74)}45%{opacity:.8;transform:scale(1.05)}67%,100%{opacity:.62;transform:scale(1)}}
+@keyframes executioner-rise{0%,18%{opacity:0;transform:translateY(14px)}38%{opacity:1;transform:translateY(-2px)}55%,100%{opacity:1;transform:translateY(0)}}
+@keyframes executioner-eyes{0%,38%{opacity:0}52%,72%{opacity:1}100%{opacity:.35}}
+@keyframes execution-sword-drop{0%,38%{transform:translateY(-90px) rotate(-4deg)}49%{transform:translateY(-76px) rotate(-3deg)}58%{transform:translateY(5px) rotate(1deg)}64%{transform:translateY(-3px) rotate(0)}100%{transform:translateY(0) rotate(0)}}
+@keyframes block-emerge{0%,28%{opacity:0;transform:translateY(8px)}48%{opacity:1;transform:translateY(0)}100%{opacity:.92}}
+@keyframes rune-dim{0%,53%{opacity:0;transform:scale(.3)}62%{opacity:.88;transform:scale(1.3)}76%,100%{opacity:.4;transform:scale(1)}}
