@@ -956,3 +956,16 @@ body.game-active,.app.in-game,.app.in-game[data-scene="day"],.app.in-game[data-s
 .theme-stage-role .theme-role-preview-art.motion-float{animation:theme-float 3s ease-in-out infinite}.theme-stage-role .theme-role-preview-art.motion-glow{animation:theme-glow 2s ease-in-out infinite alternate}.theme-stage-role .theme-role-preview-art.motion-turn{animation:theme-turn 8s linear infinite}
 .theme-crop-preview>img,.theme-crop-preview>video{position:absolute;inset:0}.theme-crop-tool>label input{width:100%}.theme-role-row .theme-asset-select{grid-column:1/-1}.theme-editor-controls .theme-section{gap:1rem}.theme-live-column .theme-asset-shelf>.wide{width:100%}
 @keyframes theme-preview-pulse{from{opacity:.65;transform:scale(.92)}to{opacity:1;transform:scale(1.04)}}@keyframes theme-slash{to{stroke-dashoffset:0}}
+
+/* The theme editor is a workspace, so let it occupy the viewport instead of
+   nesting it inside the generic narrow card used by the other app pages. */
+body:has(.theme-studio){overflow:hidden}
+.theme-studio{position:fixed;inset:0;z-index:120;width:100vw!important;height:100dvh;max-width:none!important;max-height:100dvh;margin:0;padding:clamp(1rem,2vw,2rem);overflow:auto;overscroll-behavior:contain;border:0;border-radius:0;box-shadow:none}
+.theme-studio-heading,.theme-name-row,.theme-editor-layout{width:100%;max-width:none}
+.theme-editor-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(1rem,2vw,2.25rem)}
+.theme-editor-controls,.theme-live-sticky{min-width:0}
+.theme-editor-controls{max-height:calc(100dvh - 12rem)}
+.theme-live-sticky{max-height:calc(100dvh - 3rem)}
+.theme-preview-frame{max-width:100%}
+@media(max-width:900px){.theme-editor-layout{grid-template-columns:minmax(0,1fr)}.theme-editor-controls{max-height:none}.theme-live-sticky{max-height:none}}
+@media(max-width:600px){.theme-studio{padding:.75rem}.theme-name-row{padding:.65rem}.theme-preview-frame{width:min(100%,calc(55dvh * .51613));max-height:55dvh}}
