@@ -904,3 +904,25 @@ body.game-active,.app.in-game,.app.in-game[data-scene="day"],.app.in-game[data-s
   .app.in-game .role-confirmation { padding:.65rem; }
   .app.in-game .role-art { width:min(30vw,7rem); height:5.5rem; margin:.25rem auto; }
 }
+
+/* Role-count editors and tap-outside menu dismissal. */
+.game-menu-scrim { position:fixed; inset:0; z-index:99; width:100%; height:100%; padding:0; border:0; border-radius:0; background:#050a12a8; backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); }
+.gm-drawer.fixed-gm.menu-open { z-index:100; }
+.lobby-role-adjust,.replay-role-config { position:relative; overflow:hidden; border:1px solid #c9a96877; background:radial-gradient(ellipse at 100% 0,#b88e4b20,transparent 42%),linear-gradient(145deg,#242c39,#171d28 68%,#211d24); box-shadow:inset 0 1px #ffffff12,0 18px 42px #0005; }
+.lobby-role-adjust:before,.replay-role-config:before { content:""; position:absolute; inset:.4rem; pointer-events:none; border:1px solid #d6b77920; border-radius:.75rem; }
+.lobby-role-adjust>.eyebrow,.lobby-role-adjust>h3,.lobby-role-adjust>p,.lobby-role-adjust>.lobby-role-grid,.lobby-role-adjust>.lobby-role-actions,.replay-role-config>* { position:relative; z-index:1; }
+.lobby-role-adjust>.eyebrow { color:#d8bd83; letter-spacing:.2em; }
+.lobby-role-adjust>h3,.replay-role-config h4 { color:#f2ddb0; font-family:'Noto Sans JP',serif; font-size:1.15rem; }
+.lobby-role-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.6rem; margin:.9rem 0; }
+.lobby-role-grid label { display:grid; grid-template-columns:minmax(0,1fr) 4rem; align-items:center; gap:.5rem; min-height:3.3rem; padding:.55rem .7rem; border:1px solid #c5a36645; border-radius:.75rem; background:linear-gradient(120deg,#ffffff09,#080e180e); color:#e9e2d3; box-shadow:inset 0 1px #ffffff08; }
+.lobby-role-grid input { width:100%; min-width:0; min-height:2.25rem; padding:.35rem; border:1px solid #d0ad6866; border-radius:.55rem; background:#101722; color:#f7e7bf; text-align:center; font:inherit; font-weight:750; }
+.lobby-role-grid input:focus,.replay-role-grid input:focus { outline:2px solid #dfbd77; outline-offset:2px; }
+.lobby-role-adjust .replay-total,.replay-role-config .replay-total { display:block; padding:.55rem .7rem; border-radius:.6rem; background:#0b111a88; }
+.lobby-role-actions button { min-height:3rem; border-radius:.75rem; }
+.replay-role-config { gap:.7rem; padding:1rem; }
+.replay-role-config h4 { margin:.1rem 0; }
+.replay-role-grid { gap:.6rem; }
+.replay-role-grid label { min-height:3.1rem; border-color:#c5a36645; background:linear-gradient(120deg,#ffffff09,#080e180e); }
+.replay-role-grid input { min-height:2.2rem; border-color:#d0ad6866; color:#f7e7bf; }
+@media(max-width:420px) { .lobby-role-grid,.replay-role-grid { gap:.45rem; } .lobby-role-grid label,.replay-role-grid label { grid-template-columns:minmax(0,1fr) 3.3rem; padding:.45rem; font-size:.82rem; } }
+@media(orientation:landscape) and (max-height:600px) { .lobby-role-adjust,.replay-role-config { padding:.7rem; gap:.45rem; } .lobby-role-grid,.replay-role-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:.4rem; margin:.5rem 0; } .lobby-role-grid label,.replay-role-grid label { grid-template-columns:minmax(0,1fr) 3rem; min-height:2.6rem; padding:.35rem; font-size:.78rem; } }
