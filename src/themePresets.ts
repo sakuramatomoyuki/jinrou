@@ -1,6 +1,6 @@
 export const THEME_ROLES = ['市民','占い師','霊媒師','騎士','共有者','人狼','狂人','狂言者'] as const;
-export const THEME_PHASES = ['night','discussion','vote','dawn','victory'] as const;
-export const PHASE_NAMES: Record<string,string> = {night:'夜の行動',discussion:'話し合い',vote:'投票',dawn:'夜明け',victory:'勝利'};
+export const THEME_PHASES = ['rolecheck','night','discussion','vote','dawn','victory'] as const;
+export const PHASE_NAMES: Record<string,string> = {rolecheck:'役職確認',night:'夜の行動',discussion:'話し合い',vote:'投票',dawn:'夜明け',victory:'勝利'};
 export const TEXT_KEYS = [
   ['rolePrompt','役職確認の見出し'],['nightPrompt','夜行動の見出し'],['discussionPrompt','話し合いの見出し'],['votePrompt','投票の見出し'],['morningPrompt','朝の結果の見出し'],['executionPrompt','投票結果の見出し'],['nightWait','夜の待機メッセージ'],['gameOverTitle','ゲーム終了の見出し'],['gameOverSubtitle','ゲーム終了後の説明'],['suspectPrompt','夜の怪しい人投票の見出し'],['actionPrompt','夜の役職行動の案内'],['voteQuestion','投票時の質問'],['votePrivacy','投票の秘密についての説明'],['passInstruction','共有端末を渡す案内'],['executionResult','投票結果の見出し']
 ] as const;
