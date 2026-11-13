@@ -5,3 +5,6 @@ functions/node_modules
 .firebase
 .env*
 !.env.example
+
+*debug.log
+*debug.*.log
