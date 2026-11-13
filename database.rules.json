@@ -2,6 +2,12 @@
   "rules": {
     ".read": false,
     ".write": false,
+    "roomSignals": {
+      "$roomCode": {
+        ".read": "auth != null && data.child('members').child(auth.uid).val() === true",
+        ".write": false
+      }
+    },
     "rooms": {
       "$roomCode": {
         "signalRevision": {
