@@ -45,7 +45,7 @@ function setBgm(ref:React.MutableRefObject<any>,enabled:boolean,scene:string,gam
  try{
   const levels:any={village:.095,day:.10,dusk:.09,ballot:.09,night:.085,dawn:.10,'victory-village':.11,'victory-wolf':.10};let music=ref.current;
   if(!enabled){if(music){if(music.fadeFrame)cancelAnimationFrame(music.fadeFrame);for(const audio of [music.audio,music.oldAudio])if(audio){audio.volume=0;audio.pause()}music.oldAudio=null}return}
-  const source=custom?.src||(gameStarted?gameBgmSource:preGameBgmSource),target=custom?Math.max(0,Math.min(1,custom.volume)):(levels[scene]??.095),startAt=Math.max(0,Number(custom?.start)||0),endAt=Math.max(0,Number(custom?.end)||0);
+  const source=custom?.src||(gameStarted?gameBgmSource:preGameBgmSource),target=custom?Math.max(0,Math.min(1,custom.volume)):(levels[scene]??.095),startAt=Math.max(0,Number(custom?.start)||0),rawEnd=Math.max(0,Number(custom?.end)||0),endAt=rawEnd>startAt?rawEnd:0;
   if(music?.source===source){
    if(custom&&!custom.continueAcross&&music.scene!==scene)music.audio.currentTime=startAt;
    music.scene=scene;music.custom=custom||null;music.audio.volume=target;music.audio.loop=!custom||!endAt;
@@ -60,8 +60,10 @@ function setBgm(ref:React.MutableRefObject<any>,enabled:boolean,scene:string,gam
   audio.addEventListener('loadedmetadata',()=>{if(custom)audio.currentTime=Math.min(startAt,Math.max(0,audio.duration-.05))},{once:true});
   audio.ontimeupdate=custom&&endAt?()=>{if(audio.currentTime>=endAt)audio.currentTime=startAt}:null;
   audio.onended=custom?()=>{audio.currentTime=startAt;void audio.play().catch(()=>{})}:null;
-  // 同じ曲を次の場面で使う場合は、このAudio要素を再利用して再生位置を保つ。
-  void audio.play().then(()=>{const started=performance.now(),duration=500,oldVolume=previous?.volume||0;const fade=(now:number)=>{if(ref.current!==music)return;const progress=Math.min(1,(now-started)/duration);audio.volume=target*progress;if(previous)previous.volume=oldVolume*(1-progress);if(progress<1)music.fadeFrame=requestAnimationFrame(fade);else{if(previous){previous.pause();previous.currentTime=0}music.oldAudio=null;music.fadeFrame=0}};music.fadeFrame=requestAnimationFrame(fade)}).catch(()=>{});
+  // Same-source scenes reuse the audio element above. For a new song, crossfade
+  // briefly; if autoplay is denied after an async phase change, stop the old
+  // song and keep the new one audible when the next user gesture unlocks it.
+  void audio.play().then(()=>{const started=performance.now(),duration=120,oldVolume=previous?.volume||0;const fade=(now:number)=>{if(ref.current!==music)return;const progress=Math.min(1,(now-started)/duration);audio.volume=target*progress;if(previous)previous.volume=oldVolume*(1-progress);if(progress<1)music.fadeFrame=requestAnimationFrame(fade);else{if(previous){previous.pause();previous.currentTime=0}music.oldAudio=null;music.fadeFrame=0}};music.fadeFrame=requestAnimationFrame(fade)}).catch(()=>{if(ref.current!==music)return;audio.volume=target;if(previous){previous.pause();previous.currentTime=0}music.oldAudio=null});
  }catch{/* Audio非対応環境でもゲームは通常どおり遊べる */}
 }
 function sceneFor(room:any):string{if(!room)return 'village';if(room.phase==='ended')return room.winner==='無効試合'?'invalid-match':String(room.winner||'').includes('人狼')?'victory-wolf':'victory-village';if(room.phase==='ranking')return 'village';if(room.phase==='discussion')return 'day';if(['vote','revote'].includes(room.phase))return 'ballot';if(room.phase==='waiting')return 'dusk';if(['night','rolecheck'].includes(room.phase))return 'night';if(['morning','execution'].includes(room.phase))return 'dawn';return 'village'}
