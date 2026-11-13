@@ -881,3 +881,26 @@ body.game-active,.app.in-game,.app.in-game[data-scene="day"],.app.in-game[data-s
 @media(max-width:560px){.resume-offer{align-items:stretch;flex-direction:column;gap:.7rem;padding:.8rem}.resume-offer>div:last-child{display:grid;grid-template-columns:1fr 1fr}.resume-offer button{width:100%;min-width:0}.host-transfer-toast{gap:.6rem;padding:.85rem}.host-transfer-toast>div{min-width:0}.host-transfer-toast small{font-size:.72rem}}
 
 .lobby-role-adjust{display:grid;gap:.7rem;margin:1rem 0;padding:1rem;border:1px solid #d4b36d66;border-radius:1rem;background:linear-gradient(145deg,#1b2633,#171d28);box-shadow:0 12px 32px #05080d66}.lobby-role-adjust h3,.lobby-role-adjust p{margin:0}.lobby-role-adjust h3{color:#f0dcad}.lobby-role-actions{display:grid;grid-template-columns:1fr 1.4fr;gap:.65rem}.lobby-role-actions button{min-height:2.8rem}.join-resume-offer{position:static;transform:none;width:auto;margin-top:1rem;animation:none}
+
+/* Fit active games to the currently visible mobile browser viewport. */
+@supports (height:100dvh) {
+  body.game-active { height:100dvh; }
+  .app.in-game { height:100dvh; min-height:0; }
+  .app.in-game>main { height:100%; min-height:0; box-sizing:border-box; }
+  .app.in-game>main>.game-screen { height:100%; min-height:0; box-sizing:border-box; }
+}
+.app.in-game { display:flex; flex-direction:column; }
+.app.in-game>main { flex:1 1 auto; min-height:0; }
+.app.in-game>main>.game-screen { flex:1 1 auto; min-height:0; }
+.app.in-game:not(.is-ending)>main>.game-screen { border-bottom:1px solid #ffffff18; }
+.app.in-game .game-screen>.game-area { min-height:0; }
+@media (orientation:landscape) and (max-height:600px) {
+  body.game-active { height:100vh; height:100dvh; }
+  .app.in-game { height:100vh; height:100dvh; min-height:0; }
+  .app.in-game>main { padding-top:max(.2rem,env(safe-area-inset-top)); padding-right:max(.35rem,env(safe-area-inset-right)); padding-bottom:max(.2rem,env(safe-area-inset-bottom)); padding-left:max(.35rem,env(safe-area-inset-left)); overflow-y:auto; }
+  .app.in-game>main>.game-screen { padding:.2rem; }
+  .app.in-game .game-screen>.game-area { padding:.65rem; }
+  .app.in-game .phase { padding-bottom:.45rem; margin-bottom:.45rem; }
+  .app.in-game .role-confirmation { padding:.65rem; }
+  .app.in-game .role-art { width:min(30vw,7rem); height:5.5rem; margin:.25rem auto; }
+}
