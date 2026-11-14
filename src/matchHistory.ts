@@ -3,6 +3,7 @@ import { openLocalGameDb } from './personalNotes';
 export type MatchHistoryRecord = {
   id: string;
   roomCode: string;
+  gameType: 'jinrou' | 'wordwolf' | 'ogiri' | 'survey';
   winner: string;
   startedAt: number | null;
   endedAt: number;
@@ -27,6 +28,7 @@ export function createMatchHistoryRecord(data: any): MatchHistoryRecord | null {
   return {
     id: `${data.roomCode}-${startedAt || endedAt}`,
     roomCode: String(data.roomCode),
+    gameType: ['jinrou', 'wordwolf', 'ogiri', 'survey'].includes(data.gameType) ? data.gameType : 'jinrou',
     winner: String(data.winner || '引き分け'),
     startedAt,
     endedAt,
