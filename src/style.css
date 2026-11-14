@@ -976,6 +976,14 @@ body.game-active,.app.in-game,.app.in-game[data-scene="day"],.app.in-game[data-s
 .app.theme-preset-active .game-screen>.game-area{width:min(100%,54rem);padding:clamp(1rem,3vw,2rem)}
 .app.theme-preset-active .game-screen>.ending,.app.theme-preset-active .game-screen>.ranking-screen{max-width:54rem;text-shadow:0 2px 18px #050910}
 .app.theme-preset-active .game-screen>.game-area :is(.role-confirmation,.night-action-card,.vote-card,.night-chat-fullscreen){background:transparent;border-color:transparent;box-shadow:none}
+/* Keep every phase surface consistent with the selected full-screen preset. */
+.app.theme-preset-active .game-screen .game-area :is(.role-confirmation,.night-action-card,.vote-card,.night-chat-fullscreen,.night-chat-tabs,.night-suspicion,.night-result,.handoff,.turn-wait,.morning-reveal,.execution-reveal,.vote-confirm,.replay-controls){background:transparent!important;border-color:transparent!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.app.theme-preset-active .game-screen .game-area :is(.role-confirmation,.night-suspicion,.morning-reveal,.execution-reveal,.vote-confirm,.replay-controls){text-shadow:0 2px 18px #050910}
+/* Dawn announcements are centered independently from the nested game layout. */
+.morning-screen>.game-area>.morning-reveal{position:fixed;z-index:8;top:50%;left:50%;translate:-50% -50%;width:min(64rem,calc(100vw - 2rem));max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2rem);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;margin:0}
+/* Long suspect leader lists remain fully reachable on large desktop windows. */
+.discussion-screen>.game-area>.suspect-reveal{max-height:min(38dvh,24rem);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-bottom:max(1rem,env(safe-area-inset-bottom))}
+@media(max-height:620px){.discussion-screen>.game-area>.suspect-reveal{max-height:calc(100dvh - 7rem);bottom:.5rem}}
 
 /* The theme editor is a workspace, so let it occupy the viewport instead of
    nesting it inside the generic narrow card used by the other app pages. */
