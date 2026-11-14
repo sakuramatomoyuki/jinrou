@@ -179,3 +179,24 @@ body.light-shell{background:#f6f9fb!important}
  .lobby-game-card{height:auto;min-height:145px}
  .lobby-topbar{min-height:54px}
 }
+
+/* Restore the calm light playground palette and remove the legacy forest layer. */
+.app.home-page::before,.app.home-page::after,
+.app.create-shell::before,.app.create-shell::after,
+.app.form-shell::before,.app.form-shell::after,
+.app.help-shell::before,.app.help-shell::after,
+.app.room-lobby-shell::before,.app.room-lobby-shell::after{content:none!important;display:none!important;background:none!important;opacity:0!important}
+.app.home-page,.app.create-shell,.app.form-shell,.app.help-shell,.app.room-lobby-shell{background:#f4f7fb!important;color:#1d2a38!important}
+.app.home-page .hero.playground-hero{background:linear-gradient(145deg,#fff 0%,#f7fafc 58%,#eef5f7 100%)!important;border:1px solid #dfe8ee!important;box-shadow:0 16px 42px #314d5d12!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;color:#263746!important}
+.app.home-page .hero.playground-hero::after{display:none!important;content:none!important}
+.app.home-page .hero.playground-hero .eyebrow,.app.home-page .catalog-heading .eyebrow{color:#527f82!important;text-shadow:none!important}
+.app.home-page .hero.playground-hero h1{color:#203242!important;text-shadow:none!important}
+.app.home-page .hero.playground-hero h1 em{color:#3d8283!important;text-shadow:none!important}
+.app.home-page .hero.playground-hero p{color:#667987!important}
+.app.home-page .game-catalog{background:#fff!important;border:1px solid #e1e9ee!important;box-shadow:0 12px 32px #314d5d0a!important}
+.app.home-page .catalog-heading h2{color:#243747!important}.app.home-page .catalog-heading p{color:#71818e!important}
+.app.home-page .catalog-card{color:#243746!important;background:linear-gradient(145deg,#f8fbfd,#f0f6f7)!important;border-color:#e3eaf0!important;box-shadow:none!important}
+.app.home-page .catalog-card.catalog-stage{background:linear-gradient(145deg,#fff8f2,#f7f0eb)!important;border-color:#f0e2d8!important}
+.app.home-page .catalog-card.catalog-bright{background:linear-gradient(145deg,#f4fbf7,#eef7f3)!important;border-color:#deece5!important}
+.app.home-page .catalog-card h3{color:#263a49!important}.app.home-page .catalog-card p{color:#687c89!important}.app.home-page .catalog-card small{color:#71818e!important}
+.app.home-page .catalog-status{background:#e5f3eb!important;color:#377f60!important}
