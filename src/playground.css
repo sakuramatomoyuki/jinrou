@@ -86,3 +86,96 @@ body.light-shell:before,body.light-shell:after{display:none!important}
 @media(max-width:370px){.lobby-presence{display:none}.lobby-room-code .copy{font-size:8px;padding:5px}.lobby-people,.lobby-center{padding:7px}.lobby-settings{max-height:20dvh}.home-page .catalog-card{min-height:158px}}
 @media(orientation:landscape) and (max-height:520px) and (max-width:900px){.app.room-lobby-shell main{height:calc(100dvh - 52px);padding:4px}.app.room-lobby-shell>header{height:48px;min-height:48px}.lobby-topbar{min-height:48px}.lobby-qr svg{width:38px;height:38px}.lobby-layout{grid-template-columns:minmax(135px,.72fr) minmax(260px,1.35fr) minmax(170px,.8fr);grid-template-rows:minmax(0,1fr)}.lobby-people,.lobby-center,.lobby-settings{grid-row:1;padding:7px}.lobby-settings{grid-column:auto;max-height:none;display:block}.lobby-game-card{height:auto;min-height:115px}.lobby-game-icon{width:27px;height:27px;margin-bottom:2px}.lobby-ready-panel{padding:6px}.lobby-settings-hint{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.home-page *, .create-shell *, .form-shell *, .room-lobby-shell *, .game-setup-overlay *, .game-ogiri .ogiri-screen, .game-survey .survey-screen{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+/* Readability pass: clean help screen, unclipped game cards, and a two-column lobby. */
+body.light-shell{background:#f6f9fb!important}
+.app.home-page,.app.create-shell,.app.form-shell,.app.room-lobby-shell,.app.help-shell{background:radial-gradient(ellipse at 12% 0%,#e8f4f0 0,transparent 38%),linear-gradient(180deg,#f8fafb 0%,#f1f6f7 100%)!important;color:#243846!important}
+.app.help-shell main{width:min(100% - 32px,960px);max-width:960px;min-height:calc(100dvh - 68px);padding:clamp(18px,4vh,42px) 0 36px}
+.app.help-shell .help-page{max-width:none;margin:0 auto;padding:clamp(20px,4vw,42px);border:1px solid #dfe9e9;border-radius:24px;background:rgba(255,255,255,.96);box-shadow:0 18px 50px #284f5510;color:#2a424e;animation:play-rise .4s both}
+.app.help-shell .help-page h2,.app.help-shell .help-page h3{color:#284451}
+.app.help-shell .help-page .eyebrow{color:#398884}
+.app.help-shell .help-page .muted,.app.help-shell .help-page .steps p{color:#6e8189}
+.app.help-shell .help-page .step{border-color:#e1ebeb;background:#f8fbfb;color:#354f59}
+.app.help-shell .help-page .step>b{color:#318783;background:#e7f4f1}
+.home-page .catalog-card{overflow:hidden}
+.home-page .catalog-card .catalog-status{writing-mode:horizontal-tb;position:absolute;right:9px;top:9px;width:auto;height:auto;min-width:0;max-width:calc(100% - 18px);padding:4px 7px;white-space:nowrap;border-radius:999px;transform:none;line-height:1.2}
+.app.room-lobby-shell main{height:auto;min-height:calc(100dvh - 68px);overflow:visible;padding:12px clamp(12px,2vw,30px)}
+.room.room-lobby{height:auto;min-height:calc(100dvh - 100px);overflow:visible}
+.lobby-board{height:auto;min-height:calc(100dvh - 100px)}
+.lobby-layout{grid-template-columns:minmax(230px,.78fr) minmax(0,1.45fr);grid-template-rows:minmax(0,1fr);}
+.lobby-people,.lobby-center{min-height:0}
+.lobby-top-meta{display:flex;align-items:center;gap:12px;margin-left:auto}
+.lobby-qr{margin:0}
+.lobby-points{display:grid;gap:3px;padding:8px 11px;border:1px solid #e6eded;border-radius:12px;background:#f8fbfb;white-space:nowrap}
+.lobby-points span,.lobby-method span{color:#829398;font-size:10px}
+.lobby-points b,.lobby-method b{color:#41626a;font-size:13px}
+.lobby-people-footer{margin-top:auto;padding-top:12px;border-top:1px solid #edf1f1}
+.lobby-method{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0}
+.lobby-invite-hint{margin:0;padding:5px 0 0}
+.lobby-carousel>button{touch-action:manipulation;flex:none}
+.lobby-game-card{overflow:hidden;min-width:0}
+.lobby-ready-panel{flex:none}
+.lobby-start{width:100%;min-height:46px}
+.rolecheck-stage{width:min(100%,780px);min-height:min(78dvh,760px);margin:auto;padding:clamp(18px,4vw,36px);display:grid;align-content:center;justify-items:center;gap:18px;border:1px solid #d5c29655;border-radius:26px;background:radial-gradient(ellipse at 50% 0%,#293446 0,#17202d 54%,#111923 100%);box-shadow:0 24px 80px #050a1466;color:#f3ead8;animation:role-stage-in .55s cubic-bezier(.2,.8,.2,1) both}
+.rolecheck-heading{text-align:center}.rolecheck-heading h2{margin:5px 0;color:#f1d9a6;font-size:clamp(25px,5vw,38px)}.rolecheck-heading p,.rolecheck-wait p{margin:6px 0;color:#c2cbd5;line-height:1.7}
+.role-reveal-card{width:min(100%,440px);padding:18px 22px;border-color:#d7b86e66;background:linear-gradient(155deg,#242b37,#121923);animation:role-card-arrive .58s cubic-bezier(.2,.8,.2,1) both}
+.role-reveal-card .role-art{height:clamp(110px,24vh,200px);margin:4px auto}
+.role-reveal-card .role-title{font-size:clamp(34px,8vw,54px)}.role-reveal-card .role-description{font-size:15px}
+.role-allies{margin:7px 0;padding:9px 11px;border-radius:10px;background:#ffffff0a;color:#ccd3dc}.role-allies b{color:#f1d9a6}
+.role-ready-wait{width:100%;padding:12px;border:1px solid #d5c29644;border-radius:13px;background:#ffffff08;color:#f1d9a6}.role-ready-wait p{margin:4px 0 0;color:#c2cbd5}
+.rolecheck-handoff,.rolecheck-wait{width:min(100%,440px);padding:clamp(18px,4vw,28px);display:grid;justify-items:center;gap:12px;text-align:center;border:1px solid #d5c29644;border-radius:18px;background:#ffffff08;color:#f2e7cd}
+.rolecheck-handoff p,.rolecheck-wait b{font-size:clamp(19px,4vw,26px);line-height:1.45}.rolecheck-handoff .wide{min-height:52px}
+@keyframes role-stage-in{from{opacity:0;transform:translateY(14px);filter:blur(5px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes role-card-arrive{0%{opacity:0;transform:scale(.94) translateY(14px)}65%{opacity:1;transform:scale(1.015) translateY(0)}100%{transform:scale(1)}}
+@media(max-width:680px){
+ .app.help-shell main{width:calc(100% - 22px);min-height:calc(100dvh - 58px);padding:12px 0 24px}
+ .app.help-shell .help-page{padding:20px 15px;border-radius:18px}
+ .home-page .catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+ .home-page .catalog-card{grid-template-columns:28px minmax(0,1fr);grid-template-rows:auto auto;min-height:152px;padding:10px;gap:6px 8px}
+ .home-page .catalog-card .catalog-status{position:static;grid-column:1/-1;grid-row:1;justify-self:start;width:auto;height:auto;max-width:100%;padding:3px 7px;font-size:8px;transform:none}
+ .home-page .catalog-card .catalog-mark{grid-column:1;grid-row:2;width:28px;height:28px;align-self:start}
+ .home-page .catalog-card>div{grid-column:2;grid-row:2;min-width:0;align-self:start}
+ .home-page .catalog-card h3{padding:0;overflow-wrap:anywhere;font-size:clamp(12px,3.6vw,15px);line-height:1.35}
+ .home-page .catalog-card p,.home-page .catalog-card small{grid-column:auto;overflow-wrap:anywhere}
+ .app.room-lobby-shell main{height:auto;min-height:calc(100dvh - 58px);padding:8px 10px 24px;overflow:visible}
+ .room.room-lobby{height:auto;min-height:0;overflow:visible}
+ .lobby-board{height:auto;min-height:0;gap:10px}
+ .lobby-topbar{min-height:72px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px 9px;padding:9px 10px}
+ .lobby-room-code{grid-column:1;grid-row:1;grid-template-columns:auto auto;justify-content:start;gap:0 8px}
+ .lobby-room-code>strong{font-size:clamp(20px,6vw,27px)}
+ .lobby-top-meta{grid-column:2;grid-row:1;gap:6px;margin:0}
+ .lobby-points{padding:5px 7px;gap:1px}.lobby-points span{font-size:8px}.lobby-points b{font-size:11px}
+ .lobby-qr{padding:3px}.lobby-qr svg{width:43px;height:43px}
+ .lobby-presence{grid-column:1/-1;grid-row:2;display:flex;align-items:baseline;gap:7px;padding:5px 0 0;border:0;border-top:1px solid #edf1f1}
+ .lobby-presence b{font-size:15px}.lobby-presence small,.lobby-presence span{font-size:9px}
+ .lobby-layout{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;gap:10px}
+ .lobby-people{grid-column:1;grid-row:1;min-height:0;max-height:none;padding:13px}
+ .lobby-player-list{max-height:24dvh;overscroll-behavior:contain}
+ .lobby-player{padding:8px 1px;font-size:13px}.lobby-player-name small{font-size:10px}
+ .lobby-people-footer{padding-top:8px}.lobby-method{padding:4px 0}.lobby-invite-hint{font-size:10px}
+ .lobby-center{grid-column:1;grid-row:2;min-height:0;padding:14px}
+ .lobby-section-heading h2{font-size:19px}.lobby-kicker{font-size:9px}
+ .lobby-carousel{grid-template-columns:36px minmax(0,1fr) 36px;gap:7px;min-height:0;margin:8px 0 0}
+ .lobby-carousel>button{width:36px;height:44px;font-size:25px}
+ .lobby-game-card{height:auto;min-height:210px;padding:19px 12px;border-radius:18px}
+ .lobby-game-icon{width:45px;height:45px;margin-bottom:8px;font-size:22px}
+ .lobby-game-card h3{font-size:clamp(19px,5vw,24px);overflow-wrap:anywhere}
+ .lobby-game-card p{font-size:12px;line-height:1.55;overflow-wrap:anywhere}
+ .lobby-game-card>small{font-size:10px}
+ .lobby-game-dots{padding:10px 0}
+ .lobby-ready-panel{margin-top:3px;padding:12px;gap:8px}.lobby-ready-copy,.lobby-ready-copy span{font-size:13px}
+ .lobby-ready-panel button{min-height:42px;padding:9px;font-size:13px}
+ .lobby-ready-panel>small{display:block;font-size:10px}
+ .lobby-start{min-height:48px;margin-top:10px;padding:12px;font-size:14px}
+ .lobby-disband{margin-top:7px;font-size:12px}
+ .rolecheck-stage{min-height:calc(100dvh - 96px);padding:16px 12px;gap:13px;border-radius:19px}
+ .role-reveal-card{padding:12px}.role-reveal-card .role-art{height:clamp(90px,18vh,145px)}
+}
+@media(orientation:landscape) and (max-height:520px) and (max-width:900px){
+ .app.room-lobby-shell main{height:auto;min-height:calc(100dvh - 48px);overflow:visible}
+ .app.room-lobby-shell>header{height:48px;min-height:48px}
+ .lobby-layout{grid-template-columns:minmax(150px,.75fr) minmax(250px,1.25fr);grid-template-rows:auto}
+ .lobby-people,.lobby-center{grid-row:1;padding:9px}
+ .lobby-game-card{height:auto;min-height:145px}
+ .lobby-topbar{min-height:54px}
+}
