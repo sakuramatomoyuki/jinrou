@@ -1693,3 +1693,108 @@ body:has(.theme-studio){overflow:hidden}
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
+
+/* Final, single source of truth for room-theme surfaces and phase notices.
+   Explicit longhands keep mobile WebKit from restoring opaque card fills. */
+.app.in-game.theme-preset-active > main > .game-screen,
+.app.in-game.theme-preset-active > main > .game-screen > .game-area,
+.app.in-game.theme-preset-active > main > .game-screen > .secret-card,
+.app.in-game.theme-preset-active > main > .game-screen > .ending,
+.app.in-game.theme-preset-active > main > .game-screen > .ranking-screen,
+.app.in-game.theme-preset-active > main > .game-screen .game-area > :is(.role-confirmation,.night-action-card,.vote-card,.night-chat-fullscreen,.night-chat-tabs,.night-suspicion,.night-result,.handoff,.turn-wait,.vote-confirm,.morning-reveal,.execution-reveal,.suspect-reveal,.suspect-leader-card,.replay-controls) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Morning announcements are centered against the actual visible viewport,
+   independent of the max-width room panel and its padding. */
+.app.in-game > main > .game-screen.morning-screen {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 20 !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)) !important;
+  overflow: hidden !important;
+}
+.app.in-game > main > .game-screen.morning-screen > .game-area {
+  position: static !important;
+  display: contents !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+.app.in-game > main > .game-screen.morning-screen > .game-area > .morning-reveal {
+  position: relative !important;
+  inset: auto !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  translate: none !important;
+  transform: none !important;
+  align-self: center !important;
+  justify-self: center !important;
+  width: min(64rem, calc(100vw - 2rem)) !important;
+  max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2rem) !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+
+/* Keep the discussion tally wholly inside the desktop viewport, even when a
+   large tie produces several cards. Its own contents scroll when necessary. */
+.app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal {
+  position: fixed !important;
+  z-index: 30 !important;
+  left: 50vw !important;
+  right: auto !important;
+  bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+  translate: -50% 0 !important;
+  transform: none !important;
+  width: min(72rem, calc(100vw - 2rem)) !important;
+  max-width: calc(100vw - 2rem) !important;
+  max-height: min(38dvh, 28rem) !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+.app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal .suspect-reveal-details,
+.app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal .suspect-leaders,
+.app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal .suspect-leader-card {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+.app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal .suspect-leaders {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)) !important;
+}
+@media (max-width: 650px) {
+  .app.in-game > main > .game-screen.morning-screen > .game-area > .morning-reveal {
+    width: calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right) - 1rem) !important;
+  }
+  .app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal {
+    left: max(.5rem, env(safe-area-inset-left)) !important;
+    right: max(.5rem, env(safe-area-inset-right)) !important;
+    bottom: max(.5rem, env(safe-area-inset-bottom)) !important;
+    translate: none !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: min(40dvh, 24rem) !important;
+  }
+}
