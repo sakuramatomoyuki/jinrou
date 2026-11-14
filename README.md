@@ -57,7 +57,7 @@ firebase emulators:start --only auth,database,functions --project jinrou-de81
 
 ### GitHub Pages
 
-公開URLを `https://sakuramatomoyuki.github.io/asobiba/` にする場合は、GitHubリポジトリの Settings → General → Repository name でリポジトリ名を `asobiba` に変更してから、Pagesを再ビルドしてください。ViteのベースパスはActionsが受け取るリポジトリ名から生成されるため、改名後のパスへ切り替わります。実際に使うURLは、改名後に Settings → Pages と Pagesデプロイの完了画面で確認してください。
+公開URLを `https://sakuramatomoyuki.github.io/asobiba/` にする場合は、GitHubリポジトリの Settings → General → Repository name でリポジトリ名を `asobiba` に変更してから、Pagesを再ビルドしてください。ViteのベースパスはActionsが受け取るリポジトリ名から生成されるため、改名後のパスへ切り替わります。実際に使うURLは、改名後に Settings → Pages とPagesデプロイの完了画面で確認してください。GitHubはリポジトリ名変更後もGitリポジトリへの旧リンクを転送しますが、GitHub Pagesの旧プロジェクトURLは転送しません。以前のURLを共有している場合は、新URLを改めて共有してください。
 
 1. GitHubにこのプロジェクトをpushし、既定ブランチを `main` にします。
 2. Repository Settings → Pages → Build and deployment で「GitHub Actions」を選びます。
