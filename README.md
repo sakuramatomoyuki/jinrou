@@ -57,6 +57,8 @@ firebase emulators:start --only auth,database,functions --project jinrou-de81
 
 ### GitHub Pages
 
+公開URLを `https://sakuramatomoyuki.github.io/asobiba/` にする場合は、GitHubリポジトリの Settings → General → Repository name でリポジトリ名を `asobiba` に変更してから、Pagesを再ビルドしてください。ViteのベースパスはActionsが受け取るリポジトリ名から生成されるため、改名後のパスへ切り替わります。実際に使うURLは、改名後に Settings → Pages と Pagesデプロイの完了画面で確認してください。
+
 1. GitHubにこのプロジェクトをpushし、既定ブランチを `main` にします。
 2. Repository Settings → Pages → Build and deployment で「GitHub Actions」を選びます。
 3. Settings → Secrets and variables → Actions → Variables に以下を登録します：`VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_DATABASE_URL`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_APP_ID`。
