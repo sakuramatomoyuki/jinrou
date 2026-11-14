@@ -30,6 +30,10 @@
           "wolf": {
             ".read": "auth != null && root.child('rooms').child($roomCode).child('chatMembers').child('wolf').child(auth.uid).val() === true",
             ".write": false
+          },
+          "wordwolf": {
+            ".read": "auth != null && root.child('rooms').child($roomCode).child('chatMembers').child('wordwolf').child(auth.uid).val() === true",
+            ".write": false
           }
         }
       }

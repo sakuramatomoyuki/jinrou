@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import rules from '../database.rules.json';
+import firebaseConfig from '../firebase.json';
 
 describe('Realtime Database のクライアント権限', () => {
   const roomRules = rules.rules.rooms.$roomCode;
@@ -19,7 +20,7 @@ describe('Realtime Database のクライアント権限', () => {
   });
 
   it('チャット通知は該当チャット参加者に限定し、クライアント書き込みを拒否する', () => {
-    for (const channel of ['shared', 'wolf'] as const) {
+    for (const channel of ['shared', 'wolf', 'wordwolf'] as const) {
       expect(roomRules.chatSignals[channel]['.read']).toContain(`child('${channel}')`);
       expect(roomRules.chatSignals[channel]['.write']).toBe(false);
     }
@@ -28,5 +29,16 @@ describe('Realtime Database のクライアント権限', () => {
   it('チャット参加者一覧自体はクライアントに公開しない', () => {
     expect(roomRules.chatMembers['.read']).toBe(false);
     expect(roomRules.chatMembers['.write']).toBe(false);
+  });
+});
+
+describe('ローカルFirebase Emulator設定', () => {
+  it('認証・データベース・Functionsの固定ポートを設定し、UIを有効にする', () => {
+    expect(firebaseConfig.emulators).toMatchObject({
+      auth: { port: 9099 },
+      database: { port: 9000 },
+      functions: { port: 5001 },
+      ui: { enabled: true, port: 4000 },
+    });
   });
 });

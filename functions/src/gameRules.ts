@@ -106,9 +106,43 @@ export function winningTeam(players: Array<{alive:boolean;role?:string}>): '市�
   return wolves >= village ? '人狼陣営' : null;
 }
 
+export type WerewolfPointPlayer = { uid: string; role?: string; alive: boolean };
+
+/** Calculates one match's exact Werewolf point breakdown; invalid matches score zero. */
+export function calculateWerewolfPointAwards(
+  players: WerewolfPointPlayer[],
+  winner: string | null,
+  divinationRounds: Record<string, number[]> = {},
+  voteHistory: Ballot[] = [],
+): Record<string, Record<string, number>> {
+  const awards = Object.fromEntries(players.map(({ uid }) => [uid, {} as Record<string, number>]));
+  if (winner !== '市民陣営' && winner !== '人狼陣営') return awards;
+
+  const werewolves = players.filter((player) => player.role === '人狼').map((player) => player.uid);
+  const wolvesWentUnvoted = werewolves.length > 0 && werewolves.every((uid) =>
+    !voteHistory.some((ballot) => Object.values(ballot).includes(uid)),
+  );
+
+  for (const player of players) {
+    const earned = awards[player.uid];
+    const team = teamOf(player.role);
+    if (team === '村人陣営' && winner === '市民陣営') earned['チーム勝利（村人陣営）'] = 5;
+    if (team === '人狼陣営' && winner === '人狼陣営') earned['チーム勝利（人狼陣営）'] = 7;
+    if (player.alive) earned['生存ボーナス'] = 1;
+    for (const day of new Set(divinationRounds[player.uid] || [])) {
+      const label = day <= 2 ? '占い成功（1〜2日目）' : '占い成功（3日目以降）';
+      earned[label] = (earned[label] || 0) + (day <= 2 ? 2 : 1);
+    }
+    if (player.role === '人狼' && winner === '人狼陣営' && wolvesWentUnvoted) {
+      earned['人狼のノー投票（完封）'] = 2;
+    }
+  }
+  return awards;
+}
+
 export function canRevealSeatSecret(uid: string, device: string | undefined, phase: string, activeSeatUid: string | null): boolean {
   if (device !== 'shared') return true;
-  return ['rolecheck', 'night', 'vote', 'revote'].includes(phase) && activeSeatUid === uid;
+  return ['rolecheck', 'night', 'vote', 'revote', 'wordwolf-word', 'wordwolf-vote', 'wordwolf-guess'].includes(phase) && activeSeatUid === uid;
 }
 
 /** Public-only room snapshots are needed by the owner of a shared-device room. */

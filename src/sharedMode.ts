@@ -1,5 +1,14 @@
 export type JoinMode = 'individual' | 'shared' | 'hybrid';
 
+export function shouldHandoffToSharedSeat(
+  mode: JoinMode | string,
+  nextSeat?: { uid: string; device?: string } | null,
+  activeSeat?: { uid: string; awaiting?: boolean } | null,
+): boolean {
+  if (!['shared', 'hybrid'].includes(mode) || nextSeat?.device !== 'shared') return false;
+  return !(activeSeat && !activeSeat.awaiting && activeSeat.uid === nextSeat.uid);
+}
+
 export function sharedRosterError(mode: JoinMode, playerCount: number, inputNames: string[], hostName?: string): string | null {
   if (mode === 'individual') return null;
   const names = inputNames.map(name => name.trim()).filter(Boolean);

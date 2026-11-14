@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { allVoteParticipantsSubmitted, canReadSharedPublicView, canRevealSeatSecret, chooseRandomDistinct, cleanRealtimeData, invalidateNightActionsForDeath, nextSharedNightTurn, nightCompleteIds, nightParticipantIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, voteParticipantIds, winningTeam } from '../functions/src/gameRules';
+import { allVoteParticipantsSubmitted, calculateWerewolfPointAwards, canReadSharedPublicView, canRevealSeatSecret, chooseRandomDistinct, cleanRealtimeData, invalidateNightActionsForDeath, nextSharedNightTurn, nightCompleteIds, nightParticipantIds, recommendedRoles, revoteFallbackPlan, revoteVoters, tallyVotes, teamOf, tiedVoteAction, voteParticipantIds, winningTeam } from '../functions/src/gameRules';
 
 describe('Realtime Database保存データ', () => {
   it('オブジェクト内のundefinedを除去し、配列内はnullに置き換える', () => {
@@ -172,6 +172,34 @@ describe('合意済みの役職・進行ルール', () => {
     expect(teamOf('人狼')).toBe('人狼陣営');
     expect(teamOf('狂人')).toBe('人狼陣営');
     expect(teamOf('狂言者')).toBe('人狼陣営');
+  });
+
+  it('勝利陣営・生存・占い成功・人狼完封を指定どおり加点する', () => {
+    const players = [
+      { uid: 'seer', role: '占い師', alive: true },
+      { uid: 'villager', role: '市民', alive: false },
+      { uid: 'wolf1', role: '人狼', alive: true },
+      { uid: 'wolf2', role: '人狼', alive: false },
+      { uid: 'madman', role: '狂人', alive: true },
+    ];
+    const village = calculateWerewolfPointAwards(players, '市民陣営', { seer: [1, 2, 3, 3] });
+    expect(village.seer).toEqual({ 'チーム勝利（村人陣営）': 5, 生存ボーナス: 1, '占い成功（1〜2日目）': 4, '占い成功（3日目以降）': 1 });
+    expect(village.villager).toEqual({ 'チーム勝利（村人陣営）': 5 });
+    expect(village.wolf1).toEqual({ 生存ボーナス: 1 });
+
+    const wolves = calculateWerewolfPointAwards(players, '人狼陣営');
+    expect(wolves.wolf1).toEqual({ 'チーム勝利（人狼陣営）': 7, 生存ボーナス: 1, '人狼のノー投票（完封）': 2 });
+    expect(wolves.wolf2).toEqual({ 'チーム勝利（人狼陣営）': 7, '人狼のノー投票（完封）': 2 });
+    expect(wolves.madman).toEqual({ 'チーム勝利（人狼陣営）': 7, 生存ボーナス: 1 });
+  });
+
+  it('人狼が一度でも投票を受けたら完封ボーナスを付けず、無効試合は全員0点', () => {
+    const players = [{ uid: 'wolf', role: '人狼', alive: true }, { uid: 'town', role: '市民', alive: true }];
+    expect(calculateWerewolfPointAwards(players, '人狼陣営', {}, [{ town: 'wolf' }]).wolf)
+      .toEqual({ 'チーム勝利（人狼陣営）': 7, 生存ボーナス: 1 });
+    expect(calculateWerewolfPointAwards(players, '無効試合', { town: [1] }, [{ town: 'town' }]))
+      .toEqual({ wolf: {}, town: {} });
+    expect(calculateWerewolfPointAwards(players, '引き分け')).toEqual({ wolf: {}, town: {} });
   });
 
   it('夜の完了人数には接続中・生存・保留でない人だけを含む', () => {

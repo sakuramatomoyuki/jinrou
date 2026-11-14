@@ -414,6 +414,7 @@ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid 
   input, select, textarea, .field input, .field select { font-size: 16px; }
 }
 
+
 .suspect-reveal-heading>div{display:flex;align-items:center;gap:.55rem}
 .suspect-toggle{display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .65rem;border:1px solid #d6b97655;border-radius:999px;background:#111a29;color:#f1dfb8;font:inherit;font-size:.8rem;white-space:nowrap}
 .suspect-toggle span{font-size:1rem;transition:transform .3s ease}
@@ -985,6 +986,77 @@ body.game-active,.app.in-game,.app.in-game[data-scene="day"],.app.in-game[data-s
 .discussion-screen>.game-area>.suspect-reveal{max-height:min(38dvh,24rem);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-bottom:max(1rem,env(safe-area-inset-bottom))}
 @media(max-height:620px){.discussion-screen>.game-area>.suspect-reveal{max-height:calc(100dvh - 7rem);bottom:.5rem}}
 
+/* Keep room themes isolated: the room's saved preset is the visual source of
+   truth, and its surfaces stay transparent on Safari/iOS as well. */
+.app.theme-preset-active .game-screen,
+.app.theme-preset-active .game-screen>.game-area,
+.app.theme-preset-active .game-screen>.secret-card,
+.app.theme-preset-active .game-screen>.ending,
+.app.theme-preset-active .game-screen>.ranking-screen,
+.app.theme-preset-active .game-screen>.morning-reveal,
+.app.theme-preset-active .game-screen>.execution-reveal,
+.app.theme-preset-active .game-screen .game-area>*:not(.gm-drawer):not(.log-drawer):not(.game-menu-scrim):not(.phase):not(.eyebrow):not(.death-notice):not(.spectator-permission) {
+  background-color:transparent!important;
+  background-image:none!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+.app.theme-preset-active .game-screen .game-area :is(.night-suspicion,.night-result,.handoff,.turn-wait,.role-confirmation,.vote-card,.night-action-card,.night-chat-tabs,.night-chat-fullscreen,.morning-reveal,.execution-reveal,.vote-confirm,.replay-controls,.suspect-leader-card) {
+  background-color:transparent!important;
+  background-image:none!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+
+/* Morning text is centered by a viewport-sized grid, avoiding fixed-position
+   containing-block differences in embedded mobile browsers. */
+.morning-screen>.game-area {
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  width:100%;
+  height:100%;
+  min-height:0;
+  margin:0;
+  padding:clamp(1rem,4vw,2rem);
+  background:transparent;
+  border:0;
+}
+.morning-screen>.game-area>.morning-reveal {
+  position:relative;
+  inset:auto;
+  translate:0 0;
+  width:min(100%,64rem);
+  max-height:calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  margin:0;
+}
+
+/* The discussion result panel stays within the desktop viewport even with
+   several tied leaders; its contents scroll inside the panel instead. */
+.discussion-screen>.game-area>.suspect-reveal {
+  left:50%;
+  bottom:max(1rem,env(safe-area-inset-bottom));
+  width:min(70rem,calc(100vw - 3rem));
+  max-height:min(34dvh,28rem);
+  overflow-x:hidden;
+  overflow-y:auto;
+  scrollbar-gutter:stable;
+  padding:clamp(.65rem,1.3vw,1.1rem);
+}
+.discussion-screen .suspect-leaders {
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));
+}
+@media(max-width:650px) {
+  .morning-screen>.game-area {padding:max(.75rem,env(safe-area-inset-top)) .75rem max(.75rem,env(safe-area-inset-bottom));}
+  .morning-screen>.game-area>.morning-reveal {max-height:100%;}
+  .discussion-screen>.game-area>.suspect-reveal {width:calc(100vw - 1.5rem);max-height:34dvh;bottom:max(.6rem,env(safe-area-inset-bottom));}
+}
+
 /* The theme editor is a workspace, so let it occupy the viewport instead of
    nesting it inside the generic narrow card used by the other app pages. */
 body:has(.theme-studio){overflow:hidden}
@@ -997,3 +1069,539 @@ body:has(.theme-studio){overflow:hidden}
 .theme-preview-frame{max-width:100%}
 @media(max-width:900px){.theme-editor-layout{grid-template-columns:minmax(0,1fr)}.theme-editor-controls{max-height:none}.theme-live-sticky{max-height:none}}
 @media(max-width:600px){.theme-studio{padding:.75rem}.theme-name-row{padding:.65rem}.theme-preview-frame{width:min(100%,calc(55dvh * .51613));max-height:55dvh}}
+
+/* Full-screen phases use the viewport as their coordinate system. The themed
+   game-area width cap previously shifted centered notices left on desktop. */
+.app.in-game>main>.game-screen.morning-screen>.game-area,
+.app.in-game>main>.game-screen.discussion-screen>.game-area {
+  width:100vw!important;
+  max-width:none!important;
+  box-sizing:border-box;
+}
+.app.in-game>main>.game-screen.morning-screen>.game-area {
+  position:absolute;
+  inset:0;
+  height:100%;
+  overflow:visible;
+}
+.app.in-game>main>.game-screen.discussion-screen>.game-area {
+  overflow:visible;
+}
+.app.in-game>main>.game-screen.morning-screen>.game-area>.morning-reveal {
+  position:absolute;
+  left:50%;
+  top:50%;
+  translate:-50% -50%;
+  margin:0;
+}
+.app.in-game>main>.game-screen.discussion-screen>.game-area>.suspect-reveal {
+  left:50%;
+  translate:-50% 0;
+  width:min(70rem,calc(100vw - 3rem));
+  max-height:min(34dvh,28rem);
+  box-sizing:border-box;
+}
+
+/* Use explicit transparent backgrounds on every engine; iOS WebKit can keep
+   the component's shorthand background even when only its image is cleared. */
+.app.theme-preset-active .game-screen,
+.app.theme-preset-active .game-screen>.game-area,
+.app.theme-preset-active .game-screen .game-area :is(.role-confirmation,.night-action-card,.vote-card,.night-chat-fullscreen,.night-chat-tabs,.night-suspicion,.night-result,.handoff,.turn-wait,.morning-reveal,.execution-reveal,.vote-confirm,.replay-controls,.suspect-leader-card) {
+  background:transparent!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+@media(max-width:650px) {
+  .app.in-game>main>.game-screen.morning-screen>.game-area>.morning-reveal {
+    width:calc(100vw - 1.5rem);
+    max-height:calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  }
+  .app.in-game>main>.game-screen.discussion-screen>.game-area>.suspect-reveal {
+    width:calc(100vw - 1.5rem);
+    max-height:34dvh;
+  }
+}
+
+/* Multi-game landing page: keep the existing room and in-game interface untouched. */
+.playground-hero{background:radial-gradient(ellipse at 85% 12%,#fff2d21c,transparent 38%),linear-gradient(145deg,#17263adf,#202b37e8 55%,#303137e8)!important}
+.game-catalog{width:min(100%,1040px);margin:clamp(1.6rem,4vw,3rem) auto 1.25rem;padding:0 clamp(.2rem,1vw,.6rem)}
+.catalog-heading{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin:0 0 1rem}
+.catalog-heading h2{margin:.2rem 0;color:#f2e6cd;font-size:clamp(1.35rem,3vw,2rem)}
+.catalog-heading>p{margin:0 0 .35rem;color:#c1cbd5;font-size:.92rem}
+.catalog-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.85rem}
+.catalog-card{--accent:#d7b873;position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:flex-start;gap:.8rem;min-height:145px;padding:1rem;text-align:left;border:1px solid color-mix(in srgb,var(--accent) 34%,transparent);border-radius:1rem;background:linear-gradient(145deg,#182537ed,#15202be8);box-shadow:0 14px 34px #05091135;animation:catalog-rise .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--card-index,0)*70ms)}
+.catalog-card:before{content:"";position:absolute;inset:auto -24% -72% 28%;height:130%;z-index:-1;border-radius:50%;background:radial-gradient(ellipse,color-mix(in srgb,var(--accent) 17%,transparent),transparent 68%);transition:transform .45s ease,opacity .45s ease;opacity:.6}
+.catalog-card:hover:before{transform:translate(-7%,-12%) scale(1.18);opacity:1}
+.catalog-medieval{--accent:#ddc58c;background:linear-gradient(145deg,#1d2939f0,#151d29ed)}
+.catalog-stage{--accent:#f1b27e;background:radial-gradient(ellipse at 76% -20%,#f49f4630,transparent 55%),linear-gradient(145deg,#302436,#1a1b2b)}
+.catalog-bright{--accent:#9dd2b7;background:radial-gradient(ellipse at 80% -20%,#8be0bb2b,transparent 55%),linear-gradient(145deg,#1c3435,#182630)}
+.catalog-mark{flex:0 0 2.5rem;width:2.5rem;height:2.5rem;display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--accent) 44%,transparent);border-radius:.8rem;color:var(--accent);font-size:1.35rem;background:#08111a70}
+.catalog-card>div{min-width:0;display:grid;gap:.35rem}
+.catalog-card h3{margin:.1rem 0;color:#f4ead7;font-size:1.05rem}
+.catalog-card p{margin:0;color:#c0c9d3;font-size:.84rem;line-height:1.5}
+.catalog-card small{margin-top:.3rem;color:var(--accent);font-size:.75rem}
+.catalog-arrow{position:absolute;right:.85rem;top:.75rem;color:var(--accent);opacity:.7}
+@keyframes catalog-rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(max-width:800px){.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.catalog-card{min-height:128px}}
+@media(max-width:480px){.catalog-heading{display:block}.catalog-heading>p{margin-top:.35rem}.catalog-grid{gap:.6rem}.catalog-card{min-height:145px;padding:.8rem;gap:.6rem;border-radius:.85rem}.catalog-mark{width:2.15rem;height:2.15rem;flex-basis:2.15rem}.catalog-card h3{font-size:.98rem}.catalog-card p{font-size:.78rem}}
+@media(prefers-reduced-motion:reduce){.catalog-card{animation:none}}
+
+.catalog-status{position:absolute;right:.8rem;bottom:.75rem;padding:.22rem .5rem;border:1px solid #ffffff20;border-radius:999px;color:#b3bdca;background:#0a111979;font-size:.68rem;letter-spacing:.03em}
+.catalog-status.is-available{border-color:#cce0a65c;color:#d9e5bd}
+
+/* Ogiri uses a warm stage palette while keeping the shared room controls. */
+.ogiri-setup{margin:.8rem 0 1rem;padding:1rem;border:1px solid #d8a87366;border-radius:.9rem;background:linear-gradient(145deg,#352b32,#211f2b)}
+.ogiri-setup h4{margin:0 0 .7rem;color:#f0c89b}
+.ogiri-setup-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
+.ogiri-setup-grid label{display:grid;gap:.35rem;color:#e8d8c8;font-size:.86rem}
+.ogiri-setup-grid select{width:100%;min-height:2.8rem}
+.ogiri-setup-grid input[type=range]{width:100%;accent-color:#e0a96e}
+.ogiri-setup>p{margin:.7rem 0 0;color:#c8b8a9;font-size:.8rem;line-height:1.6}
+.ogiri-points{display:flex;flex-wrap:wrap;gap:.7rem 1.1rem;margin-top:.8rem;color:#e6d4c1;font-size:.82rem}
+.ogiri-screen{position:relative;isolation:isolate;width:100%;min-height:min(68dvh,760px);box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:1rem;padding:clamp(1rem,4vw,2.5rem);overflow:hidden;border:1px solid #d7aa7866;border-radius:1.2rem;background:radial-gradient(ellipse at 75% 0%,#efaa5428,transparent 46%),linear-gradient(155deg,#30252d,#191d2a 68%,#22232d);color:#f4eee6;animation:ogiri-stage-enter .5s cubic-bezier(.2,.75,.25,1) both}
+.ogiri-screen:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.22;background:repeating-linear-gradient(115deg,transparent 0 34px,#f2ce9a09 35px 36px)}
+.ogiri-screen>header{height:auto;max-width:none;margin:0;padding:0 0 .7rem;display:flex;justify-content:space-between;gap:.6rem;border-bottom:1px solid #ffffff20;color:#efd09f;font-weight:800}
+.ogiri-screen>header small{color:#c8b6a5;font-weight:500}
+.ogiri-card,.ogiri-wait,.ogiri-handoff,.ogiri-judging{width:min(100%,760px);box-sizing:border-box;margin:auto;padding:clamp(1rem,4vw,2.3rem);border:1px solid #d4ad7a55;border-radius:1rem;background:linear-gradient(155deg,#342b32e8,#1c202bf0);box-shadow:0 20px 55px #090b1280;text-align:center}
+.ogiri-card h2,.ogiri-wait h2,.ogiri-judging h2{margin:.2rem 0 1rem;color:#f0d4a8;font-size:clamp(1.4rem,4vw,2.15rem);line-height:1.45}
+.ogiri-card>small{display:block;margin-bottom:.3rem;color:#ddb778;font-size:.75rem;letter-spacing:.12em}
+.ogiri-card textarea{width:100%;min-height:5.5rem;box-sizing:border-box;padding:.8rem;border:1px solid #b59a7966;border-radius:.65rem;background:#111923;color:#f5efe8;font:inherit;resize:vertical}
+.ogiri-tabs{display:flex;gap:.55rem;margin:.8rem 0}
+.ogiri-tabs button,.ogiri-rating button{min-height:2.8rem;padding:.55rem .8rem;border:1px solid #c5a47b66;border-radius:.65rem;background:#ffffff09;color:#f0e6d9;font:inherit;cursor:pointer}
+.ogiri-tabs button{flex:1}.ogiri-tabs button.active,.ogiri-rating button.selected{border-color:#f0c888;background:#bf8b5140;box-shadow:0 0 18px #e5ad6330}
+.ogiri-drawing{display:grid;gap:.6rem}.ogiri-drawing canvas{display:block;width:100%;height:auto;max-height:48dvh;touch-action:none;border:1px solid #b9a58c77;border-radius:.7rem;background:white}
+.ogiri-wait p,.ogiri-card>p,.ogiri-judging>p{color:#cbbcae;line-height:1.65}
+.ogiri-judging{width:min(100%,980px);max-height:min(74dvh,56rem);overflow:auto;text-align:left}
+.ogiri-submission{display:grid;gap:.65rem;margin:.75rem 0;padding:.9rem;border:1px solid #d4ad7a44;border-radius:.8rem;background:#0e1520aa}
+.ogiri-submission>b{color:#e9cfab}.ogiri-submission>p{margin:0;color:#f1e9df;overflow-wrap:anywhere}
+.ogiri-submission>img{display:block;width:min(100%,38rem);max-height:36dvh;object-fit:contain;margin:auto;border-radius:.5rem;background:#fff}
+.ogiri-rating{display:flex;flex-wrap:wrap;gap:.35rem;justify-content:center}.ogiri-rating button{flex:1 1 3rem;max-width:6rem}
+.ogiri-results ol{display:grid;gap:.55rem;margin:1rem 0;padding:0;list-style:none;text-align:left}
+.ogiri-results li{display:flex;align-items:center;justify-content:space-between;gap:.7rem;padding:.75rem;border-bottom:1px solid #ddb77650;color:#e9ddcf}
+.ogiri-results li span{color:#f1cb92;white-space:nowrap}.ogiri-results li.eliminated{opacity:.58;text-decoration:line-through}
+@keyframes ogiri-stage-enter{from{opacity:0;transform:translateY(12px) scale(.99);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
+@media(max-width:620px){.ogiri-screen{min-height:64dvh;padding:.9rem;border-radius:.9rem}.ogiri-setup-grid{grid-template-columns:1fr}.ogiri-results li{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){.ogiri-screen{animation:none}}
+
+/* The first additional title uses the same room shell and server clock as Werewolf. */
+.room-game-select{margin:.8rem 0 1rem}
+.room-ready-panel{display:grid;grid-template-columns:1fr auto;gap:.55rem .8rem;align-items:center;margin:.75rem 0 1rem;padding:.9rem 1rem;border:1px solid #d9bf8055;border-radius:.9rem;background:linear-gradient(145deg,#1e2938,#171e29)}
+.room-ready-panel>b{color:#f1dfba}.room-ready-panel>span{color:#d8c189;font-weight:700}.room-ready-panel>button,.room-ready-panel>small{grid-column:1/-1}.room-ready-panel>small{color:#aeb9c7;font-size:.78rem}
+.ww-setup{margin:1rem 0;padding:1rem;border:1px solid #d9bf8055;border-radius:.95rem;background:linear-gradient(145deg,#202b39,#161e2a)}
+.ww-setup h4{margin:0 0 .75rem;color:#ecd49f}.ww-setup-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}.ww-setup-grid label,.ww-topic-pair label{display:grid;gap:.35rem;color:#d3dae2;font-size:.85rem}.ww-setup select,.ww-setup input,.ww-private-card input{box-sizing:border-box;width:100%;min-height:2.8rem;padding:.65rem .75rem;border:1px solid #8190a955;border-radius:.65rem;background:#101824;color:#f4f1e9;font:inherit}.ww-topic-pair{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:.8rem}.ww-topic-pair button{grid-column:1/-1}.ww-point-options{display:grid;gap:.55rem;margin-top:.85rem;color:#d2dae3;font-size:.83rem}.ww-point-options label{display:flex;align-items:center;gap:.55rem}.ww-point-options input{width:1.1rem;height:1.1rem;accent-color:#d7b873}
+.wordwolf-screen{position:relative;isolation:isolate;width:100%;min-height:min(68dvh,760px);box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:1rem;padding:clamp(1rem,4vw,2.5rem);overflow:hidden;border:1px solid #d4b87566;border-radius:1.2rem;background:radial-gradient(ellipse at 50% 0%,#b0925620,transparent 42%),linear-gradient(155deg,#182433f2,#111a26f4 65%,#181a21f6);color:#f2ebde;animation:ww-stage-enter .5s cubic-bezier(.2,.8,.2,1) both}
+.wordwolf-screen:before{content:"";position:absolute;z-index:-1;width:min(68vw,560px);aspect-ratio:1;right:-25%;top:-45%;border:1px solid #e7d29a16;border-radius:50%;box-shadow:0 0 0 35px #d5b87305,0 0 0 85px #d5b87304;animation:ww-orbit 36s linear infinite}
+.wordwolf-screen>header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0 0 .75rem;border-bottom:1px solid #ffffff20;color:#e4c989;font-weight:800}.wordwolf-screen>header small{color:#c0c9d2;font-weight:600}
+.ww-private-card,.ww-stage,.ww-vote-card,.ww-result{width:min(100%,740px);box-sizing:border-box;margin:auto;padding:clamp(1rem,4vw,2.4rem);border:1px solid #d5bd8260;border-radius:1.1rem;background:linear-gradient(155deg,#202b38e8,#131c28f0);box-shadow:0 20px 65px #03070b70;text-align:center}
+.ww-private-card>span,.ww-result>.eyebrow{display:block;color:#dbc58f;font-size:.78rem;letter-spacing:.14em}.ww-private-card>strong{display:block;margin:1rem 0;font-size:clamp(2.5rem,9vw,5.2rem);color:#f2d699;text-shadow:0 0 28px #dbbb6560}.ww-private-card>p,.ww-stage>p,.ww-vote-card>p,.ww-result>p{color:#bac5d0;line-height:1.65}
+.ww-private-card h2,.ww-vote-card h2,.ww-result h2{font-size:clamp(1.35rem,4vw,2rem);color:#f0d69f}.ww-private-card input{margin:1rem 0;text-align:center;font-size:1.1rem}.ww-stage{display:grid;justify-items:center;gap:.6rem}.ww-stage h2{margin:.25rem 0;color:#f2d9a6;font-size:clamp(1.4rem,4vw,2.2rem)}.ww-stage p{max-width:36rem;margin:.2rem auto}.ww-sigil{color:#d8bd7d;font-size:2.8rem;animation:ww-sigil 2.6s ease-in-out infinite}.ww-timer{margin-top:.6rem;color:#f4dfaa;font-size:clamp(3.5rem,13vw,7rem);font-variant-numeric:tabular-nums;text-shadow:0 0 28px #e0c47b38}.ww-progress{margin:.5rem auto;color:#e6cc8f;font-weight:800;font-size:1.4rem}
+.ww-handoff{width:min(100%,38rem);box-sizing:border-box;margin:auto;padding:clamp(1.2rem,5vw,2rem);border:1px solid #d2b77370;border-radius:1rem;background:linear-gradient(145deg,#292330,#151d28);text-align:center}.ww-handoff p{margin:.3rem 0 1.1rem;font-size:clamp(1.2rem,4vw,1.75rem);line-height:1.5}.ww-handoff b{color:#f0d49a}.ww-handoff button+button{margin-top:.6rem}.ww-hide{max-width:38rem;align-self:center}
+.ww-vote-card{text-align:left}.ww-vote-card h2,.ww-vote-card>p{text-align:center}.ww-candidates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;margin:1.2rem 0}.ww-candidates button{min-height:3.6rem;border:1px solid #b8a47755;border-radius:.75rem;background:linear-gradient(145deg,#ffffff12,#ffffff05);color:#f4f0e7;font:inherit;font-weight:700;cursor:pointer;transition:transform .18s,border-color .18s,background .18s}.ww-candidates button:hover{transform:translateY(-2px);border-color:#e6ce8b}.ww-candidates button.selected{border-color:#e9cf8b;background:linear-gradient(145deg,#d9b86c44,#b58a4230);box-shadow:0 0 20px #d2b16b24}.ww-confirm{display:grid;gap:.6rem;margin-top:1rem;padding:1rem;border:1px solid #d7bd7955;border-radius:.8rem;background:#090f18a8;text-align:center}.ww-confirm b{padding:.4rem;color:#f0d59e;font-size:1.15rem}
+.ww-result-screen{justify-content:flex-start}.ww-result{margin:auto;max-height:100%;overflow:auto}.ww-result>.eyebrow{margin-bottom:.3rem}.ww-words{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:1.2rem 0}.ww-words>div{display:grid;gap:.5rem;padding:.9rem;border:1px solid #d0b77845;border-radius:.8rem;background:#ffffff08}.ww-words small{color:#b7c0cb}.ww-words b{font-size:1.4rem;color:#f3dca5}.ww-results-list{display:grid;gap:.5rem;margin:1rem 0 1.4rem;text-align:left}.ww-results-list>div{display:grid;grid-template-columns:minmax(6rem,1fr) 1fr auto;align-items:center;gap:.5rem;padding:.7rem .8rem;border:1px solid #ffffff16;border-radius:.65rem;background:#ffffff08}.ww-results-list span,.ww-results-list small{color:#bac5d0;font-size:.85rem}.ww-results-list strong{color:#e7cb8d}.ww-results-list small{grid-column:2/-1}
+@keyframes ww-stage-enter{from{opacity:0;transform:translateY(12px) scale(.99);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}@keyframes ww-orbit{to{transform:rotate(360deg)}}@keyframes ww-sigil{50%{transform:translateY(-5px);text-shadow:0 0 24px #e2c47b80}}
+@media(max-width:620px){.wordwolf-screen{min-height:64dvh;padding:.9rem;border-radius:.9rem}.ww-setup-grid,.ww-topic-pair{grid-template-columns:1fr}.ww-results-list>div{grid-template-columns:1fr auto}.ww-results-list span{grid-column:1/-1;grid-row:2}.ww-results-list small{grid-column:1/-1}.ww-words{gap:.5rem}.ww-words>div{padding:.7rem}.ww-words b{font-size:1.1rem}}
+@media(prefers-reduced-motion:reduce){.wordwolf-screen,.ww-sigil{animation:none}}
+
+.ww-chat{width:min(100%,740px);max-height:32dvh;min-height:10rem;margin:.4rem auto 0;padding:.8rem;border:1px solid #d4b87555;border-radius:.9rem;background:linear-gradient(155deg,#1c2835e8,#111a26ee);display:flex;flex-direction:column;gap:.55rem}
+.ww-chat>header{height:auto;max-width:none;margin:0;padding:.25rem 0 .55rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.35rem .8rem;border-bottom:1px solid #ffffff1d}
+.ww-chat>header b{color:#e4cc91}.ww-chat>header small,.ww-chat-messages>small{color:#aebbc8;font-size:.76rem}
+.ww-chat-messages{flex:1;min-height:3rem;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:.4rem}
+.ww-chat-messages p{margin:0;padding:.4rem .55rem;border-radius:.55rem;background:#ffffff09;display:grid;grid-template-columns:minmax(4rem,auto) 1fr;gap:.6rem;color:#e7e2d8;font-size:.88rem}
+.ww-chat-messages p b{color:#d9c48d}.ww-chat-messages p span{overflow-wrap:anywhere}
+.ww-chat-compose{display:flex;gap:.5rem}.ww-chat-compose input{flex:1;min-width:0;min-height:2.8rem;padding:.6rem .7rem;border:1px solid #8190a955;border-radius:.6rem;background:#101824;color:#f4f1e9;font:inherit}.ww-chat-compose button{flex:0 0 auto;padding:.65rem 1rem}
+
+.survey-setup{margin:.8rem 0 1rem;padding:1rem;border:1px solid #98cbb555;border-radius:.9rem;background:linear-gradient(145deg,#1d3435,#17272e)}
+.survey-setup h4{margin:0 0 .7rem;color:#c3ead2}.survey-setup label{display:grid;gap:.35rem;margin:.65rem 0;color:#d9e6df;font-size:.86rem}.survey-setup select{width:100%;min-height:2.8rem}.survey-setup p{margin:.6rem 0 0;color:#a9c3b5;font-size:.8rem;line-height:1.6}
+.survey-screen{position:relative;isolation:isolate;width:100%;min-height:min(68dvh,760px);box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:1rem;padding:clamp(1rem,4vw,2.5rem);overflow:hidden;border:1px solid #a9d5b566;border-radius:1.2rem;background:radial-gradient(ellipse at 75% 0%,#71bf8c21,transparent 45%),linear-gradient(155deg,#192d31f2,#111e27f4 68%,#182827f6);color:#eff5ef}
+.survey-screen>header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0 0 .75rem;border-bottom:1px solid #ffffff20;color:#bfe2ca;font-weight:800}.survey-screen>header small{color:#b8c8c1}
+.survey-card,.survey-wait,.survey-handoff{width:min(100%,740px);box-sizing:border-box;margin:auto;padding:clamp(1rem,4vw,2.4rem);border:1px solid #9ac5a855;border-radius:1.1rem;background:linear-gradient(155deg,#203238e8,#15232bf0);text-align:center}
+.survey-card h2,.survey-wait h2{margin:.2rem 0 1rem;color:#d0e8d0;font-size:clamp(1.4rem,4vw,2.15rem);line-height:1.5}.survey-card label{display:grid;gap:.45rem;margin:.8rem 0;text-align:left;color:#d3e4d8;font-size:.9rem}.survey-card textarea{width:100%;min-height:4.2rem;box-sizing:border-box;padding:.7rem;border:1px solid #93ac9e66;border-radius:.65rem;background:#111f27;color:#f2f7f3;font:inherit;resize:vertical}.survey-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:.7rem;margin:1.2rem 0}.survey-options button{min-height:3.5rem;padding:.8rem;border:1px solid #9dc4a766;border-radius:.75rem;background:#ffffff09;color:#eff6ef;font:inherit;font-weight:700}.survey-options button.selected{border-color:#a6dbb5;background:#77bc8935;box-shadow:0 0 20px #86ce9630}.survey-wait p,.survey-card>p{color:#bfd0c5;line-height:1.65}.survey-wait>b{color:#c0e1ca;font-size:1.2rem}.survey-bars{display:grid;gap:.9rem;text-align:left}.survey-bars>div{display:grid;grid-template-columns:1fr auto;gap:.4rem .8rem;color:#e6eee8}.survey-bars b{color:#c2ddc9;font-size:.86rem}.survey-bars i{grid-column:1/-1;height:.75rem;overflow:hidden;border-radius:99px;background:#ffffff12}.survey-bars em{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#6eaa7d,#c6dda2);transition:width .7s cubic-bezier(.2,.8,.2,1)}.survey-text-results{display:grid;gap:.6rem;max-height:40dvh;overflow:auto;text-align:left}.survey-text-results blockquote{margin:0;padding:.7rem .85rem;border-left:2px solid #a6cfae;border-radius:.3rem;background:#ffffff09;color:#e8eee8;overflow-wrap:anywhere}.survey-handoff b{color:#c7e3ce}
+
+/* Room theme surfaces must stay see-through on mobile WebKit as well as desktop. */
+.app.theme-preset-active .game-screen .game-area :is(.suspect-reveal,.morning-reveal,.execution-reveal,.suspect-leader-card),
+.app.theme-preset-active .game-screen>.game-area,
+.app.theme-preset-active .game-screen {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Keep the dawn announcement centered without relying on fixed-position
+   descendants, which can be offset by desktop and embedded-browser shells. */
+.app.in-game>main>.game-screen.morning-screen {
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+}
+.app.in-game>main>.game-screen.morning-screen>.game-area {
+  position: relative !important;
+  inset: auto !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: clamp(1rem, 4vw, 2rem) !important;
+  box-sizing: border-box;
+  overflow: visible !important;
+}
+.app.in-game>main>.game-screen.morning-screen>.game-area>.morning-reveal {
+  position: relative !important;
+  inset: auto !important;
+  left: auto !important;
+  top: auto !important;
+  translate: none !important;
+  width: min(100%, 64rem) !important;
+  max-height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* Pin discussion results to the bottom center of the viewport. The panel gets
+   its own scroll area so a long tie list cannot be clipped on desktop. */
+.app.in-game>main>.game-screen.discussion-screen>.game-area>.suspect-reveal {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+  translate: none !important;
+  transform: none !important;
+  width: min(70rem, calc(100vw - 2rem)) !important;
+  max-height: min(40dvh, 32rem) !important;
+  margin: 0 auto !important;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+@media (max-width: 650px) {
+  .app.in-game>main>.game-screen.morning-screen>.game-area {
+    padding: max(.75rem, env(safe-area-inset-top)) .75rem max(.75rem, env(safe-area-inset-bottom)) !important;
+  }
+  .app.in-game>main>.game-screen.morning-screen>.game-area>.morning-reveal {
+    width: 100% !important;
+    max-height: 100% !important;
+  }
+  .app.in-game>main>.game-screen.discussion-screen>.game-area>.suspect-reveal {
+    width: calc(100vw - 1.25rem) !important;
+    max-height: min(42dvh, 24rem) !important;
+    bottom: max(.6rem, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* The morning announcement and discussion tally use the game viewport as
+   their positioning context; the old nested centering rules disagreed with
+   the fixed, overflow-hidden mobile shell and could pin content to a corner. */
+.app.in-game > main > .game-screen.morning-screen {
+  position: fixed !important;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)) !important;
+  overflow: auto !important;
+}
+.app.in-game > main > .game-screen.morning-screen > .game-area {
+  position: static !important;
+  display: contents !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+.app.in-game > main > .game-screen.morning-screen > .game-area > .morning-reveal {
+  position: relative !important;
+  inset: auto !important;
+  left: auto !important;
+  top: auto !important;
+  translate: none !important;
+  transform: none !important;
+  align-self: center !important;
+  justify-self: center !important;
+  width: min(64rem, 100%) !important;
+  max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2rem) !important;
+  margin: 0 !important;
+  overflow-y: auto !important;
+}
+.app.in-game > main > .game-screen.discussion-screen {
+  overflow: visible !important;
+}
+.app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal {
+  position: fixed !important;
+  left: 50vw !important;
+  right: auto !important;
+  bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+  translate: -50% 0 !important;
+  transform: none !important;
+  width: min(70rem, calc(100vw - 2rem)) !important;
+  max-height: min(40dvh, 32rem) !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+/* Older embedded iOS browsers are inconsistent about shorthand/background
+   resets. Explicit declarations keep preset-driven game surfaces transparent. */
+.app.theme-preset-active .game-screen,
+.app.theme-preset-active .game-screen > .game-area,
+.app.theme-preset-active .game-screen > .secret-card,
+.app.theme-preset-active .game-screen > .ending,
+.app.theme-preset-active .game-screen > .ranking-screen,
+.app.theme-preset-active .game-screen .morning-reveal,
+.app.theme-preset-active .game-screen .execution-reveal,
+.app.theme-preset-active .game-screen .suspect-reveal,
+.app.theme-preset-active .game-screen .suspect-leader-card,
+.app.theme-preset-active .game-screen .role-confirmation,
+.app.theme-preset-active .game-screen .night-action-card,
+.app.theme-preset-active .game-screen .vote-card,
+.app.theme-preset-active .game-screen .night-chat-fullscreen,
+.app.theme-preset-active .game-screen .night-chat-tabs,
+.app.theme-preset-active .game-screen .night-suspicion,
+.app.theme-preset-active .game-screen .night-result,
+.app.theme-preset-active .game-screen .handoff,
+.app.theme-preset-active .game-screen .turn-wait,
+.app.theme-preset-active .game-screen .vote-confirm,
+.app.theme-preset-active .game-screen .replay-controls {
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+@media (max-width: 650px) {
+  .app.in-game > main > .game-screen.morning-screen {
+    padding: max(.75rem, env(safe-area-inset-top)) max(.75rem, env(safe-area-inset-right)) max(.75rem, env(safe-area-inset-bottom)) max(.75rem, env(safe-area-inset-left)) !important;
+  }
+  .app.in-game > main > .game-screen.morning-screen > .game-area > .morning-reveal {
+    width: 100% !important;
+    max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 1.5rem) !important;
+  }
+  .app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal {
+    width: calc(100vw - 1.25rem) !important;
+    max-height: min(42dvh, 24rem) !important;
+    bottom: max(.6rem, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* Code-split title/editor loading state: keep the shared app shell responsive. */
+.screen-loading{display:grid;place-content:center;justify-items:center;gap:.8rem;min-height:calc(100vh - 8rem);color:#e3d2ae;font-weight:650;text-align:center}
+.screen-loading .loading-spinner{width:2.2rem;height:2.2rem}
+.app.in-game .screen-loading{flex:1;min-height:0}
+
+/* Stable viewport layout for morning announcements and the discussion tally. */
+.app.in-game > main > .game-screen.morning-screen {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 0 !important;
+  padding: max(.75rem, env(safe-area-inset-top)) max(.75rem, env(safe-area-inset-right)) max(.75rem, env(safe-area-inset-bottom)) max(.75rem, env(safe-area-inset-left)) !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+.app.in-game > main > .game-screen.morning-screen > .game-area {
+  position: absolute !important;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)) !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+.app.in-game > main > .game-screen.morning-screen > .game-area > .morning-reveal {
+  position: relative !important;
+  inset: auto !important;
+  align-self: center !important;
+  justify-self: center !important;
+  width: min(64rem, 100%) !important;
+  max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2rem) !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  overflow-y: auto !important;
+}
+.app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal {
+  position: fixed !important;
+  left: max(.75rem, env(safe-area-inset-left)) !important;
+  right: max(.75rem, env(safe-area-inset-right)) !important;
+  bottom: max(.75rem, env(safe-area-inset-bottom)) !important;
+  translate: none !important;
+  transform: none !important;
+  width: auto !important;
+  max-width: 76rem !important;
+  max-height: min(46dvh, 36rem) !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+@media (max-width: 650px) {
+  .app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal {
+    left: max(.5rem, env(safe-area-inset-left)) !important;
+    right: max(.5rem, env(safe-area-inset-right)) !important;
+    bottom: max(.5rem, env(safe-area-inset-bottom)) !important;
+    max-height: min(42dvh, 24rem) !important;
+  }
+}
+
+/* Force room preset surfaces to remain genuinely transparent on mobile Safari
+   and embedded browsers, which can preserve an old background shorthand. */
+.app.theme-preset-active .game-screen,
+.app.theme-preset-active .game-screen > .game-area,
+.app.theme-preset-active .game-screen > .secret-card,
+.app.theme-preset-active .game-screen > .ending,
+.app.theme-preset-active .game-screen > .ranking-screen,
+.app.theme-preset-active .game-screen .morning-reveal,
+.app.theme-preset-active .game-screen .execution-reveal,
+.app.theme-preset-active .game-screen .suspect-reveal,
+.app.theme-preset-active .game-screen .suspect-leader-card {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Final phase layout overrides: use the room viewport as the containing
+   block, avoiding clipping from main's scroll/viewport shell on desktop. */
+.app.in-game > main { position: relative; }
+.app.in-game > main > .game-screen.morning-screen,
+.app.in-game > main > .game-screen.discussion-screen {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+.app.in-game > main > .game-screen.morning-screen > .game-area,
+.app.in-game > main > .game-screen.discussion-screen > .game-area {
+  position: absolute !important;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)) !important;
+  overflow: visible !important;
+}
+.app.in-game > main > .game-screen.morning-screen > .game-area > .morning-reveal {
+  position: relative !important;
+  inset: auto !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  translate: none !important;
+  align-self: center !important;
+  justify-self: center !important;
+  width: min(64rem, 100%) !important;
+  max-height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+  margin: 0 !important;
+  overflow-y: auto !important;
+}
+.app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal {
+  position: absolute !important;
+  z-index: 8 !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+  translate: -50% 0 !important;
+  transform: none !important;
+  width: min(70rem, calc(100% - 2rem)) !important;
+  max-height: min(38dvh, 30rem) !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+@media (max-width: 650px) {
+  .app.in-game > main > .game-screen.morning-screen > .game-area,
+  .app.in-game > main > .game-screen.discussion-screen > .game-area {
+    padding: max(.75rem, env(safe-area-inset-top)) max(.75rem, env(safe-area-inset-right)) max(.75rem, env(safe-area-inset-bottom)) max(.75rem, env(safe-area-inset-left)) !important;
+  }
+  .app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal {
+    width: 100% !important;
+    max-height: min(36dvh, 24rem) !important;
+    bottom: max(.5rem, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* Desktop and mobile phase overlays: anchor announcements to the viewport,
+   not to the nested, width-limited game panel. */
+.app.in-game > main > .game-screen.morning-screen > .game-area > .morning-reveal {
+  position: fixed !important;
+  inset: 50% auto auto 50% !important;
+  translate: -50% -50% !important;
+  transform: none !important;
+  z-index: 30 !important;
+  width: min(64rem, calc(100vw - 2rem)) !important;
+  max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2rem) !important;
+  overflow: auto !important;
+  margin: 0 !important;
+}
+.app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal {
+  position: fixed !important;
+  inset: auto auto max(1rem, env(safe-area-inset-bottom)) 50% !important;
+  translate: -50% 0 !important;
+  transform: none !important;
+  z-index: 30 !important;
+  width: min(76rem, calc(100vw - 2rem)) !important;
+  max-height: min(42dvh, 34rem) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  margin: 0 !important;
+}
+@media (max-width: 650px) {
+  .app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal {
+    inset-inline: max(.5rem, env(safe-area-inset-left)) !important;
+    left: max(.5rem, env(safe-area-inset-left)) !important;
+    right: max(.5rem, env(safe-area-inset-right)) !important;
+    translate: none !important;
+    width: auto !important;
+    max-height: min(42dvh, 24rem) !important;
+  }
+}
+/* iOS/embedded browsers render fixed-attachment backgrounds inconsistently.
+   The app itself is already viewport-fixed during play, so scroll attachment
+   keeps room preset art visible through genuinely transparent phase surfaces. */
+@media (max-width: 900px) {
+  .app.in-game.theme-preset-active { background-attachment: scroll !important; }
+  .app.in-game.theme-preset-active .game-screen,
+  .app.in-game.theme-preset-active .game-screen > .game-area,
+  .app.in-game.theme-preset-active .game-screen > .secret-card,
+  .app.in-game.theme-preset-active .game-screen > .ending,
+  .app.in-game.theme-preset-active .game-screen > .ranking-screen,
+  .app.in-game.theme-preset-active .game-screen .game-area :is(.role-confirmation,.night-action-card,.vote-card,.night-chat-tabs,.night-chat-fullscreen,.night-suspicion,.night-result,.handoff,.turn-wait,.morning-reveal,.execution-reveal,.vote-confirm,.suspect-reveal,.suspect-leader-card) {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
