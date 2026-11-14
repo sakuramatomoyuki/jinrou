@@ -957,6 +957,26 @@ body.game-active,.app.in-game,.app.in-game[data-scene="day"],.app.in-game[data-s
 .theme-crop-preview>img,.theme-crop-preview>video{position:absolute;inset:0}.theme-crop-tool>label input{width:100%}.theme-role-row .theme-asset-select{grid-column:1/-1}.theme-editor-controls .theme-section{gap:1rem}.theme-live-column .theme-asset-shelf>.wide{width:100%}
 @keyframes theme-preview-pulse{from{opacity:.65;transform:scale(.92)}to{opacity:1;transform:scale(1.04)}}@keyframes theme-slash{to{stroke-dashoffset:0}}
 
+/* Full game-journey, outcome, and transparent in-game preset previews. */
+.theme-walkthrough-controls{display:grid;gap:.55rem;padding:.75rem;border:1px solid #d2b46e66;border-radius:.75rem;background:#090f18aa}.theme-walkthrough-controls p{margin:0;color:#e7d6b4}.theme-walkthrough-controls>div:last-child{display:flex;flex-wrap:wrap;gap:.45rem}.theme-walkthrough-controls button{padding:.5rem .75rem}.theme-stage-content{position:relative;z-index:1}.theme-stage-content.scene-content-ranking,.theme-stage-content.scene-content-invalid-match,.theme-stage-content[class*="scene-content-victory-"]{gap:1rem}.theme-stage-content[class*="scene-content-victory-"] strong{font-family:'Noto Serif JP',serif;font-size:1.65em;letter-spacing:.08em;color:#f1d496;text-shadow:0 0 22px #e1bc6555}.theme-stage-content.scene-content-victory-wolf strong{color:#e69a98;text-shadow:0 0 22px #b43b4c88}.theme-stage-content.scene-content-invalid-match strong{color:#d2d8e0}.theme-stage-ranks{display:grid;gap:.35rem;list-style:none;margin:0;padding:0;width:70%;text-align:left}.theme-stage-ranks li{padding:.35rem .55rem;border-bottom:1px solid #ebd29955;color:#f3e5c4}
+/* The scene curtain is fully opaque before the app's scene background changes. */
+@keyframes scene-curtain{0%,8%{opacity:1;clip-path:inset(0)}73%{opacity:1;clip-path:inset(0)}100%{opacity:0;clip-path:inset(0 0 100% 0)}}
+.app[data-scene="ranking"]:before{background:radial-gradient(ellipse at 50% 12%,#e4c16b77,transparent 35%),linear-gradient(160deg,#3a3244,#232536 58%,#111722)}
+.app[data-scene="invalid-match"]:before{background:radial-gradient(ellipse at 50% 35%,#aab4c333,transparent 34%),linear-gradient(160deg,#333846,#1b202b 58%,#0b0e15)}
+.app[data-scene="ranking"]:before,.app[data-scene="invalid-match"]:before{animation:scene-arrival 1.55s cubic-bezier(.2,.7,.2,1) both}
+.scene-transition-ranking .scene-transition-sky{background:radial-gradient(ellipse at 50% 16%,#e5c879bb,transparent 32%),linear-gradient(160deg,#574351,#28243a 62%,#111722)}
+.scene-transition-ranking .scene-transition-copy>span{color:#f6dfa1;border-color:#e5c879aa;box-shadow:0 0 0 10px #e5c87918,0 0 45px #e5c87955}
+.scene-transition-invalid-match{z-index:110}
+/* A selected theme uses its own full-bleed art; keep the game controls floating over it. */
+.app.theme-preset-active{background-attachment:fixed;background-repeat:no-repeat}
+.app.theme-preset-active:before{opacity:1;animation:none!important;background:linear-gradient(180deg,#07101a20 0%,#07101a35 54%,#07101a66 100%)}
+.app.theme-preset-active:after{opacity:.24}
+.app.theme-preset-active .game-screen{background:transparent!important;border-color:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
+.app.theme-preset-active .game-screen>.game-area,.app.theme-preset-active .game-screen>.secret-card,.app.theme-preset-active .game-screen>.ending,.app.theme-preset-active .game-screen>.ranking-screen,.app.theme-preset-active .game-screen>.role-wait-screen,.app.theme-preset-active .game-screen>.morning-reveal,.app.theme-preset-active .game-screen>.execution-reveal,.app.theme-preset-active .game-screen>.replay-controls{background:transparent!important;border-color:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
+.app.theme-preset-active .game-screen>.game-area{width:min(100%,54rem);padding:clamp(1rem,3vw,2rem)}
+.app.theme-preset-active .game-screen>.ending,.app.theme-preset-active .game-screen>.ranking-screen{max-width:54rem;text-shadow:0 2px 18px #050910}
+.app.theme-preset-active .game-screen>.game-area :is(.role-confirmation,.night-action-card,.vote-card,.night-chat-fullscreen){background:transparent;border-color:transparent;box-shadow:none}
+
 /* The theme editor is a workspace, so let it occupy the viewport instead of
    nesting it inside the generic narrow card used by the other app pages. */
 body:has(.theme-studio){overflow:hidden}
