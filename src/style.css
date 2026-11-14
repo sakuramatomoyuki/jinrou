@@ -1605,3 +1605,91 @@ body:has(.theme-studio){overflow:hidden}
     backdrop-filter: none !important;
   }
 }
+
+/* Stable themed game surfaces and phase overlays. The previous phase-area
+   animation left a transform on .game-area, making fixed children use the
+   narrow panel as their viewport in WebKit and clipping them on desktop. */
+.app.in-game .game-screen > .game-area {
+  animation: game-area-fade-in .28s ease-out both !important;
+  transform: none !important;
+}
+@keyframes game-area-fade-in { from { opacity: .72; } to { opacity: 1; } }
+.app.in-game > main > .game-screen.morning-screen,
+.app.in-game > main > .game-screen.discussion-screen {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+.app.in-game > main > .game-screen.morning-screen > .game-area,
+.app.in-game > main > .game-screen.discussion-screen > .game-area {
+  position: absolute !important;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)) !important;
+  overflow: visible !important;
+}
+.app.in-game > main > .game-screen.morning-screen > .game-area > .morning-reveal {
+  position: absolute !important;
+  inset: 50% auto auto 50% !important;
+  translate: -50% -50% !important;
+  width: min(64rem, calc(100% - 2rem)) !important;
+  max-height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2rem) !important;
+  margin: 0 !important;
+  overflow: auto !important;
+}
+.app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal {
+  position: absolute !important;
+  inset: auto auto max(1rem, env(safe-area-inset-bottom)) 50% !important;
+  translate: -50% 0 !important;
+  width: min(76rem, calc(100% - 2rem)) !important;
+  max-height: min(42dvh, 34rem) !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+@media (max-width: 650px) {
+  .app.in-game > main > .game-screen.morning-screen > .game-area,
+  .app.in-game > main > .game-screen.discussion-screen > .game-area {
+    padding: max(.65rem, env(safe-area-inset-top)) max(.65rem, env(safe-area-inset-right)) max(.65rem, env(safe-area-inset-bottom)) max(.65rem, env(safe-area-inset-left)) !important;
+  }
+  .app.in-game > main > .game-screen.morning-screen > .game-area > .morning-reveal {
+    width: calc(100% - 1rem) !important;
+    max-height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 1rem) !important;
+  }
+  .app.in-game > main > .game-screen.discussion-screen > .game-area > .suspect-reveal {
+    inset-inline: .5rem !important;
+    left: .5rem !important;
+    right: .5rem !important;
+    translate: none !important;
+    width: auto !important;
+    max-height: min(40dvh, 24rem) !important;
+  }
+}
+/* Mobile Safari and embedded browsers need every themed surface explicitly
+   transparent; relying on a shorthand reset differs between engines. */
+.app.in-game.theme-preset-active > main > .game-screen,
+.app.in-game.theme-preset-active > main > .game-screen > .game-area,
+.app.in-game.theme-preset-active > main > .game-screen > .secret-card,
+.app.in-game.theme-preset-active > main > .game-screen .morning-reveal,
+.app.in-game.theme-preset-active > main > .game-screen .execution-reveal,
+.app.in-game.theme-preset-active > main > .game-screen .suspect-reveal,
+.app.in-game.theme-preset-active > main > .game-screen .game-area > :is(.role-confirmation,.night-action-card,.vote-card,.night-chat-fullscreen,.night-chat-tabs,.night-suspicion,.night-result,.handoff,.turn-wait,.vote-confirm,.suspect-leader-card) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
